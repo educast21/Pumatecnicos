@@ -19,4 +19,5 @@ El objetivo es responder a la pregunta *¿Qué es ser pobre?*, explicar la defin
 Esperamos que con este trabajo, la población sea consciente de su calidad de vida y pueda hacer valer sus derechos humanos.
 
 [1] https://dashboards.sdgindex.org/profiles/mexico/
+
 [2] https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/pm/pm2025_08.pdf
