@@ -21,3 +21,5 @@ Esperamos que con este trabajo, la población sea consciente de su calidad de vi
 [1] https://dashboards.sdgindex.org/profiles/mexico/
 
 [2] https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/pm/pm2025_08.pdf
+
+## Selección y calidad de datos
