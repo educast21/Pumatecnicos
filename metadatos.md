@@ -1,5 +1,5 @@
 # ODS 1 
-## 1.- 1.1.1_SdT_UmbralPob.xls
+## 1.- 1.1.1_sh_es.xls
 Consejo Nacional de Evaluación de la Política de Desarrollo Social (2023). 
 "Proporción de la población que vive por debajo del umbral internacional de la pobreza (1.90 dólares diarios), desglosada por sexo, edad, situación laboral y ubicación geográfica (urbano y rural)". 
 Recuperado el 30 de marzo de 2026 de: https://agenda2030.mx/ODSind.html?ind=ODS001000100010&cveind=1&cveCob=99&lang=es#/Metadata
@@ -13,7 +13,7 @@ Variables:
 - Proporción de la población que vive por debajo del umbral internacional de la pobreza (1.90 dólares diarios), desglosada por sexo, edad, situación laboral y ubicación geográfica (urbano y rural) Ámbito Rural: Porcentaje a nivel nacional en zonas rurales
 - Proporción de la población que vive por debajo del umbral internacional de la pobreza (1.90 dólares diarios), desglosada por sexo, edad, situación laboral y ubicación geográfica (urbano y rural) y etnia Ámbito Rural: Porcentaje a nivel nacional en zonas urbanas
 
-## 2.- 1r.1.1_SdT_PobExt.xls
+## 2.- 1R.1.1_sh_es.xls
 Consejo Nacional de Evaluación de la Política de Desarrollo Social (2023). 
 "Porcentaje de la población que vive por debajo del umbral de pobreza extrema regional, desglosada por sexo, edad, condición de actividad, ubicación geográfica (urbana y rural) y etnia". 
 Recuperado el 30 de marzo de 2026 de: https://agenda2030.mx/ODSind.html?ind=ODS001000100030&cveind=594&cveCob=99&lang=es#/Metadata
@@ -27,7 +27,7 @@ Variables:
 - Porcentaje de la población que vive por debajo del umbral de pobreza extrema regional, desglosada por sexo, edad, condición de actividad, ubicación geográfica (urbana y rural) y etnia Ámbito Rural: Porcentaje a nivel nacional en zonas rurales
 - Porcentaje de la población que vive por debajo del umbral de pobreza extrema regional, desglosada por sexo, edad, condición de actividad, ubicación geográfica (urbana y rural) y etnia Ámbito Rural: Porcentaje a nivel nacional en zonas urbanas
 
-## 3.- 1.2.1.Mapa_Pobreza.xlx
+## 3.- 1.2.1.A_sh_es.xlx
 Consejo Nacional de Evaluación de la Política de Desarrollo Social (2023). 
 "Proporción de la población que vive por debajo del umbral nacional de la pobreza, por desglose geográfico (Entidad federativa)". 
 Recuperado el 30 de marzo de 2026 de: https://agenda2030.mx/ODSind.html?ind=ODS001000200005&cveind=637&cveCob=99&lang=es#/Metadata
