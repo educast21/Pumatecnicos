@@ -1,0 +1,28 @@
+project:
+  type: website
+  output-dir: "docs"
+  render:
+    - index.qmd
+    - dashboard/index.qmd
+    - about.qmd
+
+website:
+  title: "website"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: dashboard/index.qmd
+        text: Dashboards
+      - about.qmd
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
+    toc: true
+
+
+
