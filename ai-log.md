@@ -26,24 +26,24 @@ conocimiento del contexto social, la hacemos nosotros.
   en un solo espacio; la personalización visual y creación de
   categorías fue manual y discutida con el equipo.
 
-### 2026-03-15 | Copilot | Boilerplate de gráficas
-- **Tarea**: Generar código base para 6 gráficas en
-  plotly.
-- **Resultado**: Templates funcionales para bar, line,
-  choropleth, scatter, heatmap, y funnel.
-- **Decisión**: Descartamos 3 de las 6. El heatmap no
-  comunicaba bien la estacionalidad (probamos y era
-  confuso). El scatter no era apropiado para datos
-  categóricos por municipio. Nos quedamos con bar, line
-  y choropleth. Toda la personalización visual (paleta
-  basada en identidad del ODS 6, etiquetas en español,
-  anotaciones contextuales) fue manual.
+### 2026-04-01 | Gemini | Limpieza de datos
+- **Tarea**: Le pedimos ayuda para convertir las entradas
+  a números, ya que tenían un caracter asociado a su
+  coeficiente de variación (e.g. a/), lo que hacía que todas las entradas
+  del dataframe fueran de tipo string
+- **Prompt**: "como puedo recuperar la ultima parte de una entrada i,j
+  de un data frame, asignar ese valor a una nueva columna y borrarlo
+  de la orignal es decir, si la observacion es "40.9127745397439 a/",
+  quiero recuperar ese "a/" asociado a un 15% y luego dejar solo "40.9127745397439" como numero"
+- **Resultado**: Nos dió un código usando el método .extract
+- **Decisión**: Usamos el código, cambiando las variables para que fueran
+  más representativas en el contexto del problema 
+
+
 
 
 ### NO usamos IA para hacer lo siguiente:
-- La selección de las 4 variables clave (revisión de
+- La selección de los ODS, y las metas más relevantes de cada uno (revisión de
   literatura y discusión en equipo)
-- La narrativa del tablero (redacción propia, 3
-  iteraciones internas)
-- La interpretación de outliers en Acapulco post-Otis
-  (conocimiento local del equipo)
+- La narrativa del tablero (redacción propia, consultando definiciones en fuentes oficiales)
+- La interpretación de gráficas
