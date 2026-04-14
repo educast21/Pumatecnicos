@@ -18,7 +18,8 @@ website:
       - text: Enfoque de Carencias Sociales
         menu:
           - href: dashboard/notebooks/enfoque_carencias.qmd
-            text: "ODS 1 y las carencias"
+            text: "Introducción y ODS 1"
+          - text: "---" # Línea divisora
           - href: dashboard/notebooks/enfoque_carencias.qmd
             text: "ODS 2: Hambre Cero"
           - href: dashboard/notebooks/enfoque_carencias.qmd
