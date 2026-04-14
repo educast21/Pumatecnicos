@@ -1,16 +1,16 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
+    "objectID": "dashboard/about.html",
+    "href": "dashboard/about.html",
     "title": "About",
     "section": "",
     "text": "About this site"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "website",
+    "objectID": "dashboard/index.html",
+    "href": "dashboard/index.html",
+    "title": "Pobreza en México",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "Richardson, B. (2019). Boy sitting on barbwire [Fotografía]. Unsplash. https://unsplash.com/photos/boy-sitting-on-barbwire-WV-NgeS9oRw⁠\n\n\n\nIntro o algo así…"
   }
 ]

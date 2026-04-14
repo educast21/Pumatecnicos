@@ -2,19 +2,18 @@ project:
   type: website
   output-dir: "docs"
   render:
-    - index.qmd
     - dashboard/index.qmd
-    - about.qmd
+    - dashboard/notebooks/index.qmd
+    - dashboard/about.qmd
 
 website:
-  title: "website"
+  title: "Pumatécnicos"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
       - href: dashboard/index.qmd
+        text: Inicio
+      - href: dashboard/notebooks/index.qmd
         text: Dashboards
-      - about.qmd
 
 format:
   html:

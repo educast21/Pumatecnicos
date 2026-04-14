@@ -1,0 +1,51 @@
+--- 
+title: "Pobreza en México"
+author: "Pumatécnicos"
+format: dashboard
+--- 
+
+# ODS 1 : Fin de la pobreza
+A medida que las sociedades intentan seguir el acelerado ritmo del progreso tecnológico y de la globalización, nos enfrentamos a nuesvos desafíos: incertidumbre, profundas desigualdades, la degradación del medio ambiente, el calentamiento y mayor vulnerabilidad ante los desastres. Los Objetivos de Desarrollo Sostenible (ODS) implementados por la ONU buscan el bienestar de las personas y el cuidado del planeta.
+
+El objetivo de esta página web es usar la información estadística disponible al 2026 para incentivar a la ciudadanía a tomar consciencia de la situación del país, y exigir cambios verdaderos por humanidad.
+
+## **Pobreza**
+
+
+
+```{python}
+import plotly.express as px
+df = px.data.gapminder()
+```
+
+# ODS 2: Hambre cero
+## Row {height=60%}
+
+```{python}
+#| title: GDP and Life Expectancy 
+px.scatter(  
+  df, x="gdpPercap", y="lifeExp", 
+  animation_frame="year", animation_group="country", 
+  size="pop", color="continent", hover_name="country",
+  facet_col="continent", log_x=True, size_max=45, 
+  range_x=[100,100000], range_y=[25,90] 
+)  
+```
+
+## Row {height=40%}
+
+```{python}
+#| title: Population
+px.area(
+  df, x="year", y="pop", 
+  color="continent", line_group="country"
+)
+```
+
+```{python}
+#| title: Life Expectancy
+px.line(
+  df, x="year", y="lifeExp", 
+  color="continent", line_group="country"
+)
+```
