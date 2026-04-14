@@ -28,3 +28,7 @@ políticas públicas gubernamentales.
 
 Se optó por usar datos de fuentes oficiales como INEGI, CONEVAL, ENSANUT, entre otras, pues se busca ser lo más transparentes posibles. Sin embargo, también es importante señalar que hay muchos indicadores desactualizados o mal reportados, por lo que nuestro análisis se vió limitado por dichas causas. 
 Todas las bases de datos utilizadas se citan en formato APA en el archivo metadatos.md 
+
+## Storytelling
+
+Para responder a la pregunta central del trabajo, se comienza por introducir al lector a las definiciones de cada 
