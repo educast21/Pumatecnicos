@@ -1,7 +1,52 @@
 ---
-title: "Pobreza en México"
+format:
+    html:
+        toc: false
 ---
 
-![Richardson, B. (2019). Boy sitting on barbwire [Fotografía]. Unsplash. https://unsplash.com/photos/boy-sitting-on-barbwire-WV-NgeS9oRw⁠](imagenes/header.jpg)
+::: {.column-screen}
+![Plaza Alonso](imagenes/Plaza_Alonso_Garc%C3%ADa_Bravo_-_Calle_Manzanares_-_Mexico_2024_(2).jpg)
+:::
 
-# Intro o algo así...
+## ¿Qué viene a tu mente al pensar en pobreza?
+
+Probablemente personas en condición de calle o en lugares remotos del país...
+
+La medición de la pobreza en nuestro país ha sido desarrollada casi siempre desde una perspectiva unidimensional, utilizando al ingreso como una aproximación del bienestar económico de la población. 
+
+El principal indicador que se utiliza define una línea de pobreza que representa el ingreso mínimo necesario para adquirir una canasta de bienes indispensables. Dicho umbral es comparado con el ingreso de las personas para determinar aquellos que son pobres.
+
+Sin embargo, la pobreza también está asociada a condiciones de vida que:
+
+- vulneran la dignidad de las personas,
+- limitan sus derechos y libertades fundamentales,
+- impiden la satisfacción de sus necesidades básicas,
+- zimposibilitan su plena integración social.
+
+
+La pobreza debe medirse desde **tres enfoques**:
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-4}
+::: {.callout-note}
+## Enfoque Monetario
+[Explorar →](notebooks/enfoque_monetario.qmd)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-4}
+::: {.callout-warning}
+## Carencias Sociales
+[Explorar →](notebooks/enfoque_carencias.qmd)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-4}
+::: {.callout-tip}
+## Capacidades
+[Explorar →](notebooks/enfoque_capacidades.qmd)
+:::
+:::
+
+:::

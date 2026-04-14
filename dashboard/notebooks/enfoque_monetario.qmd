@@ -1,0 +1,309 @@
+---
+title: "Enfoque Monetario"
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+
+# Umbrales Internacionales
+
+El Banco Mundial (BM) estableció el costo de la canasta básica de alimentos
+en **\$1.25 USD diarios**, siendo este el umbral internacional de la pobreza
+extrema. Mientras que el umbral internacional de pobreza es de **\$1.90 USD**
+al día.
+
+El CONEVAL, a través de la ENIGH, calcula la proporción de personas que viven
+por debajo de estos umbrales:
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+::: {.card .bg-warning .text-dark}
+::: {.card-body .text-center}
+### $1.90 USD / día
+**Umbral Internacional de Pobreza**  
+≈ $32.83 MXN (abril 2026)
+:::
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.card .bg-danger .text-white}
+::: {.card-body .text-center}
+### $1.25 USD / día
+**Umbral de Pobreza Extrema**  
+≈ $21.60 MXN (abril 2026)
+:::
+:::
+:::
+
+:::
+
+## Evolución temporal
+
+```{python}
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+import json
+import requests
+
+
+df = pd.read_excel("../../datos/1.1.1_sh_es.xls", sheet_name=0, header = None)
+df = df.iloc[7:-6] # Eliminar todos los renglones de texto
+df.columns = df.iloc[0] # El encabezado es el primer renglón
+df = df[1:] # Eliminar el primer renglon (ya es el encazabezado)
+df.columns = ["Periodo", "Total", "Urbano", "Rural"]
+
+df2 = pd.read_excel("../../datos/data_1775968412.xlsx", sheet_name=0)
+df2 = df2[['Años__ESTANDAR','value']]
+df2.columns = ['Periodo', 'LatinoAmerica']
+df = df.merge(df2, how='right', on='Periodo')
+df = df.apply(pd.to_numeric, errors='coerce').astype(float)
+
+colores = {
+    "Total": "#e9e83f",
+    "Urbano": "#5767dc",
+    "Rural": "#e55353",
+    "LatinoAmerica": "#f59842"
+}
+fig = px.line(df, x="Periodo", y=df.columns,
+              title='Proporción de la población que vive por debajo del umbral internacional de pobreza <br>'+
+              '(1.90 dólares diarios) entre 1992 y 2020 en México y Latinoamérica, <br>'+
+              'por ubicación geográfica (rural y urbano)',
+              markers = True,
+              color_discrete_map=colores)
+fig.update_xaxes(
+    type="date",
+    dtick="M24",
+    tickformat="%Y",
+    showgrid=True,
+    gridcolor='LightGray',
+    griddash='dot'
+)
+
+fig.update_yaxes(
+    showgrid=True,
+    gridcolor='LightGray',
+    griddash='dot'
+)
+fig.update_layout(
+    xaxis_title="Año",
+    yaxis_title="Porcentaje",
+    legend_title="Categorías",
+    plot_bgcolor='white'
+)
+fig.update_traces(connectgaps=True)
+fig.show()
+
+```
+
+```{python}
+
+df = pd.read_excel("../../datos/1r.1.1_sh_es.xls", sheet_name=0, header = None)
+df = df.iloc[7:-3] # Eliminar todos los renglones de texto
+df.columns = df.iloc[0] # El encabezado es el primer renglón
+df = df[1:] # Eliminar el primer renglon (ya es el encazabezado)
+df.columns = ["Periodo", "Total", "Urbano", "Rural"]
+
+df2 = pd.read_excel("../../datos/data_1775968526.xlsx", sheet_name=0)
+df2 = df2[['Años__ESTANDAR','value']]
+df2.columns = ['Periodo', 'LatinoAmerica']
+df = df.merge(df2, how='outer')
+df = df.apply(pd.to_numeric, errors='coerce').astype(float)
+
+colores = {"Total": "#e9e83f",
+    "Urbano": "#5767dc",
+    "Rural": "#e55353",
+    "LatinoAmerica": "#f59842"
+}
+fig = px.line(df, x="Periodo", y=df.columns,
+              title='Proporción de la población que vive por debajo del umbral internacional de pobreza <br>'+
+              'Extrema (1.25 dólares diarios) entre 2002 y 2020 en México y Latinoamérica, <br>'+
+              'por ubicación geográfica (rural y urbano)',
+              markers = True,
+              color_discrete_map=colores)
+fig.update_xaxes(
+    type="date",
+    dtick="M24",
+    tickformat="%Y",
+    showgrid=True,
+    gridcolor='LightGray',
+    griddash='dot'
+)
+
+fig.update_yaxes(
+    showgrid=True,
+    gridcolor='LightGray',
+    griddash='dot'
+)
+fig.update_layout(
+    xaxis_title="Año",
+    yaxis_title="Porcentaje",
+    legend_title="Categorías",
+    plot_bgcolor='white'
+)
+fig.update_traces(connectgaps=True)
+fig.show()
+
+```
+
+---
+
+# Umbrales Nacionales
+
+Sin embargo, el CONEVAL define sus propios umbrales conocidos como
+**Líneas de Pobreza por Ingresos** (LPI y LPEI):
+
+$$\text{LPI} = \text{Canasta alimentaria} + \text{Canasta no alimentaria}$$
+
+$$\text{LPEI} = \text{Canasta alimentaria}$$
+
+Si el ingreso mensual de una persona es inferior a alguna de estas líneas,
+cae en su respectiva categoría.
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+::: {.card .border-warning}
+::: {.card-body}
+::: {.card-title}
+#### 📊 Línea de Pobreza por Ingresos (LPI)
+:::
+| Zona | Valor mensual |
+|------|--------------|
+| Urbana | $4,877.87 MXN |
+| Rural | $3,494.95 MXN |
+:::
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.card .border-danger}
+::: {.card-body}
+#### 🔴 Línea de Pobreza Extrema por Ingresos (LPEI)
+| Zona | Valor mensual |
+|------|--------------|
+| Urbana | $2,516.91 MXN |
+| Rural | $1,887.58 MXN |
+:::
+:::
+:::
+
+:::
+
+---
+
+## Evolución Temporal
+
+::: {.callout-tip}
+## Cómo leer el mapa
+- 🔴 **Rojo**: al menos 1 de cada 2 personas es pobre (>50%)
+- 🟡 **Amarillo**: al menos 1 de cada 4 personas es pobre (25–50%)
+- 🟢 **Verde**: menos de 1 de cada 4 personas es pobre (<25%)
+
+El objetivo final es que todo el mapa se pinte de verde.
+:::
+
+```{python}
+
+df = pd.read_excel("../../datos/1.2.1.A_sh_es.xls", sheet_name=0, header = None)
+df = df.iloc[6:-10] # Eliminar todos los renglones de texto
+df.columns = df.iloc[0] # El encabezado es el primer renglón
+df = df[2:] # Eliminar el primer renglon (ya es el encazabezado)
+df.columns = ["ID", "Entidad", "2022", "2020", "2018", "2016"]
+
+# Que no solo sea un %, que incluya la cantidad de personas
+df2 = pd.read_excel("../../datos/1.2.1.A_dc_2195_es.xls", sheet_name=0, header = None)
+df2 = df2.iloc[5:-10] # Eliminar todos los renglones de texto
+df2.columns = df2.iloc[0] # El encabezado es el primer renglón
+df2 = df2[3:] # Eliminar el primer renglon (ya es el encazabezado)
+df2.columns = ["ID", "Entidad", "Pob2022", "Pob2020", "Pob2018", "Pob2016"]
+df2['Pob2016'] = 1000*df2['Pob2016']
+df2['Pob2018'] = 1000*df2['Pob2018']
+df2['Pob2020'] = 1000*df2['Pob2020']
+df2['Pob2022'] = 1000*df2['Pob2022']
+df = df.merge(df2, on=['ID', 'Entidad'], how='left')
+
+# Usar el GeoJSON de México con sus estados
+repo_url = 'https://raw.githubusercontent.com/angelnmara/geojson/master/mexicoHigh.json'
+repo_url_municps = 'https://raw.githubusercontent.com/angelnmara/geojson/master/MunicipiosMexico.json'
+mx_states_geojson = requests.get(repo_url).json()
+
+# Cambiar los nombres del df para que coincidan con los del json
+df.iloc[4, 1] = "Coahuila"
+df.iloc[15,1] = "Michoacán"
+df.iloc[29,1] = "Veracruz"
+
+# Formato largo del df, preferible para series de tiempo
+df_long = df.melt(
+    id_vars=['Entidad'],
+    value_vars=['2016', '2018', '2020', '2022'],
+    var_name='Año',
+    value_name='Porcentaje'
+)
+
+# Partición del porcentaje en categorías
+df_long['Categoría'] = pd.cut(
+    df_long['Porcentaje'],
+    bins=[0, 25, 50, 100],
+    labels=["[0,25]", "(25,50]", "(50,100]"],
+    include_lowest=True,
+    right=True
+)
+
+# Melt para las poblaciones
+df_pob = df.melt(
+    id_vars=['Entidad'],
+    value_vars=['Pob2016', 'Pob2018', 'Pob2020', 'Pob2022'],
+    var_name='Año_Pob',
+    value_name='Poblacion'
+)
+# nombre del año en la población para que coincida (ej: 'Pob2016' -> '2016')
+df_pob['Año'] = df_pob['Año_Pob'].str.extract(r'(\d+)').astype(str)
+
+# Unimos ambos DataFrames
+df_long = pd.merge(df_long, df_pob[['Entidad', 'Año', 'Poblacion']], on=['Entidad', 'Año'])
+df_long['Categoría'] = df_long['Categoría'].astype(str).str.strip()
+# Ordenamos por año para el slider
+df_long = df_long.sort_values('Año')
+df_long['Porcentaje'] = df_long['Porcentaje'].apply(lambda x: f"{round(x,2)}%")
+# Formatear la población con comas para que sea legible (ej: 1,000,000)
+df_long['Poblacion'] = df_long['Poblacion'].apply(lambda x: f"{x:,.0f}")
+
+# obs para forzar la categoría [0,25] en el 2016
+dummy = pd.DataFrame({'Entidad': ['Dummy'], 'Año': ['2016'], 'Porcentaje': ['6%'], 'Categoría': ['[0,25]'], 'Poblacion': ['1']})
+df_long = pd.concat([dummy,df_long], ignore_index=True)
+
+colores = {
+    "[0,25]": "#2dc937",
+    "(25,50]": "#efd720",
+    "(50,100]": "#d14e39"
+}
+
+fig = px.choropleth(
+    df_long,
+    geojson=mx_states_geojson,
+    locations='Entidad',
+    featureidkey='properties.name',
+    color='Categoría',             # Coloreamos por la columna de texto
+    animation_frame='Año',
+    color_discrete_map=colores,    # Forzamos los colores definidos arriba
+    hover_name='Entidad',
+    hover_data={'Porcentaje':True, 'Entidad':False, 'Poblacion':True} # Mostramos el número real en el hover
+)
+
+fig.update_geos(
+    fitbounds="locations",
+    visible=False
+)
+
+fig.update_layout(
+    title_text='Porcentaje de pobreza Umbral Nacional por Entidad Federativa <br><sup>Animación del 2016 al 2022</sup>',
+    margin={"r":0,"t":80,"l":0,"b":0}
+)
+
+fig.show()
+
+```

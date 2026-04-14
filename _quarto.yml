@@ -3,25 +3,34 @@ project:
   output-dir: "docs"
   render:
     - dashboard/index.qmd
-    - dashboard/notebooks/index.qmd
-    - dashboard/about.qmd
+    - dashboard/notebooks/enfoque_monetario.qmd
+    - dashboard/notebooks/enfoque_carencias.qmd
+    - dashboard/notebooks/enfoque_capacidades.qmd
 
 website:
-  title: "Pumatécnicos"
+  title: "Pobreza en México"
   navbar:
     left:
       - href: dashboard/index.qmd
         text: Inicio
-      - href: dashboard/notebooks/index.qmd
-        text: Dashboards
+      - href: dashboard/notebooks/enfoque_monetario.qmd
+        text: Enfoque Monetario
+      - text: Enfoque de Carencias Sociales
+        menu:
+          - href: dashboard/notebooks/enfoque_carencias.qmd
+            text: "ODS 1 y las carencias"
+          - href: dashboard/notebooks/enfoque_carencias.qmd
+            text: "ODS 2: Hambre Cero"
+          - href: dashboard/notebooks/enfoque_carencias.qmd
+            text: "ODS 3: Salud y Bienestar"
+          - href: dashboard/notebooks/enfoque_carencias.qmd
+            text: "ODS 6: Agua limpia y saneamiento"
+      - href: dashboard/notebooks/enfoque_capacidades.qmd
+        text: Enfoque de Capacidades
 
 format:
   html:
     theme:
       - cosmo
-      - brand
-    css: styles.css
-    toc: true
-
-
-
+      - dashboard/custom.scss
+    toc: false
