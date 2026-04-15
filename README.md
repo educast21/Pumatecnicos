@@ -13,6 +13,8 @@ El núcleo de nuestro proyecto es el **ODS 1** "Fin de la pobreza" pues, de acue
 - ODS 8 "Trabajo decente y crecimiento económico"
 - ODS 9 "Industria, Innovación e Infraestructura"
 
+![Relación heurística de los ODS seleccionados](/imagenes/relacionEntreODS.png)
+
 Según la 10° edición del reporte de Desarrollo Sostenible de la ONU [1], se indica que el ODS 1 está "En vías de alcanzar o mantener el logro", sin embargo al considerar la definición de pobreza por capacidades y por carencias sociales (enfoques usados por CONEVAL-INEGI [2], y que engloba los ODS anteriormente enlistados) resulta que aún "Persisten importantes ó significativos cambios" y el avance está estancado. 
 
 El objetivo es responder a la pregunta *¿Es la pobreza una cuestión de ingresos?*, explicando la definición de pobreza desde sus diferentes enfoques, y demostrar que la pobreza no solo se mide en el dinero que tiene una persona, si no que involucra toda un serie de factores más profundos que muchas veces es difícil de integrar y explicar. Además, se pretende mostrar la evolución de dichos factores en el país para justificar si realmente se ha avanzado en la reducción de la pobreza.
