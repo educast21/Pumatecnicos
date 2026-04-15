@@ -167,6 +167,180 @@ Variables:
 
 # ODS 9
 
+## 1.- 9.3.2_dc_1920_es.csv
+Instituto Nacional de Estadística y Geografía (2025).
+"Proporción de las pequeñas industrias que han obtenido un préstamo o una línea de crédito - Ámbito Nacional".
+Recuperado el 14 de abril de 2026 de: https://agenda2030.mx/ODSind.html?ind=ODS009000300020&cveind=1&cveCob=99&lang=es#/Metadata
+
+Licencia: http://ods.inegi.org.mxdocs/doctos/system/terminos_uso_SIODS_es.pdf
+
+Variables:
+
+- Periodo: Año de levantamiento del Censo Económico (2008, 2013, 2018, 2023)
+- Número_de_unidades_económicas_manufactureras_micro_y_pequeñas_con_financiamiento: Total de unidades económicas manufactureras con hasta 50 empleados que contaron con línea de crédito o préstamo
+
+Contacto: Centro de Atención a Usuarios INEGI
+atencion.usuarios@inegi.org.mx
+Daniel Vargas Montenegro, Director de Censos Económicos
+
+Cobertura Temporal: 2008-2023 (Quinquenal)
+Cobertura Espacial: Nacional (Estados Unidos Mexicanos)
+Periodicidad: Quinquenal
+Fuente: Censos Económicos (2004, 2009, 2014, 2019, 2024)
+Unidad de Medida: Número de unidades
+
+## 2.- 9.3.2_dc_1921_es.csv
+Instituto Nacional de Estadística y Geografía (2025).
+"Pequeñas industrias que han obtenido un préstamo - Porcentaje Nacional".
+Recuperado el 14 de abril de 2026 de: https://agenda2030.mx/ODSind.html?ind=ODS009000300020&cveind=1&cveCob=99&lang=es#/Metadata
+
+Licencia: http://ods.inegi.org.mxdocs/doctos/system/terminos_uso_SIODS_es.pdf
+
+Variables:
+
+- Periodo: Año de levantamiento del Censo Económico
+- Porcentaje_de_unidades_económicas_manufactureras_micro_y_pequeñas_con_financiamiento: Porcentaje de unidades económicas manufactureras micro y pequeñas que contaron con línea de crédito o préstamo respecto al total
+
+Contacto: Centro de Atención a Usuarios INEGI
+Cobertura Temporal: 2008-2023
+Cobertura Espacial: Nacional
+Periodicidad: Quinquenal
+Fuente: Censos Económicos
+Unidad de Medida: Porcentaje
+
+## 3.- 9.3.2_sh_es.csv
+Instituto Nacional de Estadística y Geografía (2025).
+"Pequeñas industrias con financiamiento - Serie Histórica".
+Recuperado el 14 de abril de 2026 de: https://agenda2030.mx/ODSind.html?ind=ODS009000300020&cveind=1&cveCob=99&lang=es#/Metadata
+
+Licencia: http://ods.inegi.org.mxdocs/doctos/system/terminos_uso_SIODS_es.pdf
+
+Variables:
+
+- Periodo: Año del Censo Económico
+- Porcentaje: Porcentaje de unidades económicas manufactureras con acceso a financiamiento
+
+Contacto: Centro de Atención a Usuarios INEGI
+Cobertura Temporal: 2008-2023
+Cobertura Espacial: Nacional
+Periodicidad: Quinquenal
+Unidad de Medida: Porcentaje
+
+## 4.- 9.5.1_dc_501_es.csv
+Instituto Nacional de Estadística y Geografía (2025).
+"Gasto federal en investigación científica y desarrollo experimental - Monto Absoluto".
+Recuperado el 14 de abril de 2026 de: https://agenda2030.mx/ODSind.html?ind=ODS009000500010&cveind=1&cveCob=99&lang=es#/Metadata
+
+Licencia: http://ods.inegi.org.mxdocs/doctos/system/terminos_uso_SIODS_es.pdf
+
+Variables:
+
+- Periodo: Año de inversión (2012-2025)
+- Gasto_en_investigación_y_desarrollo_experimental: Monto en millones de pesos destinados por el Gobierno Federal a investigación científica y desarrollo experimental
+
+Contacto: Viridiana Gabriela Yañez Rivas, Directora de Planeación y Seguimiento (DPS), SECIHTI
+vgyanezri@secihti.mx
+
+Cobertura Temporal: 2012-2025
+Cobertura Espacial: Nacional
+Periodicidad: Anual
+Fuente: Cuenta de Hacienda Pública Federal (SHCP)
+Unidad de Medida: Millones de pesos
+
+## 5.- 9.5.1_dc_502_es.csv
+Instituto Nacional de Estadística y Geografía (2025).
+"Gasto federal en investigación científica como proporción del PIB".
+Recuperado el 14 de abril de 2026 de: https://agenda2030.mx/ODSind.html?ind=ODS009000500010&cveind=1&cveCob=99&lang=es#/Metadata
+
+Licencia: http://ods.inegi.org.mxdocs/doctos/system/terminos_uso_SIODS_es.pdf
+
+Variables:
+
+- Periodo: Año de inversión
+- Gasto_federal_en_investigación_científica_y_desarrollo_experimental_como_proporción_del_PIB: Porcentaje del PIB destinado a investigación científica y desarrollo experimental
+
+Contacto: Viridiana Gabriela Yañez Rivas, SECIHTI
+Cobertura Temporal: 2012-2025
+Cobertura Espacial: Nacional
+Periodicidad: Anual
+Fuente: SECIHTI / SHCP
+Unidad de Medida: Porcentaje
+
+## 6.- 9.5.1_sh_es.csv
+Instituto Nacional de Estadística y Geografía (2025).
+"Gasto federal en investigación científica - Serie Histórica".
+Recuperado el 14 de abril de 2026 de: https://agenda2030.mx/ODSind.html?ind=ODS009000500010&cveind=1&cveCob=99&lang=es#/Metadata
+
+Licencia: http://ods.inegi.org.mxdocs/doctos/system/terminos_uso_SIODS_es.pdf
+
+Variables:
+
+- Periodo: Año
+- Porcentaje_del_PIB: Porcentaje del Producto Interno Bruto destinado a investigación científica y desarrollo experimental
+
+Contacto: Viridiana Gabriela Yañez Rivas, SECIHTI
+Cobertura Temporal: 2012-2025
+Cobertura Espacial: Nacional
+Periodicidad: Anual
+Unidad de Medida: Porcentaje
+
+## 7.- 9n.2.1_dc_2112_es.csv
+Instituto Nacional de Estadística y Geografía (2025).
+"Multiplicador del subsidio a investigación científica - Valor Total de Proyectos".
+Recuperado el 14 de abril de 2026 de: https://agenda2030.mx/ODSind.html?ind=ODS009N00200010&cveind=1&cveCob=99&lang=es#/Metadata
+
+Licencia: http://ods.inegi.org.mxdocs/doctos/system/terminos_uso_SIODS_es.pdf
+
+Variables:
+
+- Periodo: Año de inversión (2017-2024)
+- Valor_total_de_los_proyectos_autorizados_para_recibir_el_Estímulo_Fiscal_a_la_Investigación_y_Desarrollo_de_Tecnología_(EFIDT)_en_el_año_t: Valor en millones de pesos de proyectos de investigación y desarrollo autorizados para recibir el estímulo fiscal
+
+Contacto: Viridiana Gabriela Yañez Rivas, SECIHTI
+vgyanezri@secihti.mx
+
+Cobertura Temporal: 2017-2024
+Cobertura Espacial: Nacional
+Periodicidad: Anual
+Fuente: Programa de Estímulo Fiscal a la Investigación y Desarrollo Tecnológico (EFIDT), SECIHTI
+Unidad de Medida: Millones de pesos
+
+## 8.- 9n.2.1_dc_2113_es.csv
+Instituto Nacional de Estadística y Geografía (2025).
+"Multiplicador del subsidio a investigación científica - Multiplicador Total".
+Recuperado el 14 de abril de 2026 de: https://agenda2030.mx/ODSind.html?ind=ODS009N00200010&cveind=1&cveCob=99&lang=es#/Metadata
+
+Licencia: http://ods.inegi.org.mxdocs/doctos/system/terminos_uso_SIODS_es.pdf
+
+Variables:
+
+- Periodo: Año de inversión
+- Multiplicador_total: Relación de la inversión privada respecto al incentivo público (inversión privada / subsidio público)
+
+Contacto: Viridiana Gabriela Yañez Rivas, SECIHTI
+Cobertura Temporal: 2017-2024
+Cobertura Espacial: Nacional
+Periodicidad: Anual
+Unidad de Medida: Número (razón)
+
+## 9.- 9n.2.1_sh_es.csv
+Instituto Nacional de Estadística y Geografía (2025).
+"Multiplicador del subsidio a investigación - Serie Histórica".
+Recuperado el 14 de abril de 2026 de: https://agenda2030.mx/ODSind.html?ind=ODS009N00200010&cveind=1&cveCob=99&lang=es#/Metadata
+
+Licencia: http://ods.inegi.org.mxdocs/doctos/system/terminos_uso_SIODS_es.pdf
+
+Variables:
+
+- Periodo: Año
+- Multiplicador: Razón de inversión privada por cada peso público invertido en investigación y desarrollo
+
+Contacto: Viridiana Gabriela Yañez Rivas, SECIHTI
+Cobertura Temporal: 2017-2024
+Cobertura Espacial: Nacional
+Periodicidad: Anual
+Unidad de Medida: Número
+
 
 
 
