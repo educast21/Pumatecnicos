@@ -1,0 +1,498 @@
+---
+title: "ODS 2: Hambre Cero"
+format:
+  dashboard:
+    orientation: columns
+---
+
+```{python}
+#| label: setup
+#| include: false
+import pandas as pd
+import numpy as np
+import requests
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+path = "../../datos"
+
+# ── Indicador 2n.2.2: Carencia por acceso a alimentación nutritiva y de calidad ──
+
+I2n22 = pd.read_csv(f'{path}/2n.2.2_sh_es.csv', usecols=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])
+
+I2n22.rename(columns={
+    'Grupos_de_Población|Nacional': "Nacional",
+    'Grupos_de_Población|Hombres': "Hombres",
+    'Grupos_de_Población|Mujeres': "Mujeres",
+    'Grupos_de_Población|Población_analfabeta': "Población analfabeta",
+    'Grupos_de_Población|Población_indígena': "Población indígena",
+    'Grupos_de_Población|Hombres_indígenas': "Hombres indígenas",
+    'Grupos_de_Población|Mujeres_indígenas': "Mujeres indígenas",
+    'Grupos_de_Población|Personas_con_discapacidad': "Personas con discapacidad",
+    'Grupos_de_Población|Primera_infancia_(0_a_5_años)': "Niños de 0 a 5 años",
+    'Grupos_de_Población|Niños_y_niñas_(menores_de_18_años)': "Menores de 18 años",
+    'Grupos_de_Población|Jóvenes_(los_de_12_a_29_años)': "Jóvenes de 12 a 29 años",
+    'Grupos_de_Población|Adultos_mayores_(65_años_o_más)': "Adultos de 65 años o más",
+    'Grupos_de_Población|Hombres_adultos_mayores': "Hombres adultos mayores",
+    'Grupos_de_Población|Mujeres_adultos_mayores': "Mujeres adultas mayores",
+    'Grupos_de_Población|Hombres_(Menos_de_4_horas_a_cuidados)_<sup>1</sup>': "Hombres cuidados menos de 4 horas",
+    'Grupos_de_Población|Hombres_(4_horas_o_más_a_cuidados)_<sup>1</sup>': "Hombres cuidados de 4 horas o más",
+    'Grupos_de_Población|Mujeres_(Menos_de_4_horas_a_cuidados)_<sup>1</sup>': "Mujeres cuidados menos de 4 horas",
+    'Grupos_de_Población|Mujeres_(4_horas_o_más_a_cuidados)_<sup>1</sup>': "Mujeres cuidados de 4 horas o más",
+    'Grupos_de_Población|Hombres_(Menos_de_4_horas_a_hogar)_<sup>2</sup>': "Hombres cuidados menos de 4 horas en casa",
+    'Grupos_de_Población|Hombres_(4_horas_o_más_a_hogar)_<sup>2</sup>': "Hombres cuidados de 4 horas o más en casa",
+    'Grupos_de_Población|Mujeres_(Menos_de_4_horas_a_hogar)_<sup>2</sup>': "Mujeres cuidados menos de 4 horas en casa",
+    'Grupos_de_Población|Mujeres_(4_horas_o_más_a_hogar)_<sup>2</sup>': "Mujeres cuidados de 4 horas o más en casa",
+    'Grupos_de_Población|Ámbito_rural': "Rural",
+    'Grupos_de_Población|Ámbito_urbano': "Urbana"
+}, inplace=True)
+
+cols_a_convertir = I2n22.columns.drop(["Periodo"])
+I2n22[cols_a_convertir] = (
+    I2n22[cols_a_convertir]
+    .astype(str)
+    .replace(r'^(ND|\s*)$', np.nan, regex=True)
+    .replace(r'[abc]/', '', regex=True)
+    .replace(',', '', regex=True)
+    .apply(lambda col: col.str.strip())
+    .apply(pd.to_numeric, errors='coerce')
+    .astype('float64')
+)
+I2n22["Periodo"] = pd.to_numeric(I2n22["Periodo"], errors="coerce").astype("Int64")
+
+# Datos absolutos
+D2n22_alim_nutritiva = pd.read_csv(f'{path}/2n.2.2_dc_1681_es.csv', usecols=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])
+
+D2n22_alim_nutritiva.rename(columns={
+    'Grupos_de_Población|Nacional': "Nacional",
+    'Grupos_de_Población|Hombres': "Hombres",
+    'Grupos_de_Población|Mujeres': "Mujeres",
+    'Grupos_de_Población|Población_analfabeta': "Población analfabeta",
+    'Grupos_de_Población|Población_indígena': "Población indígena",
+    'Grupos_de_Población|Hombres_indígenas': "Hombres indígenas",
+    'Grupos_de_Población|Mujeres_indígenas': "Mujeres indígenas",
+    'Grupos_de_Población|Personas_con_discapacidad': "Personas con discapacidad",
+    'Grupos_de_Población|Primera_infancia_(0_a_5_años)': "Niños de 0 a 5 años",
+    'Grupos_de_Población|Niños_y_niñas_(menores_de_18_años)': "Menores de 18 años",
+    'Grupos_de_Población|Jóvenes_(los_de_12_a_29_años)': "Jóvenes de 12 a 29 años",
+    'Grupos_de_Población|Adultos_mayores_(65_años_o_más)': "Adultos de 65 años o más",
+    'Grupos_de_Población|Hombres_adultos_mayores': "Hombres adultos mayores",
+    'Grupos_de_Población|Mujeres_adultos_mayores': "Mujeres adultas mayores",
+    'Grupos_de_Población|Hombres_(Menos_de_4_horas_a_cuidados)_<sup>1</sup>': "Hombres cuidados menos de 4 horas",
+    'Grupos_de_Población|Hombres_(4_horas_o_más_a_cuidados)_<sup>1</sup>': "Hombres cuidados de 4 horas o más",
+    'Grupos_de_Población|Mujeres_(Menos_de_4_horas_a_cuidados)_<sup>1</sup>': "Mujeres cuidados menos de 4 horas",
+    'Grupos_de_Población|Mujeres_(4_horas_o_más_a_cuidados)_<sup>1</sup>': "Mujeres cuidados de 4 horas o más",
+    'Grupos_de_Población|Hombres_(Menos_de_4_horas_a_hogar)_<sup>2</sup>': "Hombres cuidados menos de 4 horas en casa",
+    'Grupos_de_Población|Hombres_(4_horas_o_más_a_hogar)_<sup>2</sup>': "Hombres cuidados de 4 horas o más en casa",
+    'Grupos_de_Población|Mujeres_(Menos_de_4_horas_a_hogar)_<sup>2</sup>': "Mujeres cuidados menos de 4 horas en casa",
+    'Grupos_de_Población|Mujeres_(4_horas_o_más_a_hogar)_<sup>2</sup>': "Mujeres cuidados de 4 horas o más en casa",
+    'Grupos_de_Población|Ámbito_rural': "Rural",
+    'Grupos_de_Población|Ámbito_urbano': "Urbana"
+}, inplace=True)
+
+cols_a_convertir = D2n22_alim_nutritiva.columns.drop(["Periodo"])
+D2n22_alim_nutritiva[cols_a_convertir] = (
+    D2n22_alim_nutritiva[cols_a_convertir]
+    .astype(str)
+    .replace(r'^(ND|\s*)$', np.nan, regex=True)
+    .replace(r'[abc]/', '', regex=True)
+    .replace(',', '', regex=True)
+    .apply(lambda col: col.str.strip())
+    .apply(pd.to_numeric, errors='coerce')
+    .astype('float64')
+)
+D2n22_alim_nutritiva["Periodo"] = pd.to_numeric(D2n22_alim_nutritiva["Periodo"], errors="coerce").astype("Int64")
+
+# ── Datos geográficos para mapas (indicador 2n.2.1.a) ──────────────────────
+
+I2n22a = pd.read_csv(f'{path}/2n.2.1.a_sh_es.csv', usecols=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])
+
+I2n22a.rename(columns={
+    'Población_con_inseguridad_alimentaria_con_desglose_geográfico|Total': "Total",
+    'Población_con_inseguridad_alimentaria_con_desglose_geográfico|Hombres': "Hombres",
+    'Población_con_inseguridad_alimentaria_con_desglose_geográfico|Mujeres': "Mujeres",
+    'Población_con_inseguridad_alimentaria_con_desglose_geográfico|Población_analfabeta': "Población analfabeta",
+    'Población_con_inseguridad_alimentaria_con_desglose_geográfico|Población_indígena': "Población indígena",
+    'Población_con_inseguridad_alimentaria_con_desglose_geográfico|Niñas,_niños_y_adolescentes_(0_a_17_años)': "Menores de edad",
+    'Población_con_inseguridad_alimentaria_con_desglose_geográfico|Jóvenes_(18_a_29_años)': "Jóvenes 18 a 29 años",
+    'Población_con_inseguridad_alimentaria_con_desglose_geográfico|Personas_adultas_(30_a_64_años)': "Adultos de 30 a 64 años",
+    'Población_con_inseguridad_alimentaria_con_desglose_geográfico|Personas_adultas_mayores_(65_años_o_más)': "Adultos 65 años o más",
+    'Población_con_inseguridad_alimentaria_con_desglose_geográfico|Población_rural': "Rural",
+    'Población_con_inseguridad_alimentaria_con_desglose_geográfico|Población_urbana': "Urbana"
+}, inplace=True)
+
+cols_a_convertir = I2n22a.columns.drop(["Periodo", "Entidad_federativa"])
+I2n22a[cols_a_convertir] = (
+    I2n22a[cols_a_convertir]
+    .astype(str)
+    .replace(r'^(ND|\s*)$', np.nan, regex=True)
+    .replace(r'[abc]/', '', regex=True)
+    .replace(',', '', regex=True)
+    .apply(lambda col: col.str.strip())
+    .apply(pd.to_numeric, errors='coerce')
+    .astype('float64')
+)
+I2n22a["Entidad_federativa"] = (
+    I2n22a["Entidad_federativa"]
+    .astype(str)
+    .str.replace("_", " ", regex=False)
+    .str.strip()
+)
+I2n22a["Periodo"] = pd.to_numeric(I2n22a["Periodo"], errors="coerce").astype("Int64")
+
+# Preparar df_base para mapas
+df_base = I2n22a.copy()
+df_base = df_base[df_base["Entidad_federativa"] != "Estados Unidos Mexicanos"].copy()
+
+columnas_mapa = ["Total", "Hombres", "Mujeres"]
+
+df_base["Periodo"] = df_base["Periodo"].astype(str)
+for col in columnas_mapa:
+    df_base[col] = pd.to_numeric(df_base[col], errors="coerce")
+
+def clasificar_severidad(valor):
+    if pd.isna(valor):
+        return pd.NA
+    elif valor < 10:
+        return "Menos de 1 de cada 10 personas"
+    elif valor < 30:
+        return "Entre 1 y 3 de cada 10 personas"
+    elif valor < 50:
+        return "Entre 3 y 5 de cada 10 personas"
+    else:
+        return "Más de 5 de cada 10 personas"
+
+for col in columnas_mapa:
+    df_base[f"Severidad_{col}"] = df_base[col].apply(clasificar_severidad)
+```
+
+```{python}
+#| label: crear-graficas
+#| output: false
+
+# ── Figura 2n.2.2: Gráfica mixta con botones de grupo ────────────────────
+
+def crear_grafica_mixta_con_boton(df_porcentaje, df_absoluto, grupos_columnas, titulo_base):
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+    paleta = px.colors.qualitative.Set3 + px.colors.qualitative.Bold + px.colors.qualitative.Plotly
+
+    mapa_colores_base = {
+        "Nacional": "#636EFA",
+        "Urbana": "#EF553B",
+        "Rural": "#00CC96",
+        "Hombres": "#AB63FA",
+        "Mujeres": "#FFA15A",
+        "Población analfabeta": "#19D3F3",
+        "Población indígena": "#FF6692",
+        "Hombres indígenas": "#B6E880",
+        "Mujeres indígenas": "#FF97FF",
+        "Personas con discapacidad": "#FECB52",
+        "Niños de 0 a 5 años": "#A1C9F4",
+        "Menores de 18 años": "#8DE5A1",
+        "Jóvenes de 12 a 29 años": "#FFB482",
+        "Adultos de 65 años o más": "#D0BBFF"
+    }
+
+    todas_las_columnas = []
+    for grupo, cols in grupos_columnas.items():
+        for col in cols:
+            if col not in todas_las_columnas:
+                todas_las_columnas.append(col)
+
+    mapa_colores = {}
+    idx_paleta = 0
+    for col in todas_las_columnas:
+        if col in mapa_colores_base:
+            mapa_colores[col] = mapa_colores_base[col]
+        else:
+            mapa_colores[col] = paleta[idx_paleta % len(paleta)]
+            idx_paleta += 1
+
+    trazas_por_grupo = {}
+
+    for nombre_grupo, columnas in grupos_columnas.items():
+        inicio = len(fig.data)
+
+        for col in columnas:
+            fig.add_trace(
+                go.Bar(
+                    x=df_absoluto["Periodo"],
+                    y=df_absoluto[col] / 1000,
+                    name=f"(No.) {col}",
+                    marker_color=mapa_colores[col],
+                    opacity=0.40,
+                    width=0.35,
+                    visible=False
+                ),
+                secondary_y=True
+            )
+
+        for col in columnas:
+            fig.add_trace(
+                go.Scatter(
+                    x=df_porcentaje["Periodo"],
+                    y=df_porcentaje[col],
+                    name=f"(%) {col}",
+                    mode="lines+markers",
+                    line=dict(color=mapa_colores[col], width=3),
+                    marker=dict(size=8),
+                    visible=False
+                ),
+                secondary_y=False
+            )
+
+        fin = len(fig.data)
+        trazas_por_grupo[nombre_grupo] = (inicio, fin)
+
+    primer_grupo = list(grupos_columnas.keys())[0]
+    inicio, fin = trazas_por_grupo[primer_grupo]
+    for i in range(inicio, fin):
+        fig.data[i].visible = True
+
+    botones = []
+    total_trazas = len(fig.data)
+
+    for nombre_grupo, (inicio, fin) in trazas_por_grupo.items():
+        visibilidad = [False] * total_trazas
+        for i in range(inicio, fin):
+            visibilidad[i] = True
+
+        botones.append(
+            dict(
+                label=nombre_grupo,
+                method="update",
+                args=[
+                    {"visible": visibilidad},
+                    {"title": f"{titulo_base}<br><sup>{nombre_grupo}</sup>"}
+                ]
+            )
+        )
+
+    fig.update_layout(
+        title=f"{titulo_base}<br><sup>{primer_grupo}</sup>",
+        xaxis_title="<b>Periodo</b>",
+        barmode="stack",
+        bargap=0.55,
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        ),
+        template="plotly_white",
+        hovermode="x unified",
+        updatemenus=[
+            dict(
+                active=0,
+                buttons=botones,
+                x=0.01,
+                y=1.08,
+                xanchor="left",
+                yanchor="top"
+            )
+        ]
+    )
+
+    fig.add_vline(
+        x=2020,
+        line_width=2,
+        line_dash="dash",
+        line_color="black",
+        annotation_text="<b>Pandemia (2020)</b>",
+        annotation_position="top"
+    )
+
+    fig.update_yaxes(title_text="<b>Porcentaje</b> (%)", secondary_y=False)
+    fig.update_yaxes(title_text="<b>Miles de Personas</b>", secondary_y=True)
+
+    return fig
+
+
+grupos = {
+    "General": ["Nacional"],
+    "Sexo": ["Hombres", "Mujeres"],
+    "Población indígena": ["Hombres indígenas", "Mujeres indígenas"],
+    "Edad": ["Menores de 18 años", "Jóvenes de 12 a 29 años", "Adultos de 65 años o más"],
+    "Vulnerabilidad": ["Población analfabeta", "Personas con discapacidad"]
+}
+
+fig17 = crear_grafica_mixta_con_boton(
+    df_porcentaje=I2n22,
+    df_absoluto=D2n22_alim_nutritiva,
+    grupos_columnas=grupos,
+    titulo_base="Población con inseguridad alimentaria moderada o severa"
+)
+
+# ── Figura 2n.2.1.a: Mapas por Total, Hombres y Mujeres ──────────────────
+
+def mapa_carencia_alimentacion_por_variable(dataframe, columna_valor, titulo_variable=None):
+    df = dataframe.copy()
+
+    df = df[["Entidad_federativa", "Periodo", columna_valor, f"Severidad_{columna_valor}"]].copy()
+    df.columns = ["Entidad", "Año", "Porcentaje", "Severidad"]
+
+    df = df.dropna(subset=["Porcentaje", "Severidad"]).copy()
+
+    repo_url = 'https://raw.githubusercontent.com/angelnmara/geojson/master/mexicoHigh.json'
+    mx_states_geojson = requests.get(repo_url).json()
+
+    df.loc[df["Entidad"] == "Coahuila de Zaragoza", "Entidad"] = "Coahuila"
+    df.loc[df["Entidad"] == "Michoacán de Ocampo", "Entidad"] = "Michoacán"
+    df.loc[df["Entidad"] == "Veracruz de Ignacio de la Llave", "Entidad"] = "Veracruz"
+
+    df = df.sort_values("Año")
+    df["Porcentaje_label"] = df["Porcentaje"].apply(lambda x: f"{x:.2f}%")
+
+    colores = {
+        "Menos de 1 de cada 10 personas": "#2dc937",
+        "Entre 1 y 3 de cada 10 personas": "#efd720",
+        "Entre 3 y 5 de cada 10 personas": "#d14e39",
+        "Más de 5 de cada 10 personas": "#8B0000"
+    }
+
+    if titulo_variable is None:
+        titulo_variable = columna_valor
+
+    fig = px.choropleth(
+        df,
+        geojson=mx_states_geojson,
+        locations="Entidad",
+        featureidkey="properties.name",
+        color="Severidad",
+        animation_frame="Año",
+        color_discrete_map=colores,
+        category_orders={
+            "Severidad": [
+                "Menos de 1 de cada 10 personas",
+                "Entre 1 y 3 de cada 10 personas",
+                "Entre 3 y 5 de cada 10 personas",
+                "Más de 5 de cada 10 personas"
+            ]
+        },
+        hover_name="Entidad",
+        hover_data={
+            "Porcentaje_label": True,
+            "Entidad": False,
+            "Año": True,
+            "Severidad": True
+        }
+    )
+
+    fig.update_geos(fitbounds="locations", visible=False)
+    fig.update_layout(
+        title_text=f'Inseguridad alimentaria moderada o severa: {titulo_variable}<br><sup>Animación por año</sup>',
+        margin={"r": 0, "t": 80, "l": 0, "b": 0},
+        legend_title_text="Severidad"
+    )
+
+    return fig
+
+
+fig_mapa_total   = mapa_carencia_alimentacion_por_variable(df_base, "Total",   "Total")
+fig_mapa_hombres = mapa_carencia_alimentacion_por_variable(df_base, "Hombres", "Hombres")
+fig_mapa_mujeres = mapa_carencia_alimentacion_por_variable(df_base, "Mujeres", "Mujeres")
+```
+
+# Indicador 2n.2.2
+
+## Column {width="30%"}
+
+::: {.card title="Indicador 2n.2.2"}
+
+**Descripción:** Población con inseguridad alimentaria moderada o severa, desglosada por sexo, procedencia indígena, edad y situación de vulnerabilidad.
+
+---
+
+La OMS y el CONEVAL señalan que una persona con inseguridad alimentaria moderada o severa enfrenta dificultades que van desde no tener acceso a una dieta variada hasta saltarse comidas por inaccesibilidad a los alimentos.
+
+Para determinar si una persona sufre esta clase de inseguridad, se aplica una encuesta que cubre los últimos tres meses, evaluando la cantidad y calidad de alimentos que ingieren todos los miembros del hogar.
+
+El desglose **General** indica que la inseguridad alimentaria ha bajado desde 2016, aunque alcanzó su punto más alto (**22.54%**) durante la pandemia en 2020.
+
+El enfoque de **Edad** permite visualizar que el grupo más afectado es el de **menores de edad**, con un 26.32% en situación de inseguridad alimentaria, lo que equivale a aproximadamente **10 mil niños y adolescentes** en condición moderada o severa.
+
+:::
+
+## Column {width="70%"}
+
+```{python}
+#| title: "Carencia por acceso a la alimentación nutritiva y de calidad"
+#| height: 100%
+fig17.show()
+```
+
+# Mapa: Inseguridad Alimentaria
+
+## Column {width="30%"}
+
+::: {.card title="Indicador 2n.2.1.a"}
+
+**Descripción:** Proporción de la población con inseguridad alimentaria moderada o severa, por entidad federativa.
+
+---
+
+El desglose geográfico permite visualizar las zonas con mayor prevalencia de inseguridad alimentaria. Tanto para hombres como para mujeres, los estados con mayor inseguridad son **Guerrero** y **Tabasco**.
+
+En años recientes (2022), esta prevalencia disminuyó de manera generalizada, lo que permitió que estados como **Baja California Norte** y **Chihuahua** alcanzaran una proporción en la que menos de 1 de cada 10 personas sufre inseguridad moderada o severa.
+
+---
+
+**Cómo leer el mapa:**
+
+- 🔴 **Rojo**: 3 o más de cada 10 personas sufren inseguridad alimentaria (>30%)
+- 🟡 **Amarillo**: Entre 1 y 3 de cada 10 personas (10–30%)
+- 🟢 **Verde**: Menos de 1 de cada 10 personas (<10%)
+
+El objetivo final es que todo el mapa se pinte de verde.
+
+:::
+
+## Column {width="70%" .tabset}
+
+### Total
+
+```{python}
+#| title: "Inseguridad alimentaria por entidad: Total"
+#| height: 100%
+fig_mapa_total.show()
+```
+
+### Hombres
+
+```{python}
+#| title: "Inseguridad alimentaria por entidad: Hombres"
+#| height: 100%
+fig_mapa_hombres.show()
+```
+
+### Mujeres
+
+```{python}
+#| title: "Inseguridad alimentaria por entidad: Mujeres"
+#| height: 100%
+fig_mapa_mujeres.show()
+```
+
+# Síntesis
+
+## Column {width="100%"}
+
+::: {.card title="ODS 2 — Hambre Cero: Conclusiones"}
+
+El **ODS 2** busca poner fin al hambre, lograr la seguridad alimentaria y la mejora de la nutrición, y promover una agricultura sostenible.
+
+---
+
+Los indicadores analizados revelan patrones estructurales importantes en México:
+
+- La **inseguridad alimentaria moderada o severa** disminuyó entre 2016 y 2018, pero repuntó con fuerza durante la pandemia de 2020, llegando al **22.54% a nivel nacional**. Desde entonces ha retomado una tendencia a la baja.
+- Los **menores de 18 años** son el grupo etario más afectado, con un **26.32%** en situación de inseguridad alimentaria, lo que subraya la urgencia de políticas focalizadas en infancia y adolescencia.
+- Geográficamente, los estados del sur —especialmente **Guerrero** y **Tabasco**— concentran la mayor prevalencia, mientras que los estados del norte presentan mejores condiciones relativas.
+- La brecha entre hombres y mujeres es reducida, pero persiste en las entidades con mayor rezago, donde las mujeres enfrentan condiciones ligeramente más adversas.
+
+El análisis conjunto de estos indicadores evidencia que la inseguridad alimentaria en México no es un fenómeno homogéneo: varía significativamente por territorio, grupo etario y condición socioeconómica, lo que exige intervenciones diferenciadas y territorialmente focalizadas.
+
+:::
