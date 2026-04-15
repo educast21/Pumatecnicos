@@ -24,7 +24,7 @@ website:
             text: "ODS 3: Salud y Bienestar"
           - href: dashboard/notebooks/enfoque_carencias.qmd
             text: "ODS 6: Agua limpia y saneamiento"
-      - href: dashboard/notebooks/enfoque_capacidades.qmd
+      - href: dashboard/notebooks/ods9.qmd
         text: Enfoque de Capacidades
 
 format:

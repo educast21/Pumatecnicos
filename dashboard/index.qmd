@@ -47,7 +47,7 @@ La pobreza debe medirse desde varios enfoques que se relacionan con derechos hum
 ::: {.g-col-12 .g-col-md-4}
 ::: {.callout-tip}
 ## Capacidades
-[Explorar →](notebooks/enfoque_capacidades.qmd)
+[Explorar →](notebooks/ods9.qmd)
 :::
 :::
 
