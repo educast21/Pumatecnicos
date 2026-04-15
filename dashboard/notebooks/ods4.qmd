@@ -1,2 +1,130 @@
-No puede haber ciudadanía sin personas alfabetas, la alfabetización es el primer paso para garantizar que puedas defender tus derechos.
-La mayoría de los estados superan una alfabetización del 85% en sus estados, y para 2024 la mayoría supera el 95% de población alfabetizada (entidades en verde). Sin embargo, nuevamente notamos que los estados de Guerrero, Oaxaca y Chiapas se encuentran por debajo del 90% (color rojo).
+---
+title: "ODS 4: Educación de Calidad"
+format:
+  dashboard:
+    orientation: columns
+---
+
+```{python}
+#| label: setup
+#| include: false
+import pandas as pd
+import plotly.express as px
+import requests
+
+path = "../../datos"
+
+# ── Indicador 4r.6.1.a(2): Tasa de alfabetización por entidad ─────────────
+df = pd.read_excel(f"{path}/4R.6.1.A(2)_sh_es.xls", sheet_name=0, header=None)
+df = df.iloc[7:-10]
+df.columns = df.iloc[0]
+df = df[2:]
+
+df = df.iloc[:, [0, 1, 2, 32, 62, 92, 122]]
+df = df.drop(df.index[0])
+df.columns = ["cvegeo", "Entidad", "2024", "2022", "2020", "2018", "2016"]
+
+anios = ["2024", "2022", "2020", "2018", "2016"]
+df[anios] = df[anios].apply(pd.to_numeric, errors='coerce')
+
+repo_url = 'https://raw.githubusercontent.com/angelnmara/geojson/master/mexicoHigh.json'
+mx_states_geojson = requests.get(repo_url).json()
+
+df.iloc[4, 1]  = "Coahuila"
+df.iloc[15, 1] = "Michoacán"
+df.iloc[29, 1] = "Veracruz"
+
+df_long = df.melt(
+    id_vars=['Entidad'],
+    value_vars=['2016', '2018', '2020', '2022', '2024'],
+    var_name='Año',
+    value_name='Porcentaje'
+)
+
+df_long['Categoría'] = pd.cut(
+    df_long['Porcentaje'],
+    bins=[0, 90, 95, 100],
+    labels=["[0,90]", "(90,95]", "(95,100]"],
+    include_lowest=True,
+    right=True
+)
+
+df_long = df_long.sort_values('Año')
+df_long['Porcentaje'] = df_long['Porcentaje'].apply(lambda x: f"{round(x, 2)}%")
+```
+
+```{python}
+#| label: crear-graficas
+#| output: false
+
+colores_mapa = {
+    "(95,100]": "#2dc937",
+    "(90,95]":  "#efd720",
+    "[0,90]":   "#d14e39"
+}
+
+fig_mapa = px.choropleth(
+    df_long,
+    geojson=mx_states_geojson,
+    locations='Entidad',
+    featureidkey='properties.name',
+    color='Categoría',
+    animation_frame='Año',
+    color_discrete_map=colores_mapa,
+    hover_name='Entidad',
+    hover_data={'Porcentaje': True, 'Entidad': False}
+)
+
+fig_mapa.update_geos(fitbounds="locations", visible=False)
+fig_mapa.update_layout(
+    title_text='Porcentaje de población alfabeta mayor de 15 años<br>'
+               '<sup>Animación del 2016 al 2024</sup>',
+    margin={"r": 0, "t": 80, "l": 0, "b": 0}
+)
+```
+
+# Alfabetización
+
+## Column {width="30%"}
+
+::: {.card title="Indicador 4r.6.1.a(2)"}
+
+**Descripción:** Tasa de alfabetización de personas de 15 años o más, desglosada por entidad federativa
+
+---
+
+No puede haber ciudadanía plena sin personas alfabetas: la alfabetización es el primer paso para garantizar que cada persona pueda defender sus derechos.
+
+La mayoría de los estados superan el 85% de población alfabeta, y para 2024 la mayor parte del territorio ya supera el 95% (entidades en verde). Sin embargo, Guerrero, Oaxaca y Chiapas se mantienen por debajo del 90% a lo largo de todo el periodo analizado, reflejando un rezago persistente que no se ha cerrado.
+
+**Cómo leer el mapa:**
+
+- 🟢 **Verde**: más del 95% de la población es alfabeta
+- 🟡 **Amarillo**: entre 90% y 95%
+- 🔴 **Rojo**: menos del 90% de la población es alfabeta
+
+:::
+
+## Column {width="70%"}
+
+```{python}
+#| title: "Tasa de alfabetización por entidad federativa (2016–2024)"
+#| height: 100%
+fig_mapa.show()
+```
+
+# Síntesis
+
+## Column {width="100%"}
+
+::: {.card title="ODS 4 — Educación de Calidad"}
+
+El **ODS 4** busca garantizar una educación inclusiva, equitativa y de calidad para toda la población. La alfabetización representa el umbral mínimo de ese objetivo: sin ella, el ejercicio de la ciudadanía y el acceso a otros derechos se ven gravemente limitados.
+
+---
+
+El mapa muestra que, si bien la tendencia general es positiva —más estados transitan hacia el verde entre 2016 y 2024—, el avance no ha sido homogéneo. Guerrero, Oaxaca y Chiapas permanecen en rojo durante todo el periodo, por debajo del 90%, en contraste con la mayoría del norte y centro del país que consolida tasas superiores al 95%.
+
+Esta concentración geográfica del rezago sugiere que los desafíos de alfabetización no son casos aislados, sino parte de una brecha territorial que requiere atención focalizada.
+
+:::
