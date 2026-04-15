@@ -33,20 +33,20 @@ Se analizaron todos los indicadores que pudieran tener relación directa con la 
 
 ## Storytelling: ¿Es la pobreza una cuestión de ingresos?
 
-## Primer acto: ¿A qué sabe y cómo se come?
+## 1er acto: _¿A qué sabe y cómo se come?_
 El Objetivo de Desarrollo Sostenible 1 comprende indicadores que abarcan desde posesión de bienes materiales y percepción de recursos económicos, hasta la exposición a fenómenos climáticos y sociales, clasificando como personas vulnerables a los individuos que se encuentran por debajo de umbrales nacionales e internacionales. Esta definición, aunque permite enfocarse en la desigualdad económica, no asigna al fenómeno de la pobreza su cualidad más básica: la complejidad. El Instituto Nacional de Estadística y Geografía (INEGI), así como el extinto Consejo Nacional de Evaluación de la política de desarrollo social (CONEVAL), permiten comprender que la pobreza puede presentarse más allá del ingreso económico, definiendo a la pobreza multidimensional como: 
 
 _Una persona se encuentra en situación de pobreza multidimensional cuando no tiene garantizado el ejercicio de al menos uno de sus derechos para el desarrollo social, y sus ingresos son insuficientes para adquirir los bienes y servicios que requiere para satisfacer sus necesidades_ 
 
 Mientras que la importancia de la percepción económica y posesión de bienes es relevante para determinar la situación social de una persona, no se debe ignorar que la inseguridad alimentaria y la falta de agua, así como la inaccesibilidad a seguridad social, son derechos humanos que se deben anteponer a todo, pues son estas necesidades las que aseguran el desempeño físico e intelectual, tanto en lo individual como en la comunidad, permitiendo a su vez una suficiente preparación académica y laboral. 
 
-## Segundo acto: ¿Y con qué se acompaña?
+## 2do acto: _¿Y con qué se acompaña?_
 
 En el análisis de los indicadores de necesidades básicas (alimentación, seguridad social y agua) nos podremos dar cuenta de qué manera las comunidades más aisladas se convierten en las más vulnerables, y no únicamente en términos del enfoque económico; puesto que al carecer de recursos para financiar la compra de alimentos y el acceso a servicios médicos, las tasas de malnutrición y mortalidad se alzan frente a sectores de la población mucho más centralizados, promoviendo que la situación de pobreza sea un fenómeno generacional. Lo más impactante es que el umbral internacional de la pobreza, a 2017 (2.15 USD/día), está lejos de considerarse para un nivel de vida digno, esto quiere decir que a pesar de que México muestre un avance significativo en el ODS 1, este avance es en extremo bajo para el nivel de vida del país, lo cuál se refleja en el lento o nulo avance del resto de objetivos enfocados en necesidades básicas. 
 
 El enfoque de capacidades, por otra parte, permite encontrar esperanza en este avance, en pro de la erradicación de la pobreza. Estos ODS (8 y 9) nos plantean el lugar de la educación académica y la situación laboral de los individuos en las carencias sociales, ya que al tener un trabajo digno (con adecuada remuneración y que permita tener una buena calidad de vida), así como promover la inversión en el sector académico mediante el impulso del desarrollo de la infraestructura, la calidad de vida de las personas se elevará. Evidencia de este fenómeno, existe de sobra; uno de los ejemplos más representados es el de Corea del Sur, que mediante estrategias de esta índole magnificar su riqueza hasta 5 veces en los últimos 40 años.
 
-## Tercer acto: ¿Y de postre?
+## 3er acto: _¿Y de postre?_
 
 El impacto que se espera que el proyecto tenga se fundamenta en cuatro pilares:
 - Comprender el ciclo: El análisis de la pobreza mediante los múltiples factores que la propician y alimentan, permitirá comprender qué clase de necesidad tiene mayor impacto en la recurrencia de la pobreza, especialmente en zonas geográficas vulnerables. 
