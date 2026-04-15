@@ -5,7 +5,7 @@ El equipo Pumatécnicos está integrado por:
 - Marco Antonio Pérez Castillo, estudiante de la Ingeniería Química Idustrial en la ESIQIE IPN
 
 ## ODS elegidos
-El núcleo de nuestro proyecto es el **ODS 1** "Fin de la pobreza" pues, de acuerdo a la definición de pobreza multidimensional del CONEVAL, este es un objetivo transversal que se relaciona con otros objetivos que también pensamos abordar desde la perspectiva de la pobreza, como lo son:
+El núcleo de nuestro proyecto es el **ODS 1** "Fin de la pobreza" pues, de acuerdo a la definición de pobreza multidimensional del [CONEVAL](https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/pm/pm2025_08.pdf), este es un objetivo transversal que se relaciona con otros objetivos que también pensamos abordar desde la perspectiva de la pobreza, como lo son:
 - ODS 2 "Hambre cero"
 - ODS 3 "Salud y bienestar"
 - ODS 4 "Educación de calidad"
@@ -15,21 +15,21 @@ El núcleo de nuestro proyecto es el **ODS 1** "Fin de la pobreza" pues, de acue
 
 ![Relación heurística de los ODS seleccionados](/imagenes/relacionEntreODS.png)
 
-Según la 10° edición del reporte de Desarrollo Sostenible de la ONU [1], se indica que el ODS 1 está "En vías de alcanzar o mantener el logro", sin embargo al considerar la definición de pobreza por capacidades y por carencias sociales (enfoques usados por CONEVAL-INEGI [2], y que engloba los ODS anteriormente enlistados) resulta que aún "Persisten importantes ó significativos cambios" y el avance está estancado. 
+Según la [10° edición del reporte de Desarrollo Sostenible de la ONU](https://dashboards.sdgindex.org/profiles/mexico/), se indica que el ODS 1 está "En vías de alcanzar o mantener el logro", sin embargo al considerar la definición de pobreza por capacidades y por carencias sociales (enfoques usados por [CONEVAL-INEGI](https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/pm/pm2025_08.pdf) [2], y que engloba los ODS anteriormente enlistados) resulta que aún "Persisten importantes ó significativos cambios" y el avance está estancado. 
 
 El objetivo es responder a la pregunta *¿Es la pobreza una cuestión de ingresos?*, explicando la definición de pobreza desde sus diferentes enfoques, y demostrar que la pobreza no solo se mide en el dinero que tiene una persona, si no que involucra toda un serie de factores más profundos que muchas veces es difícil de integrar y explicar. Además, se pretende mostrar la evolución de dichos factores en el país para justificar si realmente se ha avanzado en la reducción de la pobreza.
 
 Esperamos que con este trabajo, la población sea consciente de su calidad de vida y pueda hacer valer sus derechos humanos, exigiendo la creación o mejora de las 
 políticas públicas gubernamentales.
 
-[1] https://dashboards.sdgindex.org/profiles/mexico/
-
-[2] https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/pm/pm2025_08.pdf
-
 ## Selección y calidad de datos
 
 Todas las bases de datos utilizadas se citan en formato APA en el archivo metadatos.md 
-Se optó por usar datos de fuentes oficiales como INEGI, CONEVAL, ENSANUT, entre otras, pues se busca ser lo más transparentes posibles. Sin embargo, también es importante señalar que hay muchos indicadores desactualizados o mal reportados, por lo que nuestro análisis se vió limitado por dichas causas. 
+
+Se optó por usar datos de fuentes oficiales como [INEGI](https://agenda2030.mx/index.html?lang=es#/home), [ENSANUT](https://ensanut.insp.mx/encuestas/ensanutcontinua2024/descargas.php), entre otras, pues se busca ser lo más transparentes posibles. Sin embargo, también es importante señalar que hay muchos indicadores desactualizados o mal reportados (por ejemplo, en carencia por seguridad social se descarga automáticamente la base de datos de [Inseguridad Alimentaria](https://agenda2030.mx/ODSind.html?ind=ODS001000790040&cveind=569&cveCob=99&lang=es#/Indicator)), por lo que nuestro análisis se vió limitado por dichas causas. 
+
+Se analizaron todos los indicadores que pudieran tener relación directa con la pobreza, basándonos en las revistas “Datos en acción” de la [INEGI](https://datosenaccion.inegi.org.mx/) y en las metas específicas del ODS 1. En el caso del enfoque de necesidades básicas se puede observar mediante el desglose por grupos poblacionales y por división geográfica, que hay zonas que deben ser prioritarias en las políticas públicas, pues llevan años estancadas.
+
 
 ## Storytelling
 
