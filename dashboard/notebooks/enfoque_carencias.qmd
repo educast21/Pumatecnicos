@@ -39,12 +39,12 @@ Selecciona un ODS para ver el dashboard específico y el análisis de carencias:
 
 ::: {layout-ncol=4 .text-center .ods-icons}
 
-[![](../imagenes/ods2.jpg){width=150}](enfoque_carencias.qmd)
+[![ODS 2: Hambre Cero](../imagenes/ods2.jpg){width=150}](enfoque_carencias.qmd)
 
-[![](../imagenes/ods3.jpg){width=150}](enfoque_carencias.qmd)
+[![ODS 3: Salud y Bienestar](../imagenes/ods3.jpg){width=150}](enfoque_carencias.qmd)
 
-[![](../imagenes/ods4.jpg){width=150}](enfoque_carencias.qmd)
+[![ODS 4: Educación de Calidad](../imagenes/ods4.jpg){width=150}](enfoque_carencias.qmd)
 
-[![](../imagenes/ods6.jpg){width=150}](enfoque_carencias.qmd)
+[![ODS 6: Agua limpia y Saneamiento](../imagenes/ods6.jpg){width=150}](enfoque_carencias.qmd)
 
 :::

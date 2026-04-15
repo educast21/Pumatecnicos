@@ -2,10 +2,8 @@ project:
   type: website
   output-dir: "docs"
   render:
-    - dashboard/index.qmd
-    - dashboard/notebooks/enfoque_monetario.qmd
-    - dashboard/notebooks/enfoque_carencias.qmd
-    - dashboard/notebooks/enfoque_capacidades.qmd
+    - dashboard/*.qmd
+    - dashboard/notebooks/*.qmd
 
 website:
   title: "Pobreza en México"

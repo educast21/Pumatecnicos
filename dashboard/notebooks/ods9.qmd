@@ -1,0 +1,322 @@
+---
+title: "ODS 9: Industria, Innovación e Infraestructura"
+format: 
+  dashboard:
+    orientation: columns
+---
+
+```{python}
+#| label: setup
+#| include: false
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import numpy as np
+
+path = "../../datos"
+
+# 9.3.2
+df_932_numero_unidades     = pd.read_csv(f"{path}/9.3.2_dc_1920_es.csv", usecols=[0,1])
+df_932_total_unidades      = pd.read_csv(f"{path}/9.3.2_dc_1921_es.csv", usecols=[0,1])
+df_932_proporcion_unidades = pd.read_csv(f"{path}/9.3.2_sh_es.csv", usecols=[0,1])
+
+df_932_numero_unidades.rename(columns={df_932_numero_unidades.columns[1]: "Numero de unidades"}, inplace=True)
+df_932_total_unidades.rename(columns={df_932_total_unidades.columns[1]: "Total de unidades"}, inplace=True)
+df_932_proporcion_unidades.rename(columns={df_932_proporcion_unidades.columns[1]: "Proporcion de unidades"}, inplace=True)
+
+df_932 = df_932_numero_unidades.merge(df_932_total_unidades, on="Periodo", how="inner")
+df_932 = df_932.merge(df_932_proporcion_unidades, on="Periodo", how="inner")
+df_932 = df_932.sort_values(by='Periodo').reset_index(drop=True)
+
+numero_unidades     = pd.to_numeric(df_932['Numero de unidades'].astype(str).str.replace(',', '', regex=False))
+total_unidades      = pd.to_numeric(df_932['Total de unidades'].astype(str).str.replace(',', '', regex=False))
+proporcion_unidades = pd.to_numeric(df_932['Proporcion de unidades'])
+periodos            = df_932['Periodo'].astype(str)
+
+# 9.5.1
+df_951_gasto      = pd.read_csv(f"{path}/9.5.1_dc_501_es.csv", usecols=[0,1])
+df_951_pib        = pd.read_csv(f"{path}/9.5.1_dc_502_es.csv", usecols=[0,1])
+df_951_proporcion = pd.read_csv(f"{path}/9.5.1_sh_es.csv", usecols=[0,1])
+
+df_951_gasto.rename(columns={df_951_gasto.columns[1]: "Gasto en investigacion"}, inplace=True)
+df_951_pib.rename(columns={df_951_pib.columns[1]: "PIB anual"}, inplace=True)
+df_951_proporcion.rename(columns={df_951_proporcion.columns[1]: "Gasto proporcional"}, inplace=True)
+
+df_951 = df_951_gasto.merge(df_951_pib, on="Periodo", how="inner")
+df_951 = df_951.merge(df_951_proporcion, on="Periodo", how="inner")
+df_951 = df_951.sort_values(by='Periodo').reset_index(drop=True)
+
+df_951['Gasto en investigacion'] = pd.to_numeric(
+    df_951['Gasto en investigacion'].astype(str).str.replace(',', '', regex=False)
+)
+df_951['PIB anual'] = pd.to_numeric(
+    df_951['PIB anual'].astype(str).str.replace(',', '', regex=False)
+)
+df_951['Gasto proporcional'] = pd.to_numeric(df_951['Gasto proporcional'])
+
+# 9n.2.1
+df_9n21_autorizado    = pd.read_csv(f"{path}/9n.2.1_dc_2112_es.csv", usecols=[0,1])
+df_9n21_estimulo      = pd.read_csv(f"{path}/9n.2.1_dc_2113_es.csv", usecols=[0,1])
+df_9n21_multiplicador = pd.read_csv(f"{path}/9n.2.1_sh_es.csv", usecols=[0,1])
+
+df_9n21_autorizado.rename(columns={df_9n21_autorizado.columns[1]: "Valor total proyectos autorizados"}, inplace=True)
+df_9n21_estimulo.rename(columns={df_9n21_estimulo.columns[1]: "Valor total estímulo fiscal"}, inplace=True)
+df_9n21_multiplicador.rename(columns={df_9n21_multiplicador.columns[1]: "Multiplicador del subsidio"}, inplace=True)
+
+df_9n21 = df_9n21_autorizado.merge(df_9n21_estimulo, on="Periodo", how="inner")
+df_9n21 = df_9n21.merge(df_9n21_multiplicador, on="Periodo", how="inner")
+df_9n21 = df_9n21.sort_values(by='Periodo').reset_index(drop=True)
+
+autorizado    = pd.to_numeric(df_9n21['Valor total proyectos autorizados'].astype(str).str.replace(',', '', regex=False))
+estimulo      = pd.to_numeric(df_9n21['Valor total estímulo fiscal'].astype(str).str.replace(',', '', regex=False))
+multiplicador = pd.to_numeric(df_9n21['Multiplicador del subsidio'])
+periodos_9n21 = df_9n21['Periodo'].astype(str)
+```
+
+```{python}
+#| label: crear-graficas
+#| output: false
+
+# ── Figura 9.3.2a: Proporción con crédito ──────────────────────────────────
+fig_932a = px.line(
+    df_932,
+    x='Periodo',
+    y='Proporcion de unidades',
+    markers=True,
+    text='Proporcion de unidades'
+)
+fig_932a.update_traces(
+    texttemplate='%{text:.1f}%',
+    textposition='top center',
+    line_color='#e15d57',
+    marker=dict(size=10)
+)
+fig_932a.update_layout(
+    xaxis_title="Año",
+    yaxis_title="Porcentaje (%)",
+    plot_bgcolor='white',
+    yaxis=dict(showgrid=True, gridcolor='LightGray', griddash='dot'),
+    xaxis=dict(showgrid=True, gridcolor='LightGray', griddash='dot'),
+    margin=dict(t=40, b=80, l=60, r=40),
+)
+
+# ── Figura 9.3.2b: Empresas vs. crédito ───────────────────────────────────
+fig_932b = make_subplots(specs=[[{"secondary_y": True}]])
+
+fig_932b.add_trace(
+    go.Bar(x=periodos, y=total_unidades, name='Total de unidades económicas',
+           marker_color='#a8c8e8', opacity=0.7, offsetgroup=0),
+    secondary_y=False
+)
+fig_932b.add_trace(
+    go.Bar(x=periodos, y=numero_unidades, name='Unidades con crédito',
+           marker_color='#1f77b4',
+           text=[f"{v:,.0f}" for v in numero_unidades],
+           textposition='outside',
+           textfont=dict(size=11, color='#1f77b4', weight='bold'),
+           offsetgroup=0),
+    secondary_y=False
+)
+fig_932b.add_trace(
+    go.Scatter(x=periodos, y=proporcion_unidades, name='Proporción con crédito (%)',
+               mode='lines+markers+text',
+               line=dict(color='#e15d57', width=3),
+               marker=dict(symbol='diamond', size=10, color='#e15d57'),
+               text=[f"{v:.1f}%" for v in proporcion_unidades],
+               textposition='top center',
+               textfont=dict(color='#282828', size=11, weight='bold')),
+    secondary_y=True
+)
+fig_932b.update_layout(
+    xaxis=dict(title='Año'),
+    yaxis=dict(title='Número de unidades económicas', showgrid=True, gridcolor='rgba(0,0,0,0.05)'),
+    yaxis2=dict(title='Proporción con crédito (%)', color='#e15d57',
+                overlaying='y', side='right', showgrid=False, range=[0, 35]),
+    barmode='overlay', plot_bgcolor='white',
+    margin=dict(t=40, b=100, l=60, r=60),
+    legend=dict(orientation="h", yanchor="top", y=-0.18, xanchor="center", x=0.5),
+)
+
+# ── Figura 9.5.1: Gasto en I+D vs. PIB ────────────────────────────────────
+periodos_951 = df_951['Periodo'].astype(str)
+
+fig_951 = make_subplots(specs=[[{"secondary_y": True}]])
+
+fig_951.add_trace(
+    go.Bar(x=periodos_951, y=df_951['Gasto en investigacion'],
+           name='Gasto en I+D (millones MXN)', marker_color='#5767dc', opacity=0.85,
+           text=[f"{v/1000:.0f}k" for v in df_951['Gasto en investigacion']],
+           textposition='outside', textfont=dict(size=10, color='#5767dc')),
+    secondary_y=False
+)
+fig_951.add_trace(
+    go.Scatter(x=periodos_951, y=df_951['Gasto proporcional'], name='% del PIB',
+               mode='lines+markers+text',
+               line=dict(color='#e15d57', width=3), marker=dict(size=9, color='#e15d57'),
+               text=[f"{v:.3f}%" for v in df_951['Gasto proporcional']],
+               textposition='top center', textfont=dict(size=11, color='#282828', weight='bold')),
+    secondary_y=True
+)
+
+z = np.polyfit(range(len(df_951)), df_951['Gasto proporcional'], 1)
+tendencia = np.poly1d(z)(range(len(df_951)))
+fig_951.add_trace(
+    go.Scatter(x=periodos_951, y=tendencia, name='Tendencia % PIB', mode='lines',
+               line=dict(color='#e15d57', width=1.5, dash='dash'), opacity=0.5),
+    secondary_y=True
+)
+fig_951.update_layout(
+    xaxis=dict(title='Año', tickmode='linear'),
+    yaxis=dict(title='Millones de pesos (MXN)', showgrid=True, gridcolor='rgba(0,0,0,0.05)'),
+    yaxis2=dict(title='Proporción del PIB (%)', color='#e15d57',
+                overlaying='y', side='right', showgrid=False),
+    plot_bgcolor='white', barmode='overlay',
+    margin=dict(t=40, b=100, l=60, r=60),
+    legend=dict(orientation="h", yanchor="top", y=-0.18, xanchor="center", x=0.5),
+)
+
+# ── Figura 9n.2.1: Estímulo vs. Multiplicador ─────────────────────────────
+fig_9n21 = make_subplots(specs=[[{"secondary_y": True}]])
+
+fig_9n21.add_trace(
+    go.Bar(x=periodos_9n21, y=autorizado, name='Valor proyectos autorizados',
+           marker_color='#a8c8e8', opacity=0.85, offsetgroup=1),
+    secondary_y=False
+)
+fig_9n21.add_trace(
+    go.Bar(x=periodos_9n21, y=estimulo, name='Valor estímulo fiscal',
+           marker_color='#1f77b4',
+           text=[f"{v/1e6:.1f}M" for v in estimulo],
+           textposition='outside', textfont=dict(size=11, color='#1f77b4', weight='bold'),
+           offsetgroup=1),
+    secondary_y=False
+)
+fig_9n21.add_trace(
+    go.Scatter(x=periodos_9n21, y=multiplicador, name='Multiplicador del subsidio',
+               mode='lines+markers+text',
+               line=dict(color='#d62728', width=3.5),
+               marker=dict(symbol='diamond', size=11, color='#d62728'),
+               text=[f"{v:.2f}x" for v in multiplicador],
+               textposition='top center', cliponaxis=False,
+               textfont=dict(color='#282828', size=11, weight='bold')),
+    secondary_y=True
+)
+
+z2 = np.polyfit(range(len(df_9n21)), multiplicador, 1)
+tendencia2 = np.poly1d(z2)(range(len(df_9n21)))
+fig_9n21.add_trace(
+    go.Scatter(x=periodos_9n21, y=tendencia2, name='Tendencia multiplicador', mode='lines',
+               line=dict(color='#d62728', width=1.5, dash='dash'), opacity=0.5),
+    secondary_y=True
+)
+fig_9n21.update_layout(
+    xaxis=dict(title='Año', tickmode='linear'),
+    yaxis=dict(title='Millones de pesos', showgrid=True, gridcolor='rgba(0,0,0,0.05)'),
+    yaxis2=dict(title='Multiplicador (x veces)', range=[3, 7], color='#d62728',
+                overlaying='y', side='right', showgrid=False),
+    barmode='overlay', plot_bgcolor='white',
+    margin=dict(t=40, b=100, l=60, r=60),
+    legend=dict(orientation="h", yanchor="top", y=-0.18, xanchor="center", x=0.5),
+)
+```
+
+# Crédito a MIPyMEs
+
+## Column {width="30%"}
+
+::: {.card title="Indicador 9.3.2"}
+
+**Descripción:** Proporción de las pequeñas industrias que han obtenido un préstamo o una línea de crédito
+
+---
+
+Entre 2008 y 2023, el número total de unidades económicas en México **casi se duplicó**, pasando de 333,498 a 620,552. Sin embargo, la proporción de pequeñas industrias que logró obtener un préstamo o línea de crédito se **desplomó de 27.9% a apenas 7.6%**.
+
+En 2008 cerca de **93,000 empresas** accedían a financiamiento formal; en 2023 esa cifra bajó a **47,187**, pese a que el número de empresas era casi el doble.
+
+Sin crédito, las pequeñas industrias no pueden invertir en tecnología, infraestructura ni capital humano.
+:::
+
+## Column {width="70%" .tabset}
+
+### Proporción con crédito
+
+```{python}
+#| title: "Caída del Indicador 9.3.2: Pequeñas Industrias con Crédito"
+#| height: 100%
+fig_932a.show()
+```
+
+### Empresas vs. crédito
+
+```{python}
+#| title: "Más empresas, menos financiadas: la brecha de crédito en las MIPyMEs"
+#| height: 100%
+fig_932b.show()
+```
+
+# Gasto en I+D
+
+## Column {width="30%"}
+
+::: {.card title="Indicador 9.5.1"}
+
+**Descripción:** Gasto federal en investigación científica y desarrollo experimental como proporción del PIB
+
+---
+
+En cálculos simples, el gasto federal en investigación y desarrollo **creció de 48,237 millones de pesos en 2012 a 71,108 millones en 2025**. Podría parecer un avance. Sin embargo, cuando se mide como proporción del PIB, la imagen se invierte: el porcentaje **cayó de 0.29% en 2012 a apenas 0.21% en 2025**.
+
+Esto significa que la economía mexicana crece más rápido que la inversión en conocimiento.
+:::
+
+## Column {width="70%"}
+
+```{python}
+#| title: "El gasto en I+D crece, pero pierde terreno frente al PIB"
+#| height: 100%
+fig_951.show()
+```
+
+# Multiplicador Fiscal
+
+## Column {width="30%"}
+
+::: {.card title="Indicador 9n.2.1"}
+
+**Descripción:** Mide la contribución del sector privado a la atención de prioridades nacionales mediante la realización de proyectos de investigación científica y desarrollo experimental como respuesta a los incentivos otorgados por el gobierno.
+
+---
+
+En otras palabras, nos muestra el monto de la inversión privada por cada peso público invertido.
+
+La gráfica muestra una **tendencia descendente** en el multiplicador a lo largo del tiempo: aunque el monto del estímulo fiscal ha crecido, la capacidad de ese gasto público para detonar inversión privada se ha ido reduciendo.
+
+Esto podría sugerir que los subsidios están llegando a empresas con menor capacidad de co-inversión, o que los mecanismos de asignación requieren revisión para maximizar su impacto.
+:::
+
+## Column {width="70%"}
+
+```{python}
+#| title: "Estímulo Fiscal: Mayor gasto, menor eficiencia del multiplicador"
+#| height: 100%
+fig_9n21.show()
+```
+
+# Síntesis
+
+## Column {width="100%"}
+
+::: {.card title="ODS 9 — Industria, Innovación e Infraestructura"}
+
+El **ODS 9** pretende construir infraestructuras resilientes, promover la industrialización sostenible y fomentar la innovación.
+
+---
+
+Los indicadores analizados revelan un escenario preocupante: **mientras el número total de unidades económicas ha crecido, la proporción que accede a crédito ha caído drásticamente; y el gasto público en investigación, aunque presente, representa una fracción cada vez menor del PIB.**
+
+Los tres indicadores analizados apuntan a una misma dirección: **México enfrenta una brecha estructural en su capacidad de innovación industrial.**
+
+Las pequeñas empresas crecen en número pero se quedan sin crédito. El gasto en I+D existe pero no crece al ritmo de la economía. Los estímulos fiscales se otorgan, pero movilizan cada vez menos inversión privada.
+:::

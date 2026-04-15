@@ -5,7 +5,7 @@ format:
 ---
 
 ::: {.column-screen}
-![Plaza Alonso](imagenes/Plaza_Alonso_Garc%C3%ADa_Bravo_-_Calle_Manzanares_-_Mexico_2024_(2).jpg)
+![Plaza Alonso](imagenes/plaza_alonso.jpg)
 :::
 
 ## ¿Qué viene a tu mente al pensar en pobreza?
