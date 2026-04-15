@@ -2,6 +2,7 @@
 
 ## Herramientas
 - Google Gemini 3 Flash
+- ChatGPT Thinking 5.4
 
 ## Filosofía de uso
 Decidimos usar IA exclusivamente para tareas mecánicas y
@@ -39,8 +40,17 @@ conocimiento del contexto social, la hacemos nosotros.
 - **Decisión**: Usamos el código, cambiando las variables para que fueran
   más representativas en el contexto del problema 
 
+### 2026-04-11 | ChatGPT | Descripciones oficiales
+- **Tarea**: Le pedimos ayuda para encontrar recursos digitales donde se definieran términos como inseguridad alimentaria moderada y severa, seguridad social, emaciación, desnutrición, malnutrición, etc.
+- **Prompt**: En el prompt se establecieron instrucciones explícitas de las fuentes no permitidas para la consulta de información.
+- **Resultado**: Un total de 11 sitios web  y pdf, mediante los cuáles se describían tanto las definiciones propuestas por la instituciones extrangeras (ONU y OMS, entre otras), como nacionales (INEGI y CONEVAL).
+- **Decisión**: La lectura de los recursos digitales permitió robustecer la explicación e interpretación de cada indicador, para el diseño de las gráficas.
 
-
+### 2026-04-14 | ChatGPT | Debugear una función
+- **Tarea**: Se le pidió encontrar el fallo en una función diseñada para la graficación en serie de tiempo y barras, de distintas variables, a través de un botón interactivo.
+- **Prompt**: En el prompt se entregó la función, el error obtenido, las características del dataset y especificaciones del gráfico esperado.
+- **Resultado**: Una función que corregía el fallo, el cuál se identificó como la sintaxis incorrecta del botón interactivo además de mala especificación de los colores de la gráfica.
+- **Decisión**: Se adoptó la función corregida para el diseño de un gráfico ineractivo.
 
 ### NO usamos IA para hacer lo siguiente:
 - La selección de los ODS, y las metas más relevantes de cada uno (revisión de
