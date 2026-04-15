@@ -2,7 +2,7 @@ project:
   type: website
   output-dir: "docs"
   render:
-    - dashboard/*.qmd
+    - dashboard/index.qmd
     - dashboard/notebooks/*.qmd
 
 website:
@@ -31,3 +31,7 @@ format:
       - cosmo
       - dashboard/custom.scss
     toc: false
+  dashboard:
+    theme:
+      - cosmo
+      - dashboard/custom.scss

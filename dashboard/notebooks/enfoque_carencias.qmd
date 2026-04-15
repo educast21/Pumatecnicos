@@ -1,50 +1,54 @@
 ---
 title: "Enfoque de Carencias Sociales"
-format: html
+format:
+  dashboard:
+    orientation: columns
 ---
 
-## Introducción: ODS 1 y la Pobreza Multidimensional
+# Introducción {orientation="rows"}
+
+## Row {height="60%"}
+
+::: {.card title="ODS 1 y la Pobreza Multidimensional"}
 
 La **Meta 1n.1** busca reducir la pobreza multidimensional. En México, esto se mide a través de las carencias sociales. A continuación, se detallan las metas específicas del ODS 1 relacionadas con la seguridad social y servicios básicos:
 
-### Metas del ODS 1 en México
-* **Meta 1.3 (Seguridad Social):** Definir protección/seguridad social. Se considera que cuentas con ella si:
-    * Tienes prestaciones de ley (IMSS, ISSSTE, etc.).
-    * Eres jubilado o pensionado.
-    * Eres beneficiario de un familiar con acceso.
-* **Meta 1.4 (Servicios Básicos):** Tu hogar debe contar con agua potable, saneamiento, energías limpias y recolección de 
-    * Tienes prestaciones de ley (IMSS, ISSSTE, etc.).
-    * Eres jubilado o pensionado.
-    * Eres beneficiario de un familiar con acceso.desechos.
-* **Meta 1.a (Inversión del gobierno):**
-    * Se refiere a la movilización de recursos públicos para implementar programas y políticas dirigidas a la erradicación de la pobreza
-    * Incluye inversión en infraestructura social, servicios básicos, educación y salud
-    * Busca priorizar a las poblaciones en situación de vulnerabilidad y reducir desigualdades regionales
-* **Meta 1n.1 (Pobreza multidimensional):**
-    * Considera no solo el ingreso, sino también carencias sociales como educación, salud, vivienda, alimentación y servicios básicos
-    * Permite identificar a la población en situación de pobreza de manera integral
-    * Funciona como base para analizar el cumplimiento del resto de las metas en esta sección
-    * Se recomienda destacar las entidades federativas con mayores niveles de pobreza multidimensional
-* **Meta 1n.2 (Salud de las infancias):**
-    * Evalúa el acceso a servicios de salud para niñas y niños
-    * Considera factores como nutrición, vacunación y atención médica oportuna
-    * Busca reducir enfermedades prevenibles y mejorar el bienestar infantil
-    * Es clave analizar las regiones con mayores rezagos en salud infantil para focalizar intervenciones
+**Meta 1.3 — Seguridad Social**
 
-## Profundización por ODS
+Se considera que cuentas con seguridad social si tienes prestaciones de ley (IMSS, ISSSTE, etc.), eres jubilado o pensionado, o eres beneficiario de un familiar con acceso.
 
-Con el fin de profundizar en cada una de las carencias sociales, se profundiza en su respectivo ODS.
+**Meta 1.4 — Servicios Básicos**
+
+Tu hogar debe contar con agua potable, saneamiento, energías limpias y recolección de desechos.
+
+**Meta 1.a — Inversión del gobierno**
+
+Se refiere a la movilización de recursos públicos para implementar programas y políticas dirigidas a la erradicación de la pobreza. Incluye inversión en infraestructura social, servicios básicos, educación y salud, priorizando a las poblaciones en situación de vulnerabilidad y buscando reducir desigualdades regionales.
+
+**Meta 1n.1 — Pobreza multidimensional**
+
+Considera no solo el ingreso, sino también carencias sociales como educación, salud, vivienda, alimentación y servicios básicos. Permite identificar a la población en situación de pobreza de manera integral y funciona como base para analizar el cumplimiento del resto de las metas en esta sección.
+
+**Meta 1n.2 — Salud de las infancias**
+
+Evalúa el acceso a servicios de salud para niñas y niños, considerando factores como nutrición, vacunación y atención médica oportuna. Busca reducir enfermedades prevenibles y mejorar el bienestar infantil, con especial énfasis en las regiones con mayores rezagos.
+
+:::
+
+## Row {height="40%"}
+
+::: {.card title="Profundización por ODS"}
+
+Con el fin de profundizar en cada una de las carencias sociales, se analiza su respectivo ODS.
 
 Selecciona un ODS para ver el dashboard específico y el análisis de carencias:
 
 ::: {layout-ncol=4 .text-center .ods-icons}
 
-[![ODS 2: Hambre Cero](../imagenes/ods2.jpg){width=150}](enfoque_carencias.qmd)
+[![ODS 2: Hambre Cero](../imagenes/ods2.jpg){width=150}](ods2.qmd)
 
-[![ODS 3: Salud y Bienestar](../imagenes/ods3.jpg){width=150}](enfoque_carencias.qmd)
+[![ODS 4: Educación de Calidad](../imagenes/ods4.jpg){width=150}](ods4.qmd)
 
-[![ODS 4: Educación de Calidad](../imagenes/ods4.jpg){width=150}](enfoque_carencias.qmd)
-
-[![ODS 6: Agua limpia y Saneamiento](../imagenes/ods6.jpg){width=150}](enfoque_carencias.qmd)
+:::
 
 :::

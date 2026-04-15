@@ -488,11 +488,11 @@ El **ODS 2** busca poner fin al hambre, lograr la seguridad alimentaria y la mej
 
 Los indicadores analizados revelan patrones estructurales importantes en México:
 
-- La **inseguridad alimentaria moderada o severa** disminuyó entre 2016 y 2018, pero repuntó con fuerza durante la pandemia de 2020, llegando al **22.54% a nivel nacional**. Desde entonces ha retomado una tendencia a la baja.
-- Los **menores de 18 años** son el grupo etario más afectado, con un **26.32%** en situación de inseguridad alimentaria, lo que subraya la urgencia de políticas focalizadas en infancia y adolescencia.
-- Geográficamente, los estados del sur —especialmente **Guerrero** y **Tabasco**— concentran la mayor prevalencia, mientras que los estados del norte presentan mejores condiciones relativas.
+- La **inseguridad alimentaria moderada o severa** se mantuvo constante entre 2016 y 2018, pero repuntó con fuerza durante la pandemia de 2020, llegando al **22.54% a nivel nacional**, lo que se traduce en que al menos 2 de cada 10 personas tienen acceso limitado a alimentos. Desde entonces ha retomado una tendencia a la baja.
+- Los **menores de 18 años** son el grupo de edad más afectado, con un **26.32%** en situación de inseguridad alimentaria, lo que subraya la urgencia de políticas focalizadas en infancia y adolescencia.
+- Geográficamente, los estados del sur; especialmente **Guerrero** y **Tabasco**; concentran la mayor prevalencia, mientras que los estados del norte presentan mejores condiciones relativas.
 - La brecha entre hombres y mujeres es reducida, pero persiste en las entidades con mayor rezago, donde las mujeres enfrentan condiciones ligeramente más adversas.
 
-El análisis conjunto de estos indicadores evidencia que la inseguridad alimentaria en México no es un fenómeno homogéneo: varía significativamente por territorio, grupo etario y condición socioeconómica, lo que exige intervenciones diferenciadas y territorialmente focalizadas.
+El análisis conjunto de estos indicadores evidencia que la inseguridad alimentaria en México no es un fenómeno homogéneo: varía significativamente por territorio, grupo poblacional y condición socioeconómica, lo que supone intervenciones diferenciadas y territorialmente focalizadas.
 
 :::
