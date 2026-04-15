@@ -17,13 +17,11 @@ website:
         menu:
           - href: dashboard/notebooks/enfoque_carencias.qmd
             text: "Introducción y ODS 1"
-          - text: "---" # Línea divisora
-          - href: dashboard/notebooks/enfoque_carencias.qmd
+          - text: "---"
+          - href: dashboard/notebooks/ods2.qmd
             text: "ODS 2: Hambre Cero"
-          - href: dashboard/notebooks/enfoque_carencias.qmd
-            text: "ODS 3: Salud y Bienestar"
-          - href: dashboard/notebooks/enfoque_carencias.qmd
-            text: "ODS 6: Agua limpia y saneamiento"
+          - href: dashboard/notebooks/ods4.qmd
+            text: "ODS 4: Educación de Calidad"
       - href: dashboard/notebooks/ods9.qmd
         text: Enfoque de Capacidades
 
