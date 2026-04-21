@@ -1,0 +1,562 @@
+---
+title: "ODS 3: Salud y Bienestar"
+format:
+  dashboard:
+    orientation: columns
+---
+
+```{python}
+#| label: setup
+#| include: false
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+import numpy as np
+import requests
+from plotly.subplots import make_subplots
+
+path = "../../datos"
+
+cols_a_usar = list(range(2, 5)) # Total
+cols_a_usar.extend(range(44, 45)) # Enfermedades respiratorias
+cols_a_usar.extend(range(84, 85)) # Diabetes
+cols_a_usar.extend(range(124, 125)) # Cardiovasculares
+cols_a_usar.extend(range(164, 165)) # Cáncer
+I341 = pd.read_csv(f'{path}/3.4.1_sh_es.csv', usecols = cols_a_usar)
+# Se refiere al número de personas de 30 a 69 años que mueren por enfermedades cardiovasculares, el cáncer,
+# la diabetes o enfermedades respiratorias crónicas por cada 100,000 habitantes.
+
+I341["Entidad_federativa"] = I341["Entidad_federativa"].str.replace("_"," ")
+I341.rename(columns = {
+    "Tasa_de_mortalidad-enfermedad_no_transmisible|Total_Sexo_(t-h-m-na)|Total_Edad-enfermedad_no_transmisible|Total": "Total",
+    "Tasa_de_mortalidad-enfermedad_no_transmisible|Enfermedades_respiratorias_crónicas_Sexo_(t-h-m-na)|Total_Edad-enfermedad_no_transmisible|Total": "Enfermedades respiratorias",
+    "Tasa_de_mortalidad-enfermedad_no_transmisible|Diabetes_Sexo_(t-h-m-na)|Total_Edad-enfermedad_no_transmisible|Total": "Diabetes",
+    "Tasa_de_mortalidad-enfermedad_no_transmisible|Enfermedades_cardiovasculares_Sexo_(t-h-m-na)|Total_Edad-enfermedad_no_transmisible|Total": "Cardiovasculares",
+    "Tasa_de_mortalidad-enfermedad_no_transmisible|Cáncer_Sexo_(t-h-m-na)|Total_Edad-enfermedad_no_transmisible|Total": "Cáncer"
+    }, inplace = True)
+I341.describe()
+
+```
+
+```{python}
+#| label: crear-graficas
+#| output: false
+
+# Copia y limpieza
+df = I341.copy()
+df["Periodo"] = df["Periodo"].astype(str)
+df["Total"] = pd.to_numeric(df["Total"], errors="coerce")
+
+# Filtrar años
+df_plot = df[df["Periodo"].isin(["1998", "2024"])].copy()
+
+# Colores
+mapa_colores = {
+    "1998": "green",
+    "2024": "red"
+}
+
+nbins = 12
+
+fig1 = px.histogram(
+    df_plot,
+    x="Total",
+    color="Periodo",
+    marginal="rug",
+    hover_data=[
+        "Entidad_federativa",
+        "Periodo",
+        "Enfermedades respiratorias",
+        "Diabetes",
+        "Cardiovasculares",
+        "Cáncer"
+    ],
+    barmode="overlay",
+    opacity=0.45,
+    nbins=nbins,
+    color_discrete_map=mapa_colores
+)
+
+# Estilo general del hover
+fig1.update_traces(
+    hoverlabel=dict(
+        bgcolor="white",
+        bordercolor="black",
+        font=dict(
+            family="Arial",
+            size=13,
+            color="black"
+        )
+    )
+)
+
+# Hover separado para histograma y rug
+for trace in fig1.data:
+    nombre = trace.name if trace.name is not None else ""
+
+    if "1998" in nombre or "2024" in nombre:
+
+        # Histograma: datos agregados por bin
+        if trace.type == "histogram":
+            trace.hovertemplate = (
+                "<b>Año:</b> %{fullData.name}<br>"
+                "<b>Intervalo:</b> %{x}<br>"
+                "<b>Cantidad de estados:</b> %{y}<extra></extra>"
+            )
+
+        # Rug marginal: observaciones individuales
+        elif trace.type == "box":
+            trace.hovertemplate = (
+                "<b>Estado:</b> %{customdata[0]}<br>"
+                "<b>Año:</b> %{customdata[1]}<br>"
+                "<b>Total:</b> %{x:.2f}<br>"
+                "<b>Enf. respiratorias:</b> %{customdata[2]:.2f}<br>"
+                "<b>Diabetes:</b> %{customdata[3]:.2f}<br>"
+                "<b>Cardiovasculares:</b> %{customdata[4]:.2f}<br>"
+                "<b>Cáncer:</b> %{customdata[5]:.2f}<extra></extra>"
+            )
+
+# Curvas normales
+for anio in ["1998", "2024"]:
+    x = df_plot.loc[df_plot["Periodo"] == anio, "Total"].dropna().values
+
+    if len(x) >= 2:
+        mu = x.mean()
+        sigma = x.std(ddof=1)
+
+        if sigma > 0:
+            x_min = x.min()
+            x_max = x.max()
+            x_grid = np.linspace(x_min, x_max, 300)
+
+            y_pdf = (1 / (sigma * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((x_grid - mu) / sigma) ** 2)
+            bin_width = (x_max - x_min) / nbins if x_max > x_min else 1
+            y_freq = y_pdf * len(x) * bin_width
+
+            fig1.add_trace(
+                go.Scatter(
+                    x=x_grid,
+                    y=y_freq,
+                    mode="lines",
+                    name=f"Ajuste normal {anio}",
+                    line=dict(width=3, color=mapa_colores[anio]),
+                    hoverlabel=dict(
+                        bgcolor="white",
+                        bordercolor="black",
+                        font=dict(
+                            family="Arial",
+                            size=13,
+                            color="black"
+                        )
+                    ),
+                    hovertemplate=(
+                        f"<b>Año:</b> {anio}<br>"
+                        "<b>Total:</b> %{x:.2f}<br>"
+                        "<b>Frecuencia esperada:</b> %{y:.2f}<extra></extra>"
+                    )
+                )
+            )
+
+fig1.update_layout(
+    title="<b>Distribución de las tasas de mortalidad por enfermedades cardiovasculares, diabetes y cáncer, de 1998 y 2024</b>",
+    xaxis_title="<b>Número de defunciones por cada 100,000 habitantes</b>",
+    yaxis_title="<b>Cantidad de estados</b>",
+    template="plotly_white"
+)
+```
+
+```{python}
+#| label: segunda-grafica
+#| output: false
+
+desc_1998 = I341.query("Periodo == 1998").describe()
+
+umbrales = {
+    "Enfermedades respiratorias": (desc_1998["Enfermedades respiratorias"]["25%"], desc_1998["Enfermedades respiratorias"]["50%"]),
+    "Diabetes":                   (desc_1998["Diabetes"]["25%"],                   desc_1998["Diabetes"]["50%"]),
+    "Cardiovasculares":           (desc_1998["Cardiovasculares"]["25%"],           desc_1998["Cardiovasculares"]["50%"]),
+    "Cáncer":                     (desc_1998["Cáncer"]["25%"],                     desc_1998["Cáncer"]["50%"]),
+}
+
+etiquetas = {
+    "Enfermedades respiratorias": ("Menos de 15 personas", "Entre 15 y 18 personas", "Más de 18 personas"),
+    "Diabetes":                   ("Menos de 21 personas", "Entre 21 y 25 personas", "Más de 25 personas"),
+    "Cardiovasculares":           ("Menos de 91 personas", "Entre 91 y 102 personas", "Más de 102 personas"),
+    "Cáncer":                     ("Menos de 68 personas", "Entre 68 y 76 personas",  "Más de 76 personas"),
+}
+
+for enf, (bajo, medio, alto) in etiquetas.items():
+    q25, q50 = umbrales[enf]
+    col = f"Severidad - {enf}"
+    I341[col] = "Información desconocida"
+    I341.loc[I341[enf] <= q25, col] = bajo
+    I341.loc[(I341[enf] > q25) & (I341[enf] <= q50), col] = medio
+    I341.loc[I341[enf] > q50, col] = alto
+
+# =========================
+# 1) Copia y limpieza base
+# =========================
+df = I341.copy()
+
+enfermedades = [
+    "Enfermedades respiratorias",
+    "Diabetes",
+    "Cardiovasculares",
+    "Cáncer"
+]
+
+columnas_severidad = {
+    "Enfermedades respiratorias": "Severidad - Enfermedades respiratorias",
+    "Diabetes": "Severidad - Diabetes",
+    "Cardiovasculares": "Severidad - Cardiovasculares",
+    "Cáncer": "Severidad - Cáncer"
+}
+
+columnas_necesarias = ["Entidad_federativa", "Periodo"] + enfermedades + list(columnas_severidad.values())
+df = df[columnas_necesarias].copy()
+
+df["Periodo"] = df["Periodo"].astype(str)
+
+for col in enfermedades:
+    df[col] = pd.to_numeric(df[col], errors="coerce")
+
+# Ajustar nombres para que coincidan con el geojson
+df.loc[df["Entidad_federativa"] == "Coahuila de Zaragoza", "Entidad_federativa"] = "Coahuila"
+df.loc[df["Entidad_federativa"] == "Michoacán de Ocampo", "Entidad_federativa"] = "Michoacán"
+df.loc[df["Entidad_federativa"] == "Veracruz de Ignacio de la Llave", "Entidad_federativa"] = "Veracruz"
+
+# GeoJSON de estados
+repo_url = "https://raw.githubusercontent.com/angelnmara/geojson/master/mexicoHigh.json"
+mx_states_geojson = requests.get(repo_url).json()
+
+# =========================
+# 2) Codificación usando columnas de severidad
+# =========================
+mapas_leyenda = {
+    "Enfermedades respiratorias": {
+        "Menos de 15 personas": 1,
+        "Entre 15 y 18 personas": 2,
+        "Más de 18 personas": 3,
+        "Información desconocida": 0,
+        "Sin dato": 0
+    },
+    "Diabetes": {
+        "Menos de 21 personas": 1,
+        "Entre 21 y 25 personas": 2,
+        "Más de 25 personas": 3,
+        "Información desconocida": 0,
+        "Sin dato": 0
+    },
+    "Cardiovasculares": {
+        "Menos de 91 personas": 1,
+        "Entre 91 y 102 personas": 2,
+        "Más de 102 personas": 3,
+        "Información desconocida": 0,
+        "Sin dato": 0
+    },
+    "Cáncer": {
+        "Menos de 68 personas": 1,
+        "Entre 68 y 76 personas": 2,
+        "Más de 76 personas": 3,
+        "Información desconocida": 0,
+        "Sin dato": 0
+    }
+}
+
+for enf in enfermedades:
+    col_sev = columnas_severidad[enf]
+    df[f"Codigo_{enf}"] = df[col_sev].map(mapas_leyenda[enf]).fillna(0)
+
+# =========================
+# 3) Escala discreta simulada
+# =========================
+colorscale_discreta = [
+    [0.00, "#000000"], [0.2499, "#000000"],
+    [0.25, "#2dc937"], [0.4999, "#2dc937"],
+    [0.50, "#efd720"], [0.7499, "#efd720"],
+    [0.75, "#d14e39"], [1.00, "#d14e39"]
+]
+
+# =========================
+# 4) Años y figura base
+# =========================
+anios = sorted(df["Periodo"].dropna().unique(), key=lambda x: int(x))
+anio_inicial = anios[0]
+
+fig = make_subplots(
+    rows=2, cols=2,
+    specs=[
+        [{"type": "choropleth"}, {"type": "choropleth"}],
+        [{"type": "choropleth"}, {"type": "choropleth"}]
+    ],
+    subplot_titles=enfermedades,
+    horizontal_spacing=0.01,
+    vertical_spacing=0.02
+)
+
+posiciones = {
+    "Enfermedades respiratorias": (1, 1),
+    "Diabetes": (1, 2),
+    "Cardiovasculares": (2, 1),
+    "Cáncer": (2, 2)
+}
+
+pos_leyendas = {
+    "Enfermedades respiratorias": {"x": 0.00, "y": 0.62, "len": 0.23},
+    "Diabetes":                   {"x": 0.50, "y": 0.62, "len": 0.23},
+    "Cardiovasculares":           {"x": 0.00, "y": 0.10, "len": 0.23},
+    "Cáncer":                     {"x": 0.50, "y": 0.10, "len": 0.23}
+}
+
+# =========================
+# 6) Trazas iniciales
+# =========================
+df0 = df[df["Periodo"] == anio_inicial].copy()
+
+for enf in enfermedades:
+    r, c = posiciones[enf]
+    col_sev = columnas_severidad[enf]
+
+    ticktext_enf = [
+        "Información desconocida",
+        [k for k, v in mapas_leyenda[enf].items() if v == 1][0],
+        [k for k, v in mapas_leyenda[enf].items() if v == 2][0],
+        [k for k, v in mapas_leyenda[enf].items() if v == 3][0]
+    ]
+
+    fig.add_trace(
+        go.Choropleth(
+            geojson=mx_states_geojson,
+            featureidkey="properties.name",
+            locations=df0["Entidad_federativa"],
+            z=df0[f"Codigo_{enf}"],
+            zmin=0,
+            zmax=3,
+            colorscale=colorscale_discreta,
+            showscale=True,
+            colorbar=dict(
+                title=f"<b>{enf}</b>",
+                tickvals=[0.375, 1.125, 1.875, 2.625],
+                ticktext=ticktext_enf,
+                len=pos_leyendas[enf]["len"],
+                y=pos_leyendas[enf]["y"],
+                x=pos_leyendas[enf]["x"],
+                thickness=14
+            ),
+            marker_line_color="white",
+            marker_line_width=0.7,
+            customdata=np.stack([
+                df0[enf].fillna(np.nan),
+                df0[col_sev].fillna("Información desconocida")
+            ], axis=-1),
+            hovertemplate=(
+                "<b>Entidad:</b> %{location}<br>"
+                "<b>Año:</b> " + anio_inicial + "<br>"
+                f"<b>{enf}:</b> %{{customdata[0]:.2f}}<br>"
+                "<b>Severidad:</b> %{customdata[1]}<extra></extra>"
+            )
+        ),
+        row=r, col=c
+    )
+
+# =========================
+# 7) Frames por año
+# =========================
+frames = []
+
+for anio in anios:
+    df_anio = df[df["Periodo"] == anio].copy()
+    data_frame = []
+
+    for enf in enfermedades:
+        col_sev = columnas_severidad[enf]
+
+        ticktext_enf = [
+            "Información desconocida",
+            [k for k, v in mapas_leyenda[enf].items() if v == 1][0],
+            [k for k, v in mapas_leyenda[enf].items() if v == 2][0],
+            [k for k, v in mapas_leyenda[enf].items() if v == 3][0]
+        ]
+
+        data_frame.append(
+            go.Choropleth(
+                geojson=mx_states_geojson,
+                featureidkey="properties.name",
+                locations=df_anio["Entidad_federativa"],
+                z=df_anio[f"Codigo_{enf}"],
+                zmin=0,
+                zmax=3,
+                colorscale=colorscale_discreta,
+                showscale=True,
+                colorbar=dict(
+                    title=f"<b>{enf}</b>",
+                    tickvals=[0.375, 1.125, 1.875, 2.625],
+                    ticktext=ticktext_enf,
+                    len=pos_leyendas[enf]["len"],
+                    y=pos_leyendas[enf]["y"],
+                    x=pos_leyendas[enf]["x"],
+                    thickness=14
+                ),
+                marker_line_color="white",
+                marker_line_width=0.7,
+                customdata=np.stack([
+                    df_anio[enf].fillna(np.nan),
+                    df_anio[col_sev].fillna("Información desconocida")
+                ], axis=-1),
+                hovertemplate=(
+                    "<b>Entidad:</b> %{location}<br>"
+                    "<b>Año:</b> " + anio + "<br>"
+                    f"<b>{enf}:</b> %{{customdata[0]:.2f}}<br>"
+                    "<b>Severidad:</b> %{customdata[1]}<extra></extra>"
+                )
+            )
+        )
+
+    frames.append(go.Frame(name=anio, data=data_frame))
+
+fig.frames = frames
+
+# =========================
+# 8) Slider y botones
+# =========================
+slider_steps = []
+
+for anio in anios:
+    etiqueta = f"{anio} (Pandemia)" if anio == "2020" else anio
+    slider_steps.append(
+        dict(
+            method="animate",
+            label=etiqueta,
+            args=[
+                [anio],
+                {
+                    "mode": "immediate",
+                    "frame": {"duration": 600, "redraw": True},
+                    "transition": {"duration": 300}
+                }
+            ]
+        )
+    )
+
+fig.update_layout(
+    title_text=(
+        "<b>Tasa de mortalidad por cada 100,000 habitantes, por grupo de enfermedad en México</b><br>"
+        "<sup>Panel 2x2 por enfermedad; severidad comparada contra el año 1998</sup>"
+    ),
+    title_x=0.5,
+    title_xanchor="center",
+    width=1350,
+    height=950,
+    margin=dict(r=20, t=90, l=20, b=40),
+    template="plotly_white",
+    sliders=[dict(
+        active=0,
+        currentvalue={"prefix": "<b>Año:</b> "},
+        pad={"t": 40},
+        steps=slider_steps
+    )],
+    updatemenus=[dict(
+        type="buttons",
+        showactive=False,
+        direction="left",
+        x=0.42,
+        y=1.03,
+        xanchor="left",
+        yanchor="top",
+        pad={"r": 10, "t": 0},
+        buttons=[
+            dict(
+                label="<b>▶ Reproducir<b>",
+                method="animate",
+                args=[
+                    None,
+                    {
+                        "frame": {"duration": 700, "redraw": True},
+                        "transition": {"duration": 300},
+                        "fromcurrent": True
+                    }
+                ]
+            ),
+            dict(
+                label="<b>⏸ Pausar<b>",
+                method="animate",
+                args=[
+                    [None],
+                    {
+                        "frame": {"duration": 0, "redraw": False},
+                        "transition": {"duration": 0},
+                        "mode": "immediate"
+                    }
+                ]
+            )
+        ]
+    )]
+)
+
+# =========================
+# 9) Ajustes geográficos para los 4 submapas
+# =========================
+fig.update_geos(
+    fitbounds="locations",
+    visible=False,
+    showcountries=False,
+    showcoastlines=False,
+    showframe=False,
+    showland=True,
+    landcolor="rgb(240,240,240)"
+)
+
+for anotacion in fig.layout.annotations:
+    anotacion.font = dict(size=14)
+    anotacion.text = f"<b>{anotacion.text}</b>"
+
+```
+
+# Meta 3.4
+
+## Column {width="30%"}
+
+::: {.card color="white" height="25%" title="Meta 3.4"}
+
+**Descripción:** De aquí a 2030, reducir en un tercio la mortalidad prematura por enfermedades no transmisibles mediante su prevención y tratamiento, y promover la salud mental y el bienestar.
+
+:::
+
+::: {.card color="white" title="¿Por qué es importante?"}
+
+Información aquí.
+
+:::
+
+## Column {.tabset width="70%"}
+
+::: {.card color="white" title="Mapa 1"}
+
+```{python}
+#| title: "Mapa 1"
+fig1.show()
+```
+
+:::
+
+::: {.card color="white" title="Mapa 2"}
+```{python}
+#| title: "Mapa 2"
+fig.show()
+```
+
+:::
+
+# Síntesis
+
+## Column {width="100%"}
+
+::: {.card title="ODS 3 — Salud y Bienestar"}
+
+Info aquí.
+
+---
+
+Más información aquí.
+
+:::
