@@ -122,10 +122,19 @@ fig_190.update_xaxes(
 )
 fig_190.update_yaxes(showgrid=True, gridcolor='LightGray', griddash='dot')
 fig_190.update_layout(
-    xaxis_title="Año", yaxis_title="Porcentaje",
-    legend_title="Categorías", plot_bgcolor='white',
+    xaxis_title="Año", 
+    yaxis_title="Porcentaje",
+    plot_bgcolor='white',
     margin=dict(t=60, b=80, l=60, r=40),
-    legend=dict(orientation="h", yanchor="top", y=-0.18, xanchor="center", x=0.5),
+    legend=dict(
+        title_text="",
+        orientation="h",
+        entrywidth=100,
+        yanchor="top",
+        y=-0.18,
+        xanchor="center",
+        x=0.5
+    ),
 )
 fig_190.update_traces(connectgaps=True)
 
@@ -143,10 +152,19 @@ fig_125.update_xaxes(
 )
 fig_125.update_yaxes(showgrid=True, gridcolor='LightGray', griddash='dot')
 fig_125.update_layout(
-    xaxis_title="Año", yaxis_title="Porcentaje",
-    legend_title="Categorías", plot_bgcolor='white',
+    xaxis_title="Año", 
+    yaxis_title="Porcentaje",
+    plot_bgcolor='white',
     margin=dict(t=60, b=80, l=60, r=40),
-    legend=dict(orientation="h", yanchor="top", y=-0.18, xanchor="center", x=0.5),
+    legend=dict(
+        title_text="",
+        orientation="h",
+        entrywidth=100,
+        yanchor="top",
+        y=-0.18,
+        xanchor="center",
+        x=0.5
+    ),
 )
 fig_125.update_traces(connectgaps=True)
 
@@ -171,7 +189,16 @@ fig_mapa.update_geos(fitbounds="locations", visible=False)
 fig_mapa.update_layout(
     title_text='Porcentaje de pobreza (Umbral Nacional) por Entidad Federativa<br>'
                '<sup>Animación del 2016 al 2022</sup>',
-    margin={"r": 0, "t": 80, "l": 0, "b": 0}
+    margin={"r": 0, "t": 80, "l": 0, "b": 0},
+    legend=dict(
+        title_text="",
+        orientation="h",
+        entrywidth=100,
+        yanchor="top",
+        y=-0.3,
+        xanchor="center",
+        x=0.5
+    ),
 )
 ```
 
@@ -179,11 +206,13 @@ fig_mapa.update_layout(
 
 ## Column {width="30%"}
 
-::: {.card title="Indicador 1.1.1"}
+::: {.card title="Indicador 1.1.1" height="25%" color="white"}
 
 **Descripción:** Proporción de la población que vive por debajo del umbral internacional de pobreza
 
----
+:::
+
+::: {.card color="white"}
 
 El Banco Mundial fijó en **$1.90 USD diarios** el umbral internacional de pobreza, equivalente a aproximadamente **$32.83 MXN** (abril 2026).
 
@@ -205,11 +234,13 @@ fig_190.show()
 
 ## Column {width="30%"}
 
-::: {.card title="Indicador 1r.1.1"}
+::: {.card title="Indicador 1r.1.1" height="25%" color="white"}
 
 **Descripción:** Proporción de la población que vive por debajo del umbral internacional de pobreza extrema
 
----
+:::
+
+::: {.card color="white"}
 
 El umbral de **pobreza extrema** se fijó en **$1.25 USD diarios**, equivalente a aproximadamente **$21.60 MXN** (abril 2026).
 
@@ -231,11 +262,13 @@ fig_125.show()
 
 ## Column {width="30%"}
 
-::: {.card title="Indicador 1.2.1.A"}
+::: {.card title="Indicador 1.2.1.A" height="25%" color="white"}
 
 **Descripción:** Porcentaje de la población en situación de pobreza según los umbrales nacionales del CONEVAL
 
----
+:::
+
+::: {.card color="white"}
 
 El CONEVAL define sus propias **Líneas de Pobreza por Ingresos** (LPI y LPEI):
 
