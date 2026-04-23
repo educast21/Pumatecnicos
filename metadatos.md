@@ -158,6 +158,87 @@ Variables:
 
 # ODS 4
 
+## 1.- 4R.6.1.A(2)_sh_es.xls
+Instituto Nacional de Estadística y Geografía (INEGI). Unidad de Estadísticas Sociodemográficas (2025). 
+"4r.6.1.a(2)  Tasa de alfabetización de las personas de 15 años o más, desglosada por sexo y subpoblaciones [ENIGH]". 
+Recuperado el 18 de abril de 2026 de: [https://agenda2030.mx/ODSind.html?ind=ODS004000600025&cveind=615&cveCob=99&lang=es#/Indicator](https://agenda2030.mx/ODSind.html?ind=ODS004000600025&cveind=615&cveCob=99&lang=es#/Indicator)
+
+Licencia: Licencia de Código Abierto 
+
+Variables:
+
+- Periodo: Entidad Federativa
+- Tasa de alfabetización de las personas de 15 años o más, desglosada por sexo y subpoblaciones [ENIGH] 2024: Porcentaje a nivel nacional
+- Tasa de alfabetización de las personas de 15 años o más, desglosada por sexo y subpoblaciones [ENIGH] 2022: Porcentaje a nivel nacional
+- Tasa de alfabetización de las personas de 15 años o más, desglosada por sexo y subpoblaciones [ENIGH] 2020: Porcentaje a nivel nacional
+- Tasa de alfabetización de las personas de 15 años o más, desglosada por sexo y subpoblaciones [ENIGH] 2018: Porcentaje a nivel nacional
+- Tasa de alfabetización de las personas de 15 años o más, desglosada por sexo y subpoblaciones [ENIGH] 2016: Porcentaje a nivel nacional
+
+- Tasa de alfabetización de las personas de 15 a 17 años, desglosada por Hablantes de lengua indígena 2024: Porcentaje a nivel estatal para Chiapas, Guerrero y Oaxaca
+- Tasa de alfabetización de las personas de 18 a 29 años, desglosada por Hablantes de lengua indígena 2024: Porcentaje a nivel estatal para Chiapas, Guerrero y Oaxaca
+- Tasa de alfabetización de las personas de 30 a 59 años, desglosada por Hablantes de lengua indígena 2024: Porcentaje a nivel estatal para Chiapas, Guerrero y Oaxaca
+- Tasa de alfabetización de las personas de 60 años y más, desglosada por Hablantes de lengua indígena 2024: Porcentaje a nivel estatal para Chiapas, Guerrero y Oaxaca
+
+
+## 2a.- 4R.6.1.A(1)_sh_20_es.xls
+## 2b.- 4R.6.1.A(1)_sh_12_es.xls
+## 2c.- 4R.6.1.A(1)_sh_07_es.xls
+Instituto Nacional de Estadística y Geografía (INEGI). Unidad de Estadísticas Sociodemográficas (2023).
+"4r.6.1.b(1)  Tasa de alfabetización de las personas de 15 a 24 años, desglosada por sexo y subpoblaciones [CENSO]".
+Recuperado el 18 de abril de 2026 de: [https://agenda2030.mx/ODSind.html?ind=ODS004000600030&cveind=612&cveCob=99&lang=es#/Indicator](https://agenda2030.mx/ODSind.html?ind=ODS004000600030&cveind=612&cveCob=99&lang=es#/Indicator)
+
+Licencia: Licencia de Código Abierto 
+
+Variables:
+
+- Periodo: Entidad Federativa
+- Tasa de alfabetización de las personas de 15 años o más, desglosada por sexo y subpoblaciones [CENSO] 2020: Porcentaje a nivel municipal, Oaxaca
+- Tasa de alfabetización de las personas de 15 años o más, desglosada por sexo y subpoblaciones [CENSO] 2020: Porcentaje a nivel municipal, Guerrero
+- Tasa de alfabetización de las personas de 15 años o más, desglosada por sexo y subpoblaciones [CENSO] 2020: Porcentaje a nivel municipal, Chiapas
+
+## 3.- 4.1.2_sh_es.xls
+Instituto Nacional de Estadística y Geografía (INEGI). Unidad de Estadísticas Sociodemográficas (2025).
+"4.1.2  Índice de finalización (enseñanza primaria, secundaria y preparatoria) [ENIGH]".
+Recuperado el 18 de abril de 2026 de: [https://agenda2030.mx/ODSind.html?ind=ODS004000100011&cveind=587&cveCob=99&lang=es#/Indicator](https://agenda2030.mx/ODSind.html?ind=ODS004000100011&cveind=587&cveCob=99&lang=es#/Indicator)
+
+Licencia: Licencia de Código Abierto 
+
+Variables:
+
+- cvegeo: ID para identificar el estado (00- Nacional, 01- Ags, ..., 33- Zacatecas)
+- Entidad Federativa
+- Índice de finalización (enseñanza primaria, secundaria y preparatoria) 2024: Porcentaje a nivel nacional y por entidad federativa
+- Índice de finalización (enseñanza primaria, secundaria y preparatoria) 2020: Porcentaje a nivel nacional y por entidad federativa
+- Índice de finalización (enseñanza primaria, secundaria y preparatoria) 2022: Porcentaje a nivel nacional y por entidad federativa
+- Índice de finalización (enseñanza primaria, secundaria y preparatoria) 2018: Porcentaje a nivel nacional y por entidad federativa
+- Índice de finalización (enseñanza primaria, secundaria y preparatoria) 2016: Porcentaje a nivel nacional y por entidad federativa
+
+## 4a.- 4.A.1.A_sh_es.xls
+## 4b.- 4.A.1.B_sh_es.xls
+## 4c.- 4.A.1.C_sh_es.xls
+## 4d.- 4.A.1.E_sh_es.xls
+## 4e.- 4.A.1.F_sh_es.xls
+## 4f.- 4.A.1.G_sh_es.xls
+Secretaría de Educación Pública (SEP). Dirección General de Planeación, Programación y Estadística Educativa (2025).
+"Proporción de escuelas con acceso a 4a.- electricidad, 4b.- internet, 4c.- Equipo de cómputo, 4d.- Agua potable, 4e.- Sanitarios y 4f.- Lavabos por entidad federativa y nivel educativo".
+Recuperado el 18 de abril de 2026 de:
+- 4a.-[https://agenda2030.mx/ODSind.html?ind=ODS004000800010&cveind=159&cveCob=99&lang=es#/Indicator](https://agenda2030.mx/ODSind.html?ind=ODS004000800010&cveind=159&cveCob=99&lang=es#/Indicator)
+
+- 4b.- [https://agenda2030.mx/ODSind.html?ind=ODS004000800020&cveind=385&cveCob=99&lang=es#/Indicator](https://agenda2030.mx/ODSind.html?ind=ODS004000800020&cveind=385&cveCob=99&lang=es#/Indicator)
+
+- 4c.- [https://agenda2030.mx/ODSind.html?ind=ODS004000800030&cveind=386&cveCob=99&lang=es#/Indicator](https://agenda2030.mx/ODSind.html?ind=ODS004000800030&cveind=386&cveCob=99&lang=es#/Indicator)
+
+- 4d.- [https://agenda2030.mx/ODSind.html?ind=ODS004000800050&cveind=388&cveCob=99&lang=es#/Indicator](https://agenda2030.mx/ODSind.html?ind=ODS004000800050&cveind=388&cveCob=99&lang=es#/Indicator)
+
+- 4e.- [https://agenda2030.mx/ODSind.html?ind=ODS004000800060&cveind=389&cveCob=99&lang=es#/Indicator](https://agenda2030.mx/ODSind.html?ind=ODS004000800060&cveind=389&cveCob=99&lang=es#/Indicator)
+
+- 4f.- [https://agenda2030.mx/ODSind.html?ind=ODS004000800065&cveind=401&cveCob=99&lang=es#/Indicator](https://agenda2030.mx/ODSind.html?ind=ODS004000800065&cveind=401&cveCob=99&lang=es#/Indicator)
+
+Variables:
+
+- Entidad federativa
+- Proporción de escuelas con acceso a _cada uno de los servicios_, por entidad federativa y nivel educativo (Primaria, Secundaria, Preparatoria), para el ciclo escolar 2019 (correspondiente al ciclo escolar 2018-2019) y 2025 (correspondiente al ciclo escolar 2024-2025)
+
 
 # ODS 6
 
