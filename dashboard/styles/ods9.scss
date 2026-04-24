@@ -1,0 +1,435 @@
+/*-- scss:defaults --*/
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+// ============================================================
+// Paleta chalkboard escolar — HEREDADA de ODS 4 y ODS 8
+// (enfoque de capacidades)
+// ============================================================
+$chalk-dark:     #1e3a2b;   // pizarrón profundo
+$chalk-mid:      #2d5a3d;   // verde pizarra medio
+$chalk-light:    #3d7a52;   // verde tiza resaltado
+$chalk-accent:   #5ba672;   // verde brillante
+$chalk-soft:     #e8f3e8;   // crema verdoso
+$paper-bg:       #f5efe4;   // crema general del dashboard
+$chalk-text:     #f7f4e9;   // blanco tiza
+$chalk-muted:    #cfd9c8;   // blanco tiza apagado
+
+// ============================================================
+// Acentos específicos del ODS 9 (naranja ONU)
+// Sólo se usan en detalles puntuales (icono, borde del cierre)
+// ============================================================
+$ods9-orange:       #c46a16;
+$ods9-orange-light: #e88e2f;
+$ods9-orange-dark:  #8e4a0a;
+
+// Texto neutro (para cajas blancas descriptivas)
+$text-box:       #2a2a2a;
+$border-box:     #2a2a2a;
+
+$font-sans:   "Montserrat", sans-serif;
+$font-serif:  "Playfair Display", serif;
+$font-chalk:  "Caveat", cursive;
+
+// --- Bootstrap overrides ---
+$navbar-bg:   $chalk-dark;
+$navbar-fg:   $chalk-text;
+$body-bg:     $paper-bg;
+$body-color:  #2a2a2a;
+
+$font-family-sans-serif: $font-sans;
+$font-family-base:       $font-sans;
+$headings-font-family:   $font-serif;
+
+
+/*-- scss:rules --*/
+
+// ============================================================
+// Base
+// ============================================================
+body {
+  background-color: $paper-bg !important;
+  font-family: $font-sans;
+  -webkit-font-smoothing: antialiased;
+}
+
+// ============================================================
+// Navbar — verde chalkboard (idéntica a ODS 4 / ODS 8)
+// ============================================================
+.quarto-dashboard .navbar,
+.navbar {
+  background:
+    linear-gradient(90deg, $chalk-dark 0%, $chalk-mid 55%, $chalk-light 100%),
+    $chalk-dark !important;
+  background-color: $chalk-dark !important;
+  border-bottom: 3px solid $chalk-accent !important;
+  padding: 0.4rem 1.25rem !important;
+  min-height: 52px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+  .navbar-brand,
+  .navbar-title,
+  .title,
+  .quarto-dashboard-title {
+    color: $chalk-text !important;
+    font-family: $font-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+    font-size: clamp(1.1rem, 1.6vw, 1.4rem) !important;
+  }
+
+  .quarto-dashboard-author,
+  .navbar-author {
+    color: $chalk-muted !important;
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+}
+
+// Botón "Inicio"
+.quarto-dashboard .navbar .quarto-navbar-tools .btn,
+.quarto-dashboard .navbar .nav-btn,
+.navbar .nav-btn,
+.navbar .btn {
+  background: rgba(255, 255, 255, 0.10) !important;
+  color: $chalk-text !important;
+  border: 1px solid rgba(91, 166, 114, 0.55) !important;
+  border-radius: 999px !important;
+  padding: 0.3rem 0.9rem !important;
+  font-family: $font-sans !important;
+  font-weight: 600 !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.3px;
+  transition: all 0.2s ease;
+
+  &:hover,
+  &:focus {
+    background: $chalk-accent !important;
+    color: $chalk-dark !important;
+    border-color: $chalk-accent !important;
+    transform: translateY(-1px);
+  }
+}
+
+// ============================================================
+// Ajustes globales dashboard
+// ============================================================
+.quarto-dashboard main { padding: 0.7rem !important; }
+
+.quarto-dashboard .bslib-gap-spacing,
+.quarto-dashboard .dashboard-column,
+.quarto-dashboard .dashboard-row {
+  gap: 0.7rem !important;
+}
+
+// ============================================================
+// Cards base (gráficos con título del chunk)
+// ============================================================
+.card {
+  border: none !important;
+  border-radius: 10px !important;
+  background-color: #fbf8ef !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+// Header ("tab") de cards con título - para los gráficos
+.card > .card-header {
+  background: linear-gradient(90deg, $chalk-dark 0%, $chalk-mid 100%) !important;
+  color: $chalk-text !important;
+  font-family: $font-sans !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.4px;
+  font-size: 0.9rem !important;
+  padding: 0.45rem 0.85rem !important;
+  border-bottom: none !important;
+  border-radius: 10px 10px 0 0 !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+  min-height: 0;
+}
+
+// Ocultar header vacío en cards personalizadas
+.card.icono-ods > .card-header,
+.card.titulo-seccion > .card-header,
+.card.frase-destacada > .card-header,
+.card.nota-chalkboard > .card-header,
+.card.texto-explicativo > .card-header,
+.card.card-sintesis > .card-header {
+  display: none !important;
+}
+
+// ============================================================
+// NAVBAR SECUNDARIA (ODS 4 / 8 / 9) — igual que ODS 4 y 8
+// ============================================================
+.card.nav-ods-item {
+  background: $chalk-soft !important;
+  border: 2px solid $chalk-mid !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+
+  > .card-header { display: none !important; }
+
+  > .card-body {
+    padding: 0.4rem 0.8rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: $font-sans;
+    font-weight: 700;
+    font-size: clamp(0.8rem, 1vw, 0.95rem);
+    letter-spacing: 0.4px;
+    color: $chalk-dark;
+    text-align: center;
+    line-height: 1.1;
+  }
+
+  a {
+    color: $chalk-dark !important;
+    text-decoration: none !important;
+    display: block;
+    width: 100%;
+
+    &:hover { color: $chalk-accent !important; }
+  }
+
+  p { margin: 0 !important; }
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  }
+}
+
+// Pestaña activa (ODS 9)
+.card.nav-ods-item.nav-ods-activo {
+  background: linear-gradient(90deg, $chalk-dark 0%, $chalk-mid 100%) !important;
+  border-color: $chalk-accent !important;
+  cursor: default;
+
+  > .card-body { color: $chalk-text !important; }
+
+  &:hover { transform: none; }
+}
+
+// ============================================================
+// ICONO ODS — naranja (color oficial del ODS 9)
+// ============================================================
+.card.icono-ods {
+  background: linear-gradient(135deg, $ods9-orange-dark 0%, $ods9-orange 55%, $ods9-orange-light 100%) !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
+
+  > .card-body {
+    padding: 0.35rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden;
+  }
+  img {
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    border-radius: 6px;
+    display: block;
+    margin: 0 auto !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  p { margin: 0 !important; text-align: center; }
+}
+
+// ============================================================
+// TÍTULO DE SECCIÓN
+// ============================================================
+.card.titulo-seccion {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+
+  > .card-body {
+    padding: 0.5rem 0.9rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center;
+    color: $chalk-dark;
+    font-family: $font-serif;
+    font-weight: 700;
+    font-size: clamp(1rem, 1.4vw, 1.3rem);
+    letter-spacing: 0.5px;
+    line-height: 1.15;
+  }
+  p { margin: 0 !important; }
+}
+
+// ============================================================
+// FRASE DESTACADA (cita de cabecera de sección)
+// ============================================================
+.card.frase-destacada {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-left: 4px solid $chalk-accent !important;
+  border-right: 4px solid $chalk-accent !important;
+  border-radius: 6px !important;
+
+  > .card-body {
+    padding: 0.4rem 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center;
+    color: $chalk-dark;
+    font-family: $font-serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+    line-height: 1.35;
+  }
+  p { margin: 0.1rem 0 !important; }
+}
+
+// ============================================================
+// NOTA CHALKBOARD — textos cortos entre gráficos
+// ============================================================
+.card.nota-chalkboard {
+  background:
+    linear-gradient(135deg, rgba(30, 58, 43, 0.88) 0%, rgba(45, 90, 61, 0.82) 50%, rgba(30, 58, 43, 0.88) 100%),
+    url("../dashboard/imagenes/chalkboard.png"),
+    $chalk-dark !important;
+  background-size: cover, cover, auto !important;
+  background-position: center, center, center !important;
+  background-repeat: no-repeat, no-repeat, no-repeat !important;
+  border: 3px solid rgba(247, 244, 233, 0.15) !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 0 30px rgba(0, 0, 0, 0.25);
+
+  > .card-body {
+    padding: 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center;
+    color: $chalk-text !important;
+    font-family: $font-chalk;
+    font-weight: 500;
+    font-size: clamp(1rem, 1.35vw, 1.4rem);
+    line-height: 1.35;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border: 1px dashed rgba(247, 244, 233, 0.3);
+      border-radius: 6px;
+      pointer-events: none;
+    }
+  }
+  p { margin: 0 !important; position: relative; z-index: 2; }
+}
+
+// ============================================================
+// TEXTO EXPLICATIVO — caja blanca con la descripción detallada
+// (se usa al lado del gráfico o en fila completa)
+// ============================================================
+.card.texto-explicativo {
+  background: #ffffff !important;
+  border: 2px solid $border-box !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+
+  > .card-body {
+    padding: 1rem 1.2rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: stretch !important;
+    color: $text-box;
+    font-family: $font-sans;
+    font-size: clamp(0.85rem, 1vw, 1rem);
+    font-weight: 400;
+    line-height: 1.55;
+    text-align: left;
+    gap: 0.7rem;
+    overflow-y: auto;
+  }
+
+  p { margin: 0 !important; }
+
+  strong {
+    color: $chalk-dark;
+    font-weight: 700;
+  }
+}
+
+// ============================================================
+// CARD SÍNTESIS — cierre del dashboard (chalkboard grande con
+// borde naranja ODS 9 como sello)
+// ============================================================
+.card.card-sintesis {
+  background:
+    linear-gradient(135deg, rgba(30, 58, 43, 0.92) 0%, rgba(45, 90, 61, 0.86) 50%, rgba(30, 58, 43, 0.92) 100%),
+    url("../dashboard/imagenes/chalkboard.png"),
+    $chalk-dark !important;
+  background-size: cover, cover, auto !important;
+  background-position: center, center, center !important;
+  background-repeat: no-repeat, no-repeat, no-repeat !important;
+  border: 3px solid $ods9-orange !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), inset 0 0 40px rgba(0, 0, 0, 0.3);
+
+  > .card-body {
+    padding: 1.4rem 1.8rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    color: $chalk-text !important;
+    font-family: $font-sans;
+    font-weight: 400;
+    font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+    line-height: 1.6;
+    gap: 0.8rem;
+    position: relative;
+    text-align: justify;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border: 1px dashed rgba(247, 244, 233, 0.25);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+  }
+
+  p { margin: 0 !important; position: relative; z-index: 2; }
+
+  strong {
+    color: $ods9-orange-light;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+}
+
+// ============================================================
+// Plotly: contenedor transparente
+// ============================================================
+.js-plotly-plot .plotly .main-svg { background: transparent !important; }
+
+// ============================================================
+// Responsivo
+// ============================================================
+@media (max-width: 992px) {
+  .card.nota-chalkboard > .card-body { font-size: 1rem; padding: 0.8rem !important; }
+  .card.titulo-seccion  > .card-body { font-size: 1rem; }
+  .card.frase-destacada > .card-body { font-size: 0.95rem; }
+  .card.texto-explicativo > .card-body {
+    font-size: 0.85rem;
+    padding: 0.8rem 0.9rem !important;
+  }
+  .card.card-sintesis > .card-body {
+    font-size: 0.9rem;
+    padding: 1rem 1.2rem !important;
+  }
+}
