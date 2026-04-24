@@ -264,6 +264,48 @@ Variables:
 - Entidad Federativa
 - Proporción de la población que dispone de servicios de suministro de agua potable y saneamiento gestionados de manera segura: Porcentaje Nacional a 2022
 
+## 2.- 6.1.1.C_sh_es.xls
+
+Comisión Nacional del Agua (CONAGUA). (2023).
+"6.1.1.c  Proporción de la población que dispone de servicios de suministro de agua potable gestionados de manera segura, por entidad federativa". 
+Recuperado el 24 de abril de 2026 de: [https://agenda2030.mx/ODSind.html?ind=ODS006000050030&cveind=618&cveCob=99&lang=es#/Indicator](https://agenda2030.mx/ODSind.html?ind=ODS006000050030&cveind=618&cveCob=99&lang=es#/Indicator)
+
+Licencia: Licencia de Código Abierto 
+
+Variables:
+
+- Entidad Federativa
+- Proporción de la población que dispone de servicios de suministro de agua potable gestionados de manera segura: porcentaje para el 2022 para Baja California Sur
+
+## 3.- 6.2.1.C_sh_es.xls
+
+Comisión Nacional del Agua (CONAGUA). (2023).
+"6.2.1.c  Proporción de la población que utiliza servicios de saneamiento gestionados de manera segura, por entidad federativa". 
+Recuperado el 24 de abril de 2026 de: [https://agenda2030.mx/ODSind.html?ind=ODS006000150030&cveind=622&cveCob=99&lang=es#/Indicator](https://agenda2030.mx/ODSind.html?ind=ODS006000150030&cveind=622&cveCob=99&lang=es#/Indicator)
+
+Licencia: Licencia de Código Abierto 
+
+Variables:
+
+- Entidad Federativa
+- Proporción de la población que dispone de servicios de suministro de saneamiento gestionados de manera segura: porcentaje para el 2022 para Baja California Sur
+
+
+## 4.- Unidades-economicas-grandes-que-realizan-tratamiento-de-aguas-residuales.xlsx
+
+INEGI (2019)
+"Unidades económicas grandes que realizan tratamiento de aguas residuales". 
+Recuperado el 24 de abril de 2026 de: [https://www.economia.gob.mx/datamexico/es/profile/geo/baja-california-sur-bs?housingConectivity=goodAccess&environmental=waterOption](https://www.economia.gob.mx/datamexico/es/profile/geo/baja-california-sur-bs?housingConectivity=goodAccess&environmental=waterOption)
+
+Licencia: Licencia de Código Abierto 
+
+Variables:
+
+- Value: No. de Unidades económicas grandes
+- Percentage: % de Unidades económicas grandes en cada categoría
+- Environmental Process: Categorías de unidades, sí aplicaron o no
+
+
 
 # ODS 8 
 
