@@ -3,8 +3,8 @@ title: "Pobreza en México"
 author: "Pumatecnicos"
 format:
     dashboard:
+        theme: styles/ods4.scss
         scrolling: true
-    theme: styles/ods4.scss
 css: styles/ods4.scss
 ---
 

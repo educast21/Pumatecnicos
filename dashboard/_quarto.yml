@@ -9,4 +9,4 @@ format:
   dashboard:
     theme:
       - cosmo
-      - custom.scss
+      - styles/custom.scss

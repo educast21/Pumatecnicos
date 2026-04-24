@@ -5,32 +5,20 @@ format:
     dashboard:
         scrolling: false
         theme: styles/index.scss
-css: styles/index.scss
 ---
 
 ```{python}
 #| label: Imports
-
-import plotly.graph_objects as go
-import pandas as pd
-import geopandas as gpd
 import plotly.express as px
-import json
-import requests
-
 ```
 
 ```{python}
 #| label: Generando_grafica_1
 #| output: false
 
-# Cargar dataset incluido
 df = px.data.gapminder()
-
-# Filtrar un año (para hacerlo más claro)
 df_2007 = df[df["year"] == 2007]
 
-# Crear scatter plot
 fig = px.scatter(
     df_2007,
     x="gdpPercap",
@@ -43,6 +31,17 @@ fig = px.scatter(
     title="GDP vs Life Expectancy (2007)"
 )
 
+fig.update_layout(
+    legend=dict(
+        title_text="",
+        orientation="h",
+        entrywidth=70,
+        yanchor="top",
+        y=-0.3,
+        xanchor="center",
+        x=0.5
+    ),
+)
 ```
 
 ## Row {height=65%}
@@ -60,15 +59,35 @@ fig
 
 ### Column {width=16%}
 
-:::{.card .sticker-card}
+:::{.sdg-sticker}
 
-![](imagenes/ods1.jpg){.sticker-img}
+::: {.sdg-number}
+1
+:::
+
+::: {.sdg-label}
+FIN
+
+DE LA POBREZA
+:::
+
+::: {.sdg-icon}
+👨‍👩‍👧‍👦
+:::
+
+::: {.sdg-tagline}
+Poner fin a la pobreza
+
+en todas sus formas
+
+en todo el mundo
+:::
 
 :::
 
 ### Column {width=42%}
 
-:::{.card .enfoque-card-carencias title="[Enfoque de carencias sociales ↗ (Click aquí)](notebooks/ods4.html)"}
+:::{.card .enfoque-card-carencias title="[Enfoque de carencias sociales  ↗ (Click aquí)](notebooks/ods4.html)"}
 
 ```{python}
 #| label: Figura_2
@@ -81,9 +100,15 @@ fig
 
 :::{.card .enfoque-monetario-container height=100%}
 
-:::{.enfoque-monetario-titulo}
+:::{.enfoque-monetario-header}
 
-Enfoque monetario
+::: {.enfoque-monetario-titulo}
+ENFOQUE MONETARIO
+:::
+
+::: {.enfoque-monetario-subtitulo}
+¿Con eso te alcanza?
+:::
 
 :::
 
@@ -91,25 +116,73 @@ Enfoque monetario
 
 :::{.indicador-card}
 
-**Indicador 1**
+::: {.indicador-label}
+Pobreza Extrema Internacional
+:::
+
+::: {.indicador-valor}
+$21.60 MXN
+:::
+
+::: {.indicador-desc}
+Conversión 1.90 USD
+
+24/04/2026
+:::
 
 :::
 
 :::{.indicador-card}
 
-**Indicador 2**
+::: {.indicador-label}
+Pobreza Extrema Nacional
+:::
+
+::: {.indicador-valor}
+$75.19 MXN
+:::
+
+::: {.indicador-desc}
+Promedio simple entre línea rural & urbana
+
+dividida entre 30 (días)
+:::
 
 :::
 
 :::{.indicador-card}
 
-**Indicador 3**
+::: {.indicador-label}
+Pobreza Internacional
+:::
+
+::: {.indicador-valor}
+$32.83 MXN
+:::
+
+::: {.indicador-desc}
+Conversión 1.25 USD
+
+23/04/2026
+:::
 
 :::
 
 :::{.indicador-card}
 
-**Indicador 4**
+::: {.indicador-label}
+Pobreza Nacional
+:::
+
+::: {.indicador-valor}
+$141.56 MXN
+:::
+
+::: {.indicador-desc}
+Promedio simple entre línea rural & urbana
+
+dividida entre 30 (días)
+:::
 
 :::
 

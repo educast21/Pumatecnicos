@@ -1,95 +1,330 @@
+/*-- scss:defaults --*/
+
+$body-bg: #f5efe4;
+$body-color: #2a2a2a;
+
 /*-- scss:rules --*/
 
+// ============================================================
+// Paleta
+// ============================================================
+$cream:        #f5efe4;
+$dark-green:   #1f3a2e;
+$mid-green:    #2d5240;
+$gold:         #d4a94a;
+$gold-light:   #e8c468;
+$gold-dark:    #b8902e;
+$dark-red:     #4a1212;
+$mid-red:      #7a1f1f;
+$text-light:   #f5efe4;
+$text-muted:   #c9bfa8;
+
+body {
+  background-color: $cream !important;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+// ============================================================
+// NAVBAR / HEADER - compacta (≈52px)
+// ============================================================
+.quarto-dashboard .navbar,
+.navbar {
+  background:
+    linear-gradient(
+      90deg,
+      $dark-red 0%,
+      $mid-red 40%,
+      rgba(122, 31, 31, 0.6) 70%,
+      rgba(122, 31, 31, 0.25) 100%
+    ),
+    linear-gradient(135deg, #3a1010 0%, #5a1a1a 100%);
+  border-bottom: none !important;
+  padding: 0.4rem 1.25rem !important;
+  min-height: 52px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+  .navbar-brand,
+  .navbar-title,
+  .title,
+  .quarto-dashboard-title {
+    color: $text-light !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: clamp(1.1rem, 1.6vw, 1.4rem) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.3px;
+    line-height: 1.2 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .quarto-dashboard-author,
+  .navbar-author {
+    color: $text-muted !important;
+    font-size: 0.8rem;
+    font-weight: 400;
+    margin-left: 0.6rem;
+  }
+}
+
+// ============================================================
+// Cards base
+// ============================================================
 .card {
-  border: none;
-  border-radius: 15px;
-  text-align: center;
-  //background-color: #ff6347;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  background-color: #fbf7ee;
+}
+
+// ============================================================
+// CARD HEADERS: capacidades (verde) y carencias (rojo)
+// ============================================================
+.enfoque-card-capacidades > .card-header,
+.enfoque-card-carencias > .card-header {
+  color: $text-light !important;
+  font-size: clamp(0.8rem, 1vw, 0.95rem) !important;
+  font-weight: 700 !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+  align-items: center;
+  padding: 0.5rem 0.85rem !important;
+  border-bottom: none !important;
+  border-radius: 12px 12px 0 0 !important;
+  line-height: 1.25;
+  letter-spacing: 0.2px;
+  min-height: 0;
+
+  a {
+    color: $text-light !important;
+    text-decoration: none !important;
+    display: block;
+    width: 100%;
+
+    &:hover {
+      color: $gold-light !important;
+    }
+  }
 }
 
 .enfoque-card-capacidades > .card-header {
-  background-color: #5aaaff;
-  color: white;
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-
-  a {
-    color: white;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+  background: linear-gradient(90deg, $dark-green 0%, $mid-green 100%) !important;
 }
 
 .enfoque-card-carencias > .card-header {
-  background-color: #ff6347;
-  color: white;
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: center;
-  justify-content: center;
+  background: linear-gradient(90deg, $dark-red 0%, $mid-red 100%) !important;
+}
+
+// ============================================================
+// STICKER ODS 1 - columna central
+// ============================================================
+.sdg-sticker {
+  background: linear-gradient(160deg, #7a1f1f 0%, #5a1a1a 55%, #4a1212 100%);
+  border-radius: 12px;
+  padding: 0.85rem 0.6rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  a {
-    color: white;
-    text-decoration: none;
+  justify-content: flex-start;
+  text-align: center;
+  color: $text-light;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
 
-    &:hover {
-      text-decoration: underline;
-    }
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.06) 0%, transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(0, 0, 0, 0.2) 0%, transparent 50%);
+    pointer-events: none;
   }
+
+  > * { position: relative; z-index: 1; }
+
+  p { margin: 0 !important; }
 }
 
-.sticker-card {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  overflow: visible !important;
-  position: relative !important;
+.sdg-number {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 0.2rem;
+  color: $text-light;
 }
 
-.sticker-img {
-  width: 150px;
-  height: 150px;
-  object-fit: contain;
-  position: absolute !important;
-  bottom: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 999;
-  filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.25));
+.sdg-label {
+  font-size: clamp(0.6rem, 0.75vw, 0.75rem);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1.15;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
 }
 
+.sdg-icon {
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  line-height: 1;
+  margin: 0.3rem 0;
+  filter: grayscale(1) brightness(3);
+}
+
+.sdg-tagline {
+  font-size: clamp(0.55rem, 0.7vw, 0.7rem);
+  font-style: italic;
+  line-height: 1.3;
+  color: $text-muted;
+  margin-top: auto;
+  padding-top: 0.4rem;
+}
+
+// ============================================================
+// ENFOQUE MONETARIO - fila inferior con gradiente verde
+// ============================================================
 .enfoque-monetario-container {
-  padding: 0.75rem;
-  color: #4b4b4b;
-  background-color: #fffdda;
-  border: none;
-  border-radius: 15px;
+  padding: 0.75rem 1rem !important;
+  color: $text-light !important;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(31, 58, 46, 0.65) 0%,
+      rgba(45, 82, 64, 0.9) 30%,
+      rgba(45, 82, 64, 0.9) 70%,
+      rgba(31, 58, 46, 0.65) 100%
+    ),
+    radial-gradient(ellipse at 10% 60%, rgba(40, 30, 20, 0.6) 0%, transparent 45%),
+    radial-gradient(ellipse at 90% 50%, rgba(60, 40, 25, 0.55) 0%, transparent 50%),
+    linear-gradient(135deg, #2d3a28 0%, #3d4a32 50%, #2a352a 100%) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  overflow: hidden !important;
+}
+
+// El card-body de bslib mete padding extra; lo normalizamos
+.enfoque-monetario-container > .card-body,
+.enfoque-monetario-container .card-body {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 !important;
+  background: transparent !important;
+  overflow: hidden !important;
+  gap: 0.5rem;
+}
+
+.enfoque-monetario-header {
+  text-align: center;
+  flex-shrink: 0;
+
+  p { margin: 0 !important; }
 }
 
 .enfoque-monetario-titulo {
-  text-align: center;
-  font-weight: bold;
-  font-size: 2rem;
-  margin-bottom: 0.75rem;
+  font-weight: 700;
+  color: $text-light;
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
+  font-family: Georgia, serif;
+  line-height: 1.2;
+  margin: 0 !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.enfoque-monetario-subtitulo {
+  font-size: clamp(0.7rem, 0.85vw, 0.8rem);
+  color: $text-muted;
+  line-height: 1.2;
+  margin: 0.15rem 0 0 0 !important;
 }
 
 .enfoque-monetario-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.75rem;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 0.6rem !important;
+  flex: 1 1 auto;
+  min-height: 0;
+  align-items: stretch;
 }
 
+// ============================================================
+// Tarjetas de indicador (las 4 con números grandes)
+// ============================================================
 .indicador-card {
-  background-color: rgb(255, 255, 255);
+  background: linear-gradient(160deg, rgba(45, 70, 50, 0.85) 0%, rgba(30, 50, 35, 0.92) 100%);
+  border: 1px solid rgba(212, 169, 74, 0.35);
+  padding: 0.55rem 0.5rem !important;
+  border-radius: 8px;
+  color: $text-light;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.15rem;
   text-align: center;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem;
-  border-radius: 4px;
+  min-height: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+  // CLAVE del fix de overlap: pandoc envuelve cada ::: en un <p>
+  // con márgenes default. Los reseteamos.
+  p { margin: 0 !important; line-height: inherit; }
+}
+
+.indicador-label {
+  color: $gold-light;
+  font-size: clamp(0.65rem, 0.8vw, 0.8rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.2px;
+}
+
+.indicador-valor {
+  color: $text-light;
+  font-size: clamp(1rem, 1.6vw, 1.5rem);
+  font-weight: 700;
+  font-family: Georgia, serif;
+  line-height: 1.1;
+}
+
+.indicador-desc {
+  color: $text-muted;
+  font-size: clamp(0.55rem, 0.7vw, 0.7rem);
+  line-height: 1.25;
+}
+
+// ============================================================
+// Responsivo
+// ============================================================
+@media (max-width: 992px) {
+  .enfoque-monetario-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .sdg-tagline { display: none; }
+}
+
+@media (max-width: 576px) {
+  .enfoque-monetario-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+// ============================================================
+// Ajustes globales Quarto dashboard
+// ============================================================
+.quarto-dashboard main {
+  padding: 0.6rem !important;
+}
+
+.quarto-dashboard .bslib-gap-spacing,
+.quarto-dashboard .dashboard-column,
+.quarto-dashboard .dashboard-row {
+  gap: 0.6rem !important;
+}
+
+// Esconder header vacío del card que envuelve al sticker
+.sdg-sticker > .card-header,
+.card:has(> .sdg-sticker) > .card-header {
+  display: none !important;
 }
