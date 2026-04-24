@@ -1,213 +1,171 @@
 ---
-title: "Pobreza en México"
+title: "ODS 4 · Educación de Calidad"
 author: "Pumatecnicos"
 format:
-    dashboard:
-        theme: styles/ods4.scss
-        scrolling: true
-css: styles/ods4.scss
+  dashboard:
+    theme: ../styles/ods4.scss
+    scrolling: true
 ---
 
 ```{python}
-#| label: Imports
+#| label: imports
 #| output: false
-
-import plotly.graph_objects as go
-import pandas as pd
-import geopandas as gpd
 import plotly.express as px
-import json
-import requests
+
+df = px.data.gapminder().query("year == 2007")
+
+def fig_demo(title):
+    f = px.scatter(
+        df, x="gdpPercap", y="lifeExp",
+        size="pop", color="continent",
+        hover_name="country", log_x=True, size_max=45,
+        title=title
+    )
+    f.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(245,245,235,0.95)",
+        font=dict(color="#1b2a1f"),
+        margin=dict(l=10, r=10, t=40, b=10),
+        legend=dict(orientation="h", y=-0.25, x=0.5, xanchor="center"),
+    )
+    return f
 ```
 
-```{python}
-#| label: Gráfica 3
-#| output: false
-#| eval: false
+<!-- ============================================================
+     SECCIÓN 1 · ALFABETIZACIÓN
+     ============================================================ -->
 
-path = "../datos"
+## Row {height="90px"}
 
-# Oaxaca
-df = pd.read_excel(path + "/4R.6.1.A(1)_sh_20_es.xls", sheet_name=0, header=None)
-df = df.iloc[7:-5]
-df.columns = df.iloc[0]
-df = df[2:]
-df = df.iloc[:, [0,1,9]]
-df = df.drop(df.index[0])
-df.columns = ["cvegeo", "Entidad", "LenguaIndigena"]
-df_oax = df
+### Column {width="10%"}
 
-# Guerrero
-df = pd.read_excel(path + "/4R.6.1.A(1)_sh_12_es.xls", sheet_name=0, header=None)
-df = df.iloc[7:-5]
-df.columns = df.iloc[0]
-df = df[2:]
-df = df.iloc[:, [0,1,9]]
-df = df.drop(df.index[0])
-df.columns = ["cvegeo", "Entidad", "LenguaIndigena"]
-df_guerr = df
-
-# Chiapas
-df = pd.read_excel(path + "/4R.6.1.A(1)_sh_07_es.xls", sheet_name=0, header=None)
-df = df.iloc[7:-5]
-df.columns = df.iloc[0]
-df = df[2:]
-df = df.iloc[:, [0,1,9]]
-df = df.drop(df.index[0])
-df.columns = ["cvegeo", "Entidad", "LenguaIndigena"]
-df_chis = df
-
-df = pd.concat([df_chis, df_guerr, df_oax], ignore_index=True)
-df['LenguaIndigena'] = pd.to_numeric(df["LenguaIndigena"], errors="coerce")
-
-repo_url = 'https://datamx.io/dataset/2c171d7e-bec1-4e0f-9f3e-90deea13019c/resource/7fe95b09-9a76-4b0f-9981-ea08c27b9e12/download/municipalities_full.geojson'
-mx_states_geojson = requests.get(repo_url).json()
-estados = ['07', '12', '20']
-gdf = gpd.GeoDataFrame.from_features(mx_states_geojson['features'])
-gdf_filtrado = gdf[gdf['CVE_ENT'].isin(estados)].copy()
-mx_states_geojson = json.loads(gdf_filtrado.to_json())
-
-df['Categoría'] = pd.cut(
-    df['LenguaIndigena'],
-    bins=[0, 75, 90, 100],
-    labels=["[0,75]", "(75,90]", "(90,100]"],
-    include_lowest=True,
-    right=True
-)
-
-colores = {
-    "(90,100]": "#2dc937",
-    "(75,90]": "#efd720",
-    "[0,75]": "#d14e39"
-}
-
-fig = px.choropleth(
-    df,
-    geojson=mx_states_geojson,
-    locations='cvegeo',
-    featureidkey='properties.CVEGEO',
-    color='Categoría',
-    color_discrete_map=colores,
-    hover_name='Entidad',
-    hover_data={'LenguaIndigena':True, 'Entidad':False}
-)
-
-fig.update_geos(fitbounds="locations", visible=False)
-
-fig.update_layout(
-    title_text='Porcentaje de población alfabeta hablante de lenguas indígenas mayor de 15 años,<br>'
-               + 'en Guerrero, Oaxaca y Chiapas <br><sup>Censo de Población y Vivienda INEGI 2020 </sup>',
-    margin={"r":0,"t":80,"l":0,"b":0}
-)
-```
-
-
-## Row {height=80px}
-
-### Column {width=10%}
-:::{.card .icono}
-![](imagenes/ods4.jpg){width=50 height=50}
+:::{.card .icono-ods}
+![](../imagenes/ods4.jpg)
 :::
 
-### Column {width=20%}
-:::{.card}
+### Column {width="25%"}
+
+:::{.card .titulo-seccion}
 Alfabetización
 :::
 
-### Column {width=70%}
-:::{.card .centrado}
+### Column {width="65%"}
+
+:::{.card .frase-destacada}
 No puede haber ciudadanía plena sin personas alfabetas.
 :::
 
+## Row {height="400px"}
 
-## Row {height=400px}
+### Column {width="40%"}
 
-### Column {width=35%}
-:::{.card}
 ```{python}
-#| label: Gráfica 3 show
-#| eval: false
-fig.show()
+#| title: "ODS4 — Alfabetización en el tiempo"
+fig_demo("Evolución temporal")
 ```
+
+### Column {width="20%"}
+
+:::{.card .nota-chalkboard}
+Aprender a leer y escribir es el primer paso para garantizar que una persona pueda defender sus derechos.
 :::
 
-### Column {width=30%}
-:::{.card}
-Al 2014, Guerrero, Oaxaca y Chiapas (tres de los estados con mayor porcentaje de población indígena) se mantienen por debajo del 90% de población alfabeta.
+### Column {width="40%"}
+
+```{python}
+#| title: "ODS4 — Mapa de alfabetización"
+fig_demo("Mapa nacional")
+```
+
+## Row {height="400px"}
+
+### Column {width="40%"}
+
+```{python}
+#| title: "ODS4 — Alfabetización municipal"
+fig_demo("Alfabetización municipal")
+```
+
+### Column {width="20%"}
+
+:::{.card .nota-chalkboard}
+Al 2024, Guerrero, Oaxaca y Chiapas (tres de los estados con mayor porcentaje de población indígena) se mantienen por debajo del 90% de población alfabeta.
 :::
 
-### Column {width=35%}
-:::{.card}
-Gráfica 2
+### Column {width="40%"}
+
+```{python}
+#| title: "ODS4 — Rangos de alfabetización"
+fig_demo("Rangos por grupo")
+```
+
+<!-- ============================================================
+     SECCIÓN 2 · REZAGO EDUCATIVO
+     ============================================================ -->
+
+## Row {height="120px"}
+
+### Column {width="10%"}
+
+:::{.card .icono-ods}
+![](../imagenes/ods4.jpg)
 :::
 
+### Column {width="25%"}
 
-## Row {height=400px}
-
-### Column {width=35%}
-:::{.card}
-Gráfica 3
-:::
-
-### Column {width=30%}
-:::{.card}
-Alfabetización
-:::
-
-### Column {width=35%}
-:::{.card}
-Gráfica 4
-:::
-
-
-## Row {height=120px}
-
-### Column {width=10%}
-:::{.card}
-![](imagenes/ods4.jpg){width=50 height=50}
-:::
-
-### Column {width=20%}
-:::{.card}
+:::{.card .titulo-seccion}
 Rezago Educativo
 :::
 
-### Column {width=70%}
-:::{.card}
+### Column {width="65%"}
+
+:::{.card .frase-destacada .frase-doble}
 La alfabetización suele ocurrir durante los primeros años de la escolaridad.
 
 La educación es el principal medio para desarrollar y potenciar las habilidades, conocimientos y valores éticos de las personas.
 :::
 
+## Row {height="400px"}
 
-## Row {height=400px}
+### Column {width="40%"}
 
-### Column {width=20%}
-:::{.card}
-Gráfica 5
-:::
+```{python}
+#| title: "ODS4 — Finalización por nivel"
+fig_demo("Finalización por nivel educativo")
+```
 
-### Column {width=30%}
-:::{.card}
+### Column {width="20%"}
+
+:::{.card .nota-chalkboard}
 Es en el nivel de Preparatoria donde hay menor finalización, y dicho fenómeno es similar en todos los estados.
 :::
 
-### Column {width=50%}
-:::{.card}
-Gráfica 6
+### Column {width="40%"}
+
+```{python}
+#| title: "ODS4 — Rezago municipal"
+fig_demo("Rezago educativo municipal")
+```
+
+## Row {height="420px"}
+
+### Column {width="30%"}
+
+:::{.card .imagen-aula}
+![](../imagenes/salon_clases.jpg)
 :::
 
+### Column {width="70%"}
 
-## Row {height=400px}
+#### Row {height="60px"}
 
-### Column {width=30%}
-:::{.card}
-Imágen
-:::
-
-### Column {width=70%}
-:::{.card}
+:::{.card .banner-infraestructura}
 La infraestructura escolar garantiza que se materialice el derecho a la educación.
-
-Gráfica 7
 :::
+
+#### Row
+
+```{python}
+#| title: "ODS4 — Escuelas y servicios"
+fig_demo("Infraestructura escolar por nivel")
+```

@@ -103,7 +103,7 @@ fig
 :::{.enfoque-monetario-header}
 
 ::: {.enfoque-monetario-titulo}
-ENFOQUE MONETARIO
+Enfoque monetario
 :::
 
 ::: {.enfoque-monetario-subtitulo}

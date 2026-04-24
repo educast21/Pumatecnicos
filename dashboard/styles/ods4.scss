@@ -1,0 +1,332 @@
+/*-- scss:defaults --*/
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Montserrat:wght@400;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+// ============================================================
+// Paleta chalkboard escolar (verdes vivos, no tristes)
+// ============================================================
+$chalk-dark:     #1e3a2b;   // pizarrón profundo
+$chalk-mid:      #2d5a3d;   // verde pizarra medio
+$chalk-light:    #3d7a52;   // verde tiza resaltado
+$chalk-accent:   #5ba672;   // verde brillante (tiza de color)
+$chalk-soft:     #e8f3e8;   // crema verdoso para fondos suaves
+$paper-bg:       #f5efe4;   // crema del dashboard general
+$chalk-text:     #f7f4e9;   // blanco tiza
+$chalk-muted:    #cfd9c8;   // blanco tiza apagado
+
+$font-sans:   "Montserrat", sans-serif;
+$font-serif:  "Playfair Display", serif;
+$font-chalk:  "Caveat", cursive;
+
+// --- Bootstrap overrides (ANTES que el custom.scss del proyecto) ---
+$navbar-bg:   $chalk-dark;
+$navbar-fg:   $chalk-text;
+$body-bg:     $paper-bg;
+$body-color:  #2a2a2a;
+
+$font-family-sans-serif: $font-sans;
+$font-family-base:       $font-sans;
+$headings-font-family:   $font-serif;
+
+
+/*-- scss:rules --*/
+
+// ============================================================
+// Base
+// ============================================================
+body {
+  background-color: $paper-bg !important;
+  font-family: $font-sans;
+  -webkit-font-smoothing: antialiased;
+}
+
+// ============================================================
+// Navbar — fondo verde OPACO (override del rojo global)
+// ============================================================
+.quarto-dashboard .navbar,
+.navbar {
+  background:
+    linear-gradient(90deg, $chalk-dark 0%, $chalk-mid 55%, $chalk-light 100%),
+    $chalk-dark !important;
+  background-color: $chalk-dark !important;
+  border-bottom: 3px solid $chalk-accent !important;
+  padding: 0.4rem 1.25rem !important;
+  min-height: 52px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+  .navbar-brand,
+  .navbar-title,
+  .title,
+  .quarto-dashboard-title {
+    color: $chalk-text !important;
+    font-family: $font-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+    font-size: clamp(1.1rem, 1.6vw, 1.4rem) !important;
+  }
+
+  .quarto-dashboard-author,
+  .navbar-author {
+    color: $chalk-muted !important;
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+}
+
+// ============================================================
+// Ajustes globales dashboard
+// ============================================================
+.quarto-dashboard main { padding: 0.7rem !important; }
+
+.quarto-dashboard .bslib-gap-spacing,
+.quarto-dashboard .dashboard-column,
+.quarto-dashboard .dashboard-row {
+  gap: 0.7rem !important;
+}
+
+// ============================================================
+// Cards BASE (los cards normales = gráficos)
+// ============================================================
+.card {
+  border: none !important;
+  border-radius: 10px !important;
+  background-color: #fbf8ef !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+// Header ("tab") de cards con título (usado por los gráficos)
+.card > .card-header {
+  background: linear-gradient(90deg, $chalk-dark 0%, $chalk-mid 100%) !important;
+  color: $chalk-text !important;
+  font-family: $font-sans !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.4px;
+  font-size: 0.9rem !important;
+  padding: 0.45rem 0.85rem !important;
+  border-bottom: none !important;
+  border-radius: 10px 10px 0 0 !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+  min-height: 0;
+}
+
+// Ocultar header vacío (cuando el card NO tiene título pero Quarto mete header)
+.card.icono-ods > .card-header,
+.card.titulo-seccion > .card-header,
+.card.frase-destacada > .card-header,
+.card.nota-chalkboard > .card-header,
+.card.imagen-aula > .card-header,
+.card.banner-infraestructura > .card-header {
+  display: none !important;
+}
+
+// ============================================================
+// ICONO ODS (pastilla roja pequeña)
+// ============================================================
+.card.icono-ods {
+  background: linear-gradient(135deg, #7a1f1f 0%, #a02929 100%) !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
+
+  > .card-body {
+    padding: 0.35rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden;
+  }
+  img {
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    border-radius: 6px;
+    display: block;
+    margin: 0 auto !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  p { margin: 0 !important; text-align: center; }
+}
+
+// ============================================================
+// TÍTULO DE SECCIÓN ("Alfabetización" / "Rezago Educativo")
+// ============================================================
+.card.titulo-seccion {
+  background: $chalk-soft !important;
+  border: 2px solid $chalk-mid !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+
+  > .card-body {
+    padding: 0.5rem 0.9rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center;
+    color: $chalk-dark;
+    font-family: $font-serif;
+    font-weight: 700;
+    font-size: clamp(1rem, 1.4vw, 1.3rem);
+    letter-spacing: 0.5px;
+    line-height: 1.15;
+  }
+  p { margin: 0 !important; }
+}
+
+// ============================================================
+// FRASE DESTACADA (derecha en fila de encabezado)
+// ============================================================
+.card.frase-destacada {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-left: 4px solid $chalk-accent !important;
+  border-right: 4px solid $chalk-accent !important;
+  border-radius: 6px !important;
+
+  > .card-body {
+    padding: 0.4rem 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center;
+    color: $chalk-dark;
+    font-family: $font-serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+    line-height: 1.35;
+  }
+  p { margin: 0.1rem 0 !important; }
+}
+
+// Variante con dos párrafos (sección Rezago)
+.card.frase-destacada.frase-doble {
+  > .card-body {
+    flex-direction: column;
+    font-size: clamp(0.85rem, 1vw, 1rem);
+  }
+  p { text-align: center; margin: 0.15rem 0 !important; }
+  p:first-child { font-weight: 700; color: $chalk-dark; font-style: italic; }
+  p:last-child  {
+    font-weight: 500;
+    color: #3a4a3a;
+    font-style: normal;
+    font-size: 0.9em;
+  }
+}
+
+// ============================================================
+// NOTA CHALKBOARD (los 3 textos entre gráficos)
+// ============================================================
+.card.nota-chalkboard {
+  background:
+    linear-gradient(135deg, rgba(30, 58, 43, 0.88) 0%, rgba(45, 90, 61, 0.82) 50%, rgba(30, 58, 43, 0.88) 100%),
+    url("../dashboard/imagenes/chalkboard.png"),
+    $chalk-dark !important;
+  background-size: cover, cover, auto !important;
+  background-position: center, center, center !important;
+  background-repeat: no-repeat, no-repeat, no-repeat !important;
+  border: 3px solid rgba(247, 244, 233, 0.15) !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 0 30px rgba(0, 0, 0, 0.25);
+
+  > .card-body {
+    padding: 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center;
+    color: $chalk-text !important;
+    font-family: $font-chalk;
+    font-weight: 500;
+    font-size: clamp(1rem, 1.35vw, 1.4rem);
+    line-height: 1.35;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border: 1px dashed rgba(247, 244, 233, 0.3);
+      border-radius: 6px;
+      pointer-events: none;
+    }
+  }
+  p { margin: 0 !important; position: relative; z-index: 2; }
+}
+
+// ============================================================
+// IMAGEN DEL AULA (última fila) — sin marco pesado
+// ============================================================
+.card.imagen-aula {
+  background: $chalk-mid !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  padding: 0 !important;
+
+  > .card-body {
+    padding: 0 !important;
+    overflow: hidden;
+    display: flex !important;
+    align-items: stretch !important;
+  }
+  img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  p { margin: 0 !important; height: 100%; }
+}
+
+// ============================================================
+// BANNER "La infraestructura escolar..."
+// ============================================================
+.card.banner-infraestructura {
+  background: linear-gradient(90deg, $chalk-dark 0%, $chalk-mid 50%, $chalk-dark 100%) !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+
+  > .card-body {
+    padding: 0.5rem 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: $chalk-text !important;
+    font-family: $font-serif !important;
+    font-weight: 600 !important;
+    font-style: italic;
+    font-size: clamp(0.95rem, 1.2vw, 1.15rem) !important;
+    text-align: center;
+    letter-spacing: 0.3px;
+    line-height: 1.25;
+  }
+  p { margin: 0 !important; }
+}
+
+// ============================================================
+// Plotly: asegurar transparencia del contenedor
+// ============================================================
+.js-plotly-plot .plotly .main-svg { background: transparent !important; }
+
+// ============================================================
+// Tabs (si Quarto agrega pestañas en algún lado)
+// ============================================================
+.nav-tabs .nav-link {
+  color: $chalk-dark !important;
+  font-weight: 600;
+}
+.nav-tabs .nav-link.active {
+  background: $chalk-mid !important;
+  color: $chalk-text !important;
+  border-color: $chalk-mid !important;
+}
+
+// ============================================================
+// Responsivo
+// ============================================================
+@media (max-width: 992px) {
+  .card.nota-chalkboard > .card-body { font-size: 1rem; padding: 0.8rem !important; }
+  .card.titulo-seccion  > .card-body { font-size: 1rem; }
+  .card.frase-destacada > .card-body { font-size: 0.95rem; }
+}

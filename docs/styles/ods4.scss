@@ -1,0 +1,28 @@
+/*-- scss:defaults --*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap');
+
+$font-family-sans-serif: "Montserrat", sans-serif;
+$font-family-serif: "Playfair Display", serif;
+
+$body-bg: #f5efe4;
+$body-color: #2a2a2a;
+
+$headings-font-family: $font-family-serif;
+$font-family-base: $font-family-sans-serif;
+
+/*-- scss:rules --*/
+
+// ============================================================
+// Paleta
+// ============================================================
+$cream:        #f5efe4;
+$dark-green:   #1f3a2e;
+$mid-green:    #2d5240;
+$gold:         #d4a94a;
+$gold-light:   #e8c468;
+$gold-dark:    #b8902e;
+$dark-red:     #4a1212;
+$mid-red:      #7a1f1f;
+$text-light:   #f5efe4;
+$text-muted:   #c9bfa8;
