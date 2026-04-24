@@ -220,6 +220,7 @@ body {
   box-shadow:
     0 3px 10px rgba(139, 105, 20, 0.15),
     inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+    text-align: justify;
 
   > .card-body {
     padding: 1rem 1.2rem !important;
@@ -231,7 +232,7 @@ body {
     font-weight: 400;
     font-size: clamp(0.82rem, 0.93vw, 0.98rem);
     line-height: 1.55;
-    text-align: left;
+    text-align: justify;
   }
 
   p { margin: 0 !important; }

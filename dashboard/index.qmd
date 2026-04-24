@@ -35,7 +35,7 @@ fig.update_layout(
     legend=dict(
         title_text="",
         orientation="h",
-        entrywidth=70,
+        entrywidth=100,
         yanchor="top",
         y=-0.3,
         xanchor="center",

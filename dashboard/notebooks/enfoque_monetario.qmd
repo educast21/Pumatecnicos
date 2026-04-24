@@ -4,7 +4,7 @@ author: "Pumatecnicos"
 format:
   dashboard:
     theme: ../styles/enfoque_monetario.scss
-    scrolling: false
+    scrolling: true
     nav-buttons:
       - icon: house-fill
         text: Inicio
@@ -13,74 +13,122 @@ format:
 ---
 
 ```{python}
-#| label: imports
-#| output: false
+#| label: Imports
+
+import plotly.graph_objects as go
+import pandas as pd
 import plotly.express as px
+import json
+import requests
+path = "../../datos"
 
-df = px.data.gapminder()
-df_recent = df.query("year == 2007")
-
-# Paleta consistente con el tema dorado/desértico
-PAPER_BG   = "rgba(0,0,0,0)"
-PLOT_BG    = "rgba(250,241,220,0.55)"
-TEXT_COLOR = "#3a2817"
-GOLDS      = ["#b8860b", "#d4a94a", "#8b6914", "#e8c468", "#6b4423"]
-
-
-def _layout(fig):
-    fig.update_layout(
-        paper_bgcolor=PAPER_BG,
-        plot_bgcolor=PLOT_BG,
-        font=dict(color=TEXT_COLOR, family="Montserrat"),
-        margin=dict(l=12, r=12, t=42, b=12),
-        legend=dict(
-            orientation="h",
-            y=-0.22, x=0.5, xanchor="center",
-            bgcolor="rgba(255,255,255,0.35)",
-            bordercolor="rgba(184,134,11,0.25)",
-            borderwidth=1,
-        ),
-        colorway=GOLDS,
-        title=dict(font=dict(size=13, color=TEXT_COLOR)),
-    )
-    fig.update_xaxes(gridcolor="rgba(139,105,20,0.12)", zerolinecolor="rgba(139,105,20,0.2)")
-    fig.update_yaxes(gridcolor="rgba(139,105,20,0.12)", zerolinecolor="rgba(139,105,20,0.2)")
-    return fig
-
-
-def fig_linea_tiempo(title):
-    """Placeholder: evolución temporal de la pobreza."""
-    sub = df.query("country in ['Mexico', 'Brazil', 'Argentina', 'Chile']")
-    f = px.line(
-        sub, x="year", y="lifeExp", color="country",
-        markers=True, title=title
-    )
-    return _layout(f)
-
-
-def fig_mapa_placeholder(title, variant=1):
-    """Placeholder para mapa coroplético (reemplazar con choropleth real)."""
-    f = px.scatter(
-        df_recent, x="gdpPercap", y="lifeExp",
-        size="pop", color="continent",
-        hover_name="country", log_x=True,
-        size_max=38 if variant == 1 else 30,
-        title=title,
-    )
-    return _layout(f)
 ```
 
-<!-- ============================================================
-     ROW 1 · Gráfica histórica + Texto introductorio
-     ============================================================ -->
+```{python}
+#| label: Calculos_Grafica_1
+#| output: false
+#| 
+df_p = pd.read_excel(path + "/1.1.1_sh_es.xls", sheet_name=0, header=None)
+df_p = df_p.iloc[7:-6]
+df_p.columns = ["Periodo", "Pobreza_Mexico", "Urbano", "Rural"]
+df_p = df_p[["Periodo", "Pobreza_Mexico"]].copy()
 
-## Row {height="45%"}
+df2_p = pd.read_excel(path + "/data_1775968412.xlsx", sheet_name=0)
+df2_p = df2_p[['Años__ESTANDAR','value']]
+df2_p.columns = ['Periodo', 'Pobreza_Latam']
+df_final_p = df_p.merge(df2_p, how='left', on='Periodo')
+
+
+df_e = pd.read_excel(path + "/1r.1.1_sh_es.xls", sheet_name=0, header=None)
+df_e = df_e.iloc[7:-3]
+df_e.columns = ["Periodo", "Extrema_Mexico", "Urbano", "Rural"]
+df_e = df_e[["Periodo", "Extrema_Mexico"]].copy()
+
+df2_e = pd.read_excel(path + "/data_1775968526.xlsx", sheet_name=0)
+df2_e = df2_e[['Años__ESTANDAR','value']]
+df2_e.columns = ['Periodo', 'Extrema_Latam']
+df_final_e = df_e.merge(df2_e, how='left', on='Periodo')
+
+df_total = df_final_p.merge(df_final_e, on='Periodo', how='outer')
+df_total = df_total.apply(pd.to_numeric, errors='coerce').astype(float)
+df_total = df_total.sort_values("Periodo")
+
+df_total = df_total.rename(columns={
+    "Pobreza_Mexico": "México (Pobreza)",
+    "Pobreza_Latam": "Latam (Pobreza)",
+    "Extrema_Mexico": "México (Pobreza Extrema)",
+    "Extrema_Latam": "Latam (Pobreza Extrema)"
+})
+
+# Como Latinoamerica pobreza extrema solo tiene desde 2002 en adelante, quitamos
+# los primeros años de informacion
+df_total = df_total.iloc[5:]
+
+colores = {
+    "México (Pobreza)": "rgb(0, 104, 71,1)",
+    "México (Pobreza Extrema)": "#96F39B",
+    "Latam (Pobreza)": "DarkOrange",
+    "Latam (Pobreza Extrema)": "Orange"}
+
+etiquetas = {
+    "value": "Porcentaje",
+    "Periodo": "Año",
+    "variable": "Indicador"
+}
+
+fig = px.line(df_total, x="Periodo",
+              y=list(colores.keys()),
+              title='<b>Evolución de la Pobreza (≈33.10 MXN) y <br>Pobreza Extrema (≈21.76 MXN), 2002-2020</b><br><sup>INEGI y Comisión Económica para América Latina y el Caribe</sup>',
+              markers=True,
+              color_discrete_map=colores,
+              labels=etiquetas
+)
+
+fig.update_xaxes(
+    type="date",
+    dtick="M24",
+    tickformat="%Y",
+    showgrid=True,
+    gridcolor='LightGray',
+    griddash='dot'
+)
+
+fig.update_yaxes(
+    showgrid=True,
+    gridcolor='LightGray',
+    griddash='dot'
+)
+
+
+fig.update_layout(
+    xaxis_title="Año",
+    yaxis_title="Porcentaje (%) de la población",
+    legend=dict(
+        title_text="",
+        orientation="h",
+        entrywidth=70,
+        yanchor="top",
+        y=-0.5,
+        xanchor="center",
+        x=0.5
+    ),
+    plot_bgcolor='white',
+    hovermode="x unified",
+  )
+
+fig.update_traces(line=dict(dash='dash'), selector=dict(name="México (Pobreza Extrema)"))
+fig.update_traces(line=dict(dash='dash'), selector=dict(name="Latam (Pobreza Extrema)"))
+
+fig.update_traces(connectgaps=True)
+```
+
+## Row {height="500px"}
 
 ### Column {width="52%"}
 
 ```{python}
 #| title: "Evolución de la Pobreza y Pobreza Extrema (2002-2020)"
-fig_linea_tiempo("Comparativa entre México y Latinoamérica")
+fig
 ```
 
 ### Column {width="48%"}
@@ -89,17 +137,128 @@ fig_linea_tiempo("Comparativa entre México y Latinoamérica")
 La medición de la pobreza en nuestro país se ha desarrollado, en la mayoría de los casos, desde una perspectiva unidimensional que utiliza el ingreso como aproximación del bienestar de la población; sin embargo, este enfoque resulta limitado, pues deja de lado dimensiones fundamentales vinculadas con los derechos humanos, económicos, sociales y culturales.
 :::
 
-<!-- ============================================================
-     ROW 2 · Mapa · Texto aside · Mapa animado
-     ============================================================ -->
-
-## Row {height="55%"}
+## Row {height="560px"}
 
 ### Column {width="38%"}
 
 ```{python}
+#| label: Calculos_Grafica_2
+#| output: false
+
+df = pd.read_excel(path + "/1.2.1.A_sh_es.xls", sheet_name=0, header = None)
+df = df.iloc[6:-10] # Eliminar todos los renglones de texto
+df.columns = df.iloc[0] # El encabezado es el primer renglón
+df = df[2:] # Eliminar el primer renglon (ya es el encazabezado)
+df.columns = ["ID", "Entidad", "2022", "2020", "2018", "2016"]
+
+# Que no solo sea un %, que incluya la cantidad de personas
+df2 = pd.read_excel(path + "/1.2.1.A_dc_2195_es.xls", sheet_name=0, header = None)
+df2 = df2.iloc[5:-10] # Eliminar todos los renglones de texto
+df2.columns = df2.iloc[0] # El encabezado es el primer renglón
+df2 = df2[3:] # Eliminar el primer renglon (ya es el encazabezado)
+df2.columns = ["ID", "Entidad", "Pob2022", "Pob2020", "Pob2018", "Pob2016"]
+df2['Pob2016'] = 1000*df2['Pob2016']
+df2['Pob2018'] = 1000*df2['Pob2018']
+df2['Pob2020'] = 1000*df2['Pob2020']
+df2['Pob2022'] = 1000*df2['Pob2022']
+df = df.merge(df2, on=['ID', 'Entidad'], how='left')
+
+# Usar el GeoJSON de México con sus estados
+repo_url = 'https://raw.githubusercontent.com/angelnmara/geojson/master/mexicoHigh.json'
+repo_url_municps = 'https://raw.githubusercontent.com/angelnmara/geojson/master/MunicipiosMexico.json'
+mx_states_geojson = requests.get(repo_url).json()
+
+# Cambiar los nombres del df para que coincidan con los del json
+df.iloc[4, 1] = "Coahuila"
+df.iloc[15,1] = "Michoacán"
+df.iloc[29,1] = "Veracruz"
+
+# Formato largo del df, preferible para series de tiempo
+df_long = df.melt(
+    id_vars=['Entidad'],
+    value_vars=['2016', '2018', '2020', '2022'],
+    var_name='Año',
+    value_name='Porcentaje'
+)
+
+# Partición del porcentaje en categorías
+df_long['Categoría'] = pd.cut(
+    df_long['Porcentaje'],
+    bins=[0, 25, 50, 100],
+    labels=["[0,25]", "(25,50]", "(50,100]"],
+    include_lowest=True,
+    right=True
+)
+
+# Melt para las poblaciones
+df_pob = df.melt(
+    id_vars=['Entidad'],
+    value_vars=['Pob2016', 'Pob2018', 'Pob2020', 'Pob2022'],
+    var_name='Año_Pob',
+    value_name='Poblacion'
+)
+# nombre del año en la población para que coincida (ej: 'Pob2016' -> '2016')
+df_pob['Año'] = df_pob['Año_Pob'].str.extract(r'(\d+)').astype(str)
+
+# Unimos ambos DataFrames
+df_long = pd.merge(df_long, df_pob[['Entidad', 'Año', 'Poblacion']], on=['Entidad', 'Año'])
+df_long['Categoría'] = df_long['Categoría'].astype(str).str.strip()
+# Ordenamos por año para el slider
+df_long = df_long.sort_values('Año')
+df_long['Porcentaje'] = df_long['Porcentaje'].apply(lambda x: f"{round(x,2)}%")
+# Formatear la población con comas para que sea legible (ej: 1,000,000)
+df_long['Poblacion'] = df_long['Poblacion'].apply(lambda x: f"{x:,.0f}")
+
+# obs para forzar la categoría [0,25] en el 2016
+dummy = pd.DataFrame({'Entidad': ['Dummy'], 'Año': ['2016'], 'Porcentaje': ['6%'], 'Categoría': ['[0,25]'], 'Poblacion': ['1']})
+df_long = pd.concat([dummy,df_long], ignore_index=True)
+
+colores = {
+    "[0,25]": "#2dc937",
+    "(25,50]": "#efd720",
+    "(50,100]": "#d14e39"
+}
+
+fig = px.choropleth(
+    df_long,
+    geojson=mx_states_geojson,
+    locations='Entidad',
+    featureidkey='properties.name',
+    color='Categoría',             # Coloreamos por la columna de texto
+    animation_frame='Año',
+    color_discrete_map=colores,    # Forzamos los colores definidos arriba
+    hover_name='Entidad',
+    hover_data={'Porcentaje':True, 'Entidad':False, 'Poblacion':True} # Mostramos el número real en el hover
+)
+
+fig.update_geos(
+    fitbounds="locations",
+    visible=False
+)
+
+fig.update_layout(
+    title_text='Población que vive en pobreza <br>(Umbral Nacional ≈141.56 MXN) <br><sup>CONEVAL ENIGH 2016-2022</sup>',
+    margin={"r":0,"t":80,"l":0,"b":0},
+    coloraxis_colorbar=dict(
+        x=0.85,
+        xanchor='left',
+        len=0.7),
+    legend=dict(
+        title_text="",
+        orientation="h",
+        entrywidth=70,
+        yanchor="top",
+        y=-0.5,
+        xanchor="center",
+        x=0.5
+    ),
+)
+
+```
+
+```{python}
 #| title: "Población que vive en pobreza (Umbral Nacional)"
-fig_mapa_placeholder("Animación del 2016 al 2022", variant=1)
+fig
 ```
 
 ### Column {width="24%"}
@@ -111,6 +270,101 @@ En este contexto, incluso la implementación de políticas públicas centradas e
 ### Column {width="38%"}
 
 ```{python}
+#| label: Calculando_Grafica_3
+#| output: false
+
+df = pd.read_excel(path + "/1N.3.1.A_sh_es.xls", sheet_name=0, header = None)
+df = df.iloc[7:-19] # Eliminar todos los renglones de texto
+df.columns = df.iloc[0] # El encabezado es el primer renglón
+df = df[1:] # Eliminar el primer renglon (ya es el encazabezado)
+df.columns = ["cvegeo","Entidad", "2022", "2020", "2018", "2016"]
+
+anios = ['2022','2020','2018','2016']
+liminfs = ['inf2022','inf2020','inf2018','inf2016']
+limsups = ['sup2022','sup2020','sup2018','sup2016']
+sd = ['sd2022','sd2020','sd2018','sd2016']
+mapa_notas = {'a/': 0.15, 'b/': 0.25, 'c/':0.2}
+
+for anio in anios:
+  extraer = df[anio].str.extract(r'(?P<Numero>[0-9.]+)\s*(?P<Sufijo>.*)')
+  sd = ['sd2022','sd2020','sd2018','sd2016']
+  df[sd[anios.index(anio)]] = extraer['Sufijo']
+  df[sd[anios.index(anio)]] = df[sd[anios.index(anio)]].map(mapa_notas)
+  df[anio] = pd.to_numeric(extraer['Numero'])
+  df[sd[anios.index(anio)]] = df[anio]*df[sd[anios.index(anio)]]
+  df[liminfs[anios.index(anio)]] = df[anio] - df[sd[anios.index(anio)]]
+  df[limsups[anios.index(anio)]] = df[anio] + df[sd[anios.index(anio)]]
+
+df.iloc[4, 1] = "Coahuila"
+df.iloc[15,1] = "Michoacán"
+df.iloc[29,1] = "Veracruz"
+
+lista_estados = df['Entidad'].unique()
+anios = ['2016', '2018', '2020', '2022']
+
+# --- 1. Obtener el GeoJSON de México (Estados) ---
+repo_url = 'https://raw.githubusercontent.com/angelnmara/geojson/master/mexicoHigh.json'
+repo_url_municps = 'https://raw.githubusercontent.com/angelnmara/geojson/master/MunicipiosMexico.json'
+mx_states_geojson = requests.get(repo_url).json()
+
+df_plot = df.melt(
+    id_vars=['Entidad'], # renglones
+    value_vars=['2016', '2018', '2020', '2022'],
+    var_name='Año',
+    value_name='Porcentaje'
+)
+
+# Partición del porcentaje en categorías
+df_plot['Categoría'] = pd.cut(
+    df_plot['Porcentaje'],
+    bins=[0, 25, 50, 100],
+    labels=["[0,25]", "(25,50]", "(50,100]"],
+    include_lowest=True,
+    right=True
+)
+
+
+colores = {
+    "[0,25]": "#d14e39",
+    "(25,50]": "#efd720",
+    "(50,100]": "#2dc937"
+}
+
+
+fig = px.choropleth(
+    df_plot,
+    geojson=mx_states_geojson,
+    locations='Entidad',
+    featureidkey='properties.name',
+    color='Categoría',
+    animation_frame='Año',
+    color_discrete_map=colores,
+    hover_name='Entidad',
+    hover_data={'Porcentaje':True, 'Entidad':False}
+)
+
+fig.update_geos(
+    fitbounds="locations",
+    visible=False
+)
+
+fig.update_layout(
+    title_text='Proporción de la población mayor de 65 años <br>con pensión digna<br><sup>CONEVAL ENIGH 2016-2022</sup>',
+    margin={"r":0,"t":80,"l":0,"b":0},
+    legend=dict(
+        title_text="",
+        orientation="h",
+        entrywidth=70,
+        yanchor="top",
+        y=-0.5,
+        xanchor="center",
+        x=0.5
+    ),
+)
+
+```
+
+```{python}
 #| title: "Proporción de la población mayor de 65 años con pensión digna"
-fig_mapa_placeholder("Animación del 2016 al 2022", variant=2)
+fig
 ```
