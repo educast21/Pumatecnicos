@@ -177,7 +177,7 @@ en todo el mundo
 
 ### Column {width=42%}
 
-:::{.card .enfoque-card-carencias title="[Enfoque de carencias sociales ↗ (Click aquí)](notebooks/enfoque_carencias.html)"}
+:::{.card .enfoque-card-carencias title="[Enfoque de carencias sociales ↗ (Click aquí)](notebooks/ods2)"}
 
 ```{python}
 #| label: Figura_2
