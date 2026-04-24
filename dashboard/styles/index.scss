@@ -245,6 +245,19 @@ body {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 }
 
+// ============================================================
+// Link dentro del título del enfoque monetario
+// ============================================================
+.enfoque-monetario-titulo a {
+  color: $text-light !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $gold-light !important;
+  }
+}
+
 .enfoque-monetario-subtitulo {
   font-size: clamp(0.7rem, 0.85vw, 0.8rem);
   color: $text-muted;

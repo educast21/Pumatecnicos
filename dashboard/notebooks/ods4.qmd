@@ -1,10 +1,15 @@
 ---
-title: "ODS 4 · Educación de Calidad"
+title: "Enfoque de Capacidades"
 author: "Pumatecnicos"
 format:
   dashboard:
     theme: ../styles/ods4.scss
     scrolling: true
+    nav-buttons:
+      - icon: house-fill
+        text: Inicio
+        href: ../index.html
+        aria-label: Volver al inicio
 ---
 
 ```{python}
@@ -30,6 +35,30 @@ def fig_demo(title):
     )
     return f
 ```
+
+<!-- ============================================================
+     NAVBAR SECUNDARIA · ODS
+     ============================================================ -->
+
+## Row {height="52px" .nav-ods-row}
+
+### Column
+
+:::{.card .nav-ods-item .nav-ods-activo}
+ODS 4 · Educación de Calidad
+:::
+
+### Column
+
+:::{.card .nav-ods-item}
+[ODS 8 · Trabajo Decente](ods8.html)
+:::
+
+### Column
+
+:::{.card .nav-ods-item}
+[ODS 9 · Industria e Innovación](ods9.html)
+:::
 
 <!-- ============================================================
      SECCIÓN 1 · ALFABETIZACIÓN

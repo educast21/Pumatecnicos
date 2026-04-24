@@ -152,8 +152,7 @@ body {
 // TÍTULO DE SECCIÓN ("Alfabetización" / "Rezago Educativo")
 // ============================================================
 .card.titulo-seccion {
-  background: $chalk-soft !important;
-  border: 2px solid $chalk-mid !important;
+  font-size: 1.3em;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 
   > .card-body {
@@ -329,4 +328,58 @@ body {
   .card.nota-chalkboard > .card-body { font-size: 1rem; padding: 0.8rem !important; }
   .card.titulo-seccion  > .card-body { font-size: 1rem; }
   .card.frase-destacada > .card-body { font-size: 0.95rem; }
+}
+
+// ============================================================
+// NAVBAR SECUNDARIA (ODS 4 / 8 / 9)
+// ============================================================
+.card.nav-ods-item {
+  background: $chalk-soft !important;
+  border: 2px solid $chalk-mid !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+
+  > .card-header { display: none !important; }
+
+  > .card-body {
+    padding: 0.4rem 0.8rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: $font-sans;
+    font-weight: 700;
+    font-size: clamp(0.8rem, 1vw, 0.95rem);
+    letter-spacing: 0.4px;
+    color: $chalk-dark;
+    text-align: center;
+    line-height: 1.1;
+  }
+
+  a {
+    color: $chalk-dark !important;
+    text-decoration: none !important;
+    display: block;
+    width: 100%;
+
+    &:hover { color: $chalk-accent !important; }
+  }
+
+  p { margin: 0 !important; }
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  }
+}
+
+// Pestaña activa (la del ODS en el que estás parado)
+.card.nav-ods-item.nav-ods-activo {
+  background: linear-gradient(90deg, $chalk-dark 0%, $chalk-mid 100%) !important;
+  border-color: $chalk-accent !important;
+  cursor: default;
+
+  > .card-body { color: $chalk-text !important; }
+
+  &:hover { transform: none; }
 }
