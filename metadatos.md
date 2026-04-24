@@ -151,6 +151,17 @@ Variables:
 
 
 # ODS 2
+## 1.- 2N.2.1.A_sh_es.xls
+CONEVAL - ENIGH 
+"2n.2.1.a Porcentaje de población con inseguridad alimentaria moderada o severa, por desglose geográfico y grupo poblacional (Entidad federativa)". 
+Recuperado el 18 de abril de 2026 de: [https://agenda2030.mx/ODSind.html?ind=ODS002000790020&cveind=564&cveCob=99&lang=es#/Indicator](https://agenda2030.mx/ODSind.html?ind=ODS002000790020&cveind=564&cveCob=99&lang=es#/Indicator)
+
+Licencia: Licencia de Código Abierto 
+
+Variables:
+
+- Periodo: Entidad Federativa
+-  Porcentaje de población con inseguridad alimentaria moderada o severa, por desglose geográfico y grupo poblacional 2022: Porcentaje a nivel nacional 
 
 
 # ODS 3
@@ -241,6 +252,17 @@ Variables:
 
 
 # ODS 6
+## 1.- 6N.1.1.C_sh_es.xls
+Comisión Nacional del Agua (CONAGUA). 
+"6n.1.1.c  Proporción de la población que dispone de servicios de suministro de agua potable y saneamiento gestionados de manera segura, por entidad federativa [CONAGUA]".
+Recuperado el 22 de abril de 2026 de: [https://agenda2030.mx/ODSind.html?ind=ODS006000850030&cveind=620&cveCob=99&lang=es#/Indicator](https://agenda2030.mx/ODSind.html?ind=ODS006000850030&cveind=620&cveCob=99&lang=es#/Indicator)
+
+Licencia: Licencia de Código Abierto
+
+Variables:
+
+- Entidad Federativa
+- Proporción de la población que dispone de servicios de suministro de agua potable y saneamiento gestionados de manera segura: Porcentaje Nacional a 2022
 
 
 # ODS 8 
