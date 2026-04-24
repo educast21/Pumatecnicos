@@ -267,6 +267,71 @@ Variables:
 
 # ODS 8 
 
+## 1a.- 8.5.1A_sh_03_es.xls
+## 1b.- 8.5.1A_sh_07_es.xls
+Instituto Nacional de Estadística y Geografía (INEGI). Unidad de Estadísticas Sociodemográficas (2025). 
+"8.5.1a  Ingreso medio por hora de empleadas y empleados". 
+Recuperado el 23 de abril de 2026 de: [https://agenda2030.mx/ODSind.html?ind=ODS008000550010&cveind=209&cveCob=99&lang=es#/Metadata](https://agenda2030.mx/ODSind.html?ind=ODS008000550010&cveind=209&cveCob=99&lang=es#/Metadata)
+
+Licencia: Licencia de Código Abierto 
+
+Variables:
+
+- Entidad Federativa
+- Ingreso medio por hora de empleados y empleadas: Porcentaje a 2024 para Baja California Sur (03) y para Chiapas (07), desglosado en Hombres y Mujeres
+
+
+## 2.- 8.3.1_sh_es.xls
+Secretaría del Trabajo y Previsión Social (STPS).
+"8.3.1  Proporción del empleo informal en el empleo no agropecuario, desglosada por sexo". 
+Recuperado el 23 de abril de 2026 de: [https://agenda2030.mx/ODSind.html?ind=ODS008000350010&cveind=208&cveCob=99&lang=es#/Metadata](https://agenda2030.mx/ODSind.html?ind=ODS008000350010&cveind=208&cveCob=99&lang=es#/Metadata)
+
+Licencia: Licencia de Código Abierto 
+
+Variables:
+
+- Sexo: Año de medición
+- Proporción del empleo informal en el empleo no agropecuario, desglosada por sexo: Porcentaje de mujeres, en los años 2024 a 2018	
+- Proporción del empleo informal en el empleo no agropecuario, desglosada por sexo: Porcentaje de hombres, en los años 2024 a 2018	
+
+
+## 3.- 8.7.1_sh_es.xls
+Secretaría del Trabajo y Previsión Social (STPS).
+"8.7.1  Proporción de la población de 5 a 17 años que realiza una ocupación infantil no permitida, desglosada por sexo y edad".
+Recuperado el 23 de abril de 2026 de: [https://agenda2030.mx/ODSind.html?ind=ODS008000750010&cveind=212&cveCob=99&lang=es#/Indicator](https://agenda2030.mx/ODSind.html?ind=ODS008000750010&cveind=212&cveCob=99&lang=es#/Indicator)
+
+Licencia: Licencia de Código Abierto 
+
+Variables:
+
+- Entidad Federativa
+- Proporción de la población de 5 a 17 años que realiza una ocupación infantil no permitida, desglosada por sexo y edad: Porcentaje a 2022, para niños de 5 a 14 años
+
+## 4.- 8.6.1A_sh_es.xls
+Secretaría del Trabajo y Previsión Social (STPS).
+"8.6.1a Proporción de jóvenes (de 15 a 24 años) que no estudian, no tienen empleo ni reciben capacitación, desglosado por escolaridad y tipo de localidad".
+Recuperado el 23 de abril de 2026 de: [https://agenda2030.mx/ODSind.html?ind=ODS008000650010&cveind=211&cveCob=99&lang=es#/Indicator](https://agenda2030.mx/ODSind.html?ind=ODS008000650010&cveind=211&cveCob=99&lang=es#/Indicator)
+
+Licencia: Licencia de Código Abierto 
+
+Variables:
+
+- Entidad Federativa
+- Proporción de jóvenes (de 15 a 24 años) que no estudian, no tienen empleo ni reciben capacitación, desglosado por escolaridad: que finalizó la Primaria 2024
+- Proporción de jóvenes (de 15 a 24 años) que no estudian, no tienen empleo ni reciben capacitación, desglosado por escolaridad: que finalizó la Primaria 2022
+- Proporción de jóvenes (de 15 a 24 años) que no estudian, no tienen empleo ni reciben capacitación, desglosado por escolaridad: que finalizó la Primaria 2020
+- Proporción de jóvenes (de 15 a 24 años) que no estudian, no tienen empleo ni reciben capacitación, desglosado por escolaridad: que finalizó la Primaria 2018
+
+- Proporción de jóvenes (de 15 a 24 años) que no estudian, no tienen empleo ni reciben capacitación, desglosado por escolaridad: que finalizó la Secundaria 2024
+- Proporción de jóvenes (de 15 a 24 años) que no estudian, no tienen empleo ni reciben capacitación, desglosado por escolaridad: que finalizó la Secundaria 2022
+- Proporción de jóvenes (de 15 a 24 años) que no estudian, no tienen empleo ni reciben capacitación, desglosado por escolaridad: que finalizó la Secundaria 2020
+- Proporción de jóvenes (de 15 a 24 años) que no estudian, no tienen empleo ni reciben capacitación, desglosado por escolaridad: que finalizó la Secundaria 2018
+
+- Proporción de jóvenes (de 15 a 24 años) que no estudian, no tienen empleo ni reciben capacitación, desglosado por escolaridad: que finalizó la Preparatoria 2024
+- Proporción de jóvenes (de 15 a 24 años) que no estudian, no tienen empleo ni reciben capacitación, desglosado por escolaridad: que finalizó la Preparatoria 2022
+- Proporción de jóvenes (de 15 a 24 años) que no estudian, no tienen empleo ni reciben capacitación, desglosado por escolaridad: que finalizó la Preparatoria 2020
+- Proporción de jóvenes (de 15 a 24 años) que no estudian, no tienen empleo ni reciben capacitación, desglosado por escolaridad: que finalizó la Preparatoria 2018
+
 
 # ODS 9
 
