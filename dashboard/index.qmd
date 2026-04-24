@@ -1,54 +1,118 @@
 ---
+title: "Pobreza en México"
+author: "Pumatecnicos"
 format:
-    html:
-        toc: false
+    dashboard:
+        scrolling: false
+        theme: styles/index.scss
+css: styles/index.scss
 ---
 
-::: {.column-screen}
-![Plaza Alonso](imagenes/plaza_alonso.jpg)
+```{python}
+#| label: Imports
+
+import plotly.graph_objects as go
+import pandas as pd
+import geopandas as gpd
+import plotly.express as px
+import json
+import requests
+
+```
+
+```{python}
+#| label: Generando_grafica_1
+#| output: false
+
+# Cargar dataset incluido
+df = px.data.gapminder()
+
+# Filtrar un año (para hacerlo más claro)
+df_2007 = df[df["year"] == 2007]
+
+# Crear scatter plot
+fig = px.scatter(
+    df_2007,
+    x="gdpPercap",
+    y="lifeExp",
+    size="pop",
+    color="continent",
+    hover_name="country",
+    log_x=True,
+    size_max=60,
+    title="GDP vs Life Expectancy (2007)"
+)
+
+```
+
+## Row {height=65%}
+
+### Column {width=42%}
+
+:::{.card .enfoque-card-capacidades title="[Enfoque de capacidades ↗ (Click aquí)](notebooks/ods4.html)"}
+
+```{python}
+#| label: Figura_1
+fig
+```
+
 :::
 
-## ¿Qué viene a tu mente al pensar en pobreza?
+### Column {width=16%}
 
-Probablemente personas en condición de calle o en lugares remotos del país...
+:::{.card .sticker-card}
 
-Si bien lo anterior podría formar parte de una condición de pobreza, existen muchas otras formas de pobreza que usualmente no se toman con la seriedad que deberían.
+![](imagenes/ods1.jpg){.sticker-img}
 
-La medición de la pobreza en nuestro país ha sido desarrollada casi siempre desde una perspectiva unidimensional, utilizando al ingreso como una aproximación del bienestar económico de la población. 
-
-El principal indicador que se utiliza define una línea de pobreza que representa el ingreso mínimo necesario para adquirir una canasta de bienes indispensables. Dicho umbral es comparado con el ingreso de las personas para determinar aquellos que son pobres.
-
-Sin embargo, la pobreza también está asociada a condiciones de vida que:
-
-* Vulneran la dignidad de las personas,
-* Limitan sus derechos y libertades fundamentales,
-* Impiden la satisfacción de sus necesidades básicas,
-* Imposibilitan su plena integración social.
-
-
-La pobreza debe medirse desde varios enfoques que se relacionan con derechos humanos, económicos, sociales y culturales. Hoy abordaremos la pobreza desde tres enfoques generales:
-
-::: {.grid}
-
-::: {.g-col-12 .g-col-md-4}
-::: {.callout-note}
-## Enfoque Monetario
-[Explorar →](notebooks/enfoque_monetario.qmd)
-:::
 :::
 
-::: {.g-col-12 .g-col-md-4}
-::: {.callout-warning}
-## Carencias Sociales
-[Explorar →](notebooks/enfoque_carencias.qmd)
-:::
+### Column {width=42%}
+
+:::{.card .enfoque-card-carencias title="[Enfoque de carencias sociales ↗ (Click aquí)](notebooks/ods4.html)"}
+
+```{python}
+#| label: Figura_2
+fig
+```
+
 :::
 
-::: {.g-col-12 .g-col-md-4}
-::: {.callout-tip}
-## Capacidades
-[Explorar →](notebooks/ods9.qmd)
+## Row
+
+:::{.card .enfoque-monetario-container height=100%}
+
+:::{.enfoque-monetario-titulo}
+
+Enfoque monetario
+
 :::
+
+:::{.enfoque-monetario-grid}
+
+:::{.indicador-card}
+
+**Indicador 1**
+
+:::
+
+:::{.indicador-card}
+
+**Indicador 2**
+
+:::
+
+:::{.indicador-card}
+
+**Indicador 3**
+
+:::
+
+:::{.indicador-card}
+
+**Indicador 4**
+
+:::
+
 :::
 
 :::

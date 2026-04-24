@@ -1,0 +1,95 @@
+/*-- scss:rules --*/
+
+.card {
+  border: none;
+  border-radius: 15px;
+  text-align: center;
+  //background-color: #ff6347;
+}
+
+.enfoque-card-capacidades > .card-header {
+  background-color: #5aaaff;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+
+  a {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.enfoque-card-carencias > .card-header {
+  background-color: #ff6347;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  a {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.sticker-card {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  position: relative !important;
+}
+
+.sticker-img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  position: absolute !important;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.25));
+}
+
+.enfoque-monetario-container {
+  padding: 0.75rem;
+  color: #4b4b4b;
+  background-color: #fffdda;
+  border: none;
+  border-radius: 15px;
+}
+
+.enfoque-monetario-titulo {
+  text-align: center;
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.enfoque-monetario-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.indicador-card {
+  background-color: rgb(255, 255, 255);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  border-radius: 4px;
+}

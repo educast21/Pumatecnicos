@@ -1,0 +1,12 @@
+project:
+  type: default
+  output-dir: "../docs"
+  render:
+    - index.qmd
+    - notebooks/ods4.qmd
+
+format:
+  dashboard:
+    theme:
+      - cosmo
+      - custom.scss

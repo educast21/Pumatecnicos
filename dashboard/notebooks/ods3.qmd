@@ -3,6 +3,7 @@ title: "ODS 3: Salud y Bienestar"
 format:
   dashboard:
     orientation: columns
+    scrolling: true
 ---
 
 ```{python}
@@ -445,7 +446,6 @@ fig.update_layout(
     ),
     title_x=0.5,
     title_xanchor="center",
-    width=1350,
     height=950,
     margin=dict(r=20, t=90, l=20, b=40),
     template="plotly_white",
@@ -528,7 +528,9 @@ Información aquí.
 
 :::
 
-## Column {.tabset width="70%"}
+## Column {width="70%"}
+
+### Row {.tabset}
 
 ::: {.card color="white" title="Mapa 1"}
 
@@ -546,6 +548,10 @@ fig.show()
 ```
 
 :::
+
+### Row
+
+Otra fila
 
 # Síntesis
 
