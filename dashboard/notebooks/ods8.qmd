@@ -1,0 +1,274 @@
+---
+title: "Trabajo Decente y Crecimiento Económico"
+author: "Pumatecnicos"
+format:
+  dashboard:
+    theme: ../styles/ods8.scss
+    scrolling: true
+    nav-buttons:
+      - icon: house-fill
+        text: Inicio
+        href: ../index.html
+        aria-label: Volver al inicio
+---
+
+```{python}
+#| label: imports
+#| output: false
+import plotly.express as px
+import plotly.graph_objects as go
+import pandas as pd
+import numpy as np
+
+# Paleta consistente con el tema chalkboard
+PAPER_BG    = "rgba(0,0,0,0)"
+PLOT_BG     = "rgba(245,245,235,0.95)"
+TEXT_COLOR  = "#1b2a1f"
+
+COLOR_HOMBRE = "#2d6daa"
+COLOR_MUJER  = "#e03a96"
+GREENS       = ["#1e3a2b", "#2d5a3d", "#3d7a52", "#5ba672", "#8fc79e"]
+WARM         = ["#b8860b", "#d14e39", "#7a1f1f"]
+
+
+def _layout(fig, legend=True):
+    fig.update_layout(
+        paper_bgcolor=PAPER_BG,
+        plot_bgcolor=PLOT_BG,
+        font=dict(color=TEXT_COLOR, family="Montserrat", size=11),
+        margin=dict(l=10, r=10, t=36, b=10),
+        title=dict(font=dict(size=12, color=TEXT_COLOR)),
+        showlegend=legend,
+        legend=dict(
+            orientation="h",
+            y=-0.22, x=0.5, xanchor="center",
+            bgcolor="rgba(255,255,255,0.35)",
+            bordercolor="rgba(30,58,43,0.2)",
+            borderwidth=1,
+        ),
+    )
+    fig.update_xaxes(gridcolor="rgba(30,58,43,0.12)", zerolinecolor="rgba(30,58,43,0.2)")
+    fig.update_yaxes(gridcolor="rgba(30,58,43,0.12)", zerolinecolor="rgba(30,58,43,0.2)")
+    return fig
+
+
+def fig_informalidad():
+    """Placeholder: % de Hombres y Mujeres en la informalidad por año."""
+    years = list(range(2015, 2025))
+    rng = np.random.default_rng(8)
+    data = pd.DataFrame({
+        "Año": years * 2,
+        "Sexo": ["Hombre"] * len(years) + ["Mujer"] * len(years),
+        "Porcentaje": np.concatenate([
+            55 + rng.normal(0, 1.2, len(years)),
+            58 + rng.normal(0, 1.4, len(years)),
+        ]),
+    })
+    f = px.bar(
+        data, x="Año", y="Porcentaje", color="Sexo",
+        barmode="group",
+        color_discrete_map={"Hombre": COLOR_HOMBRE, "Mujer": COLOR_MUJER},
+        title="Fuentes: INEGI, ENOE 2015-2024",
+    )
+    return _layout(f)
+
+
+def fig_ninos_trabajando():
+    """Placeholder: % niños 5-14 años trabajando, 3 estados peor posicionados."""
+    data = pd.DataFrame({
+        "Estado": ["Guerrero", "Chiapas", "Nayarit"],
+        "Porcentaje": [10.2, 10.1, 8.5],
+    })
+    f = px.bar(
+        data, x="Estado", y="Porcentaje",
+        title="Los 3 estados con mayor proporción",
+        color_discrete_sequence=[GREENS[3]],
+    )
+    f.add_hline(
+        y=4.85, line_dash="dot", line_color=WARM[1], line_width=2,
+        annotation_text="Promedio Nacional: 4.85%",
+        annotation_position="top right",
+        annotation_font=dict(color=WARM[1], size=10),
+    )
+    f.update_traces(marker_line_color=GREENS[0], marker_line_width=1)
+    return _layout(f, legend=False)
+
+
+def fig_jovenes_ninis():
+    """Placeholder: % de jóvenes 15-24 que no estudian ni trabajan por nivel."""
+    data = pd.DataFrame({
+        "Año":  [2018, 2020, 2022, 2024] * 3,
+        "Nivel": ["Primaria"] * 4 + ["Secundaria"] * 4 + ["Preparatoria"] * 4,
+        "Porcentaje": [
+            33.8, 51.0, 48.7, 48.5,
+            36.6, 19.0, 17.0, 15.4,
+            13.8, 15.8, 13.8, 11.2,
+        ],
+    })
+    f = px.bar(
+        data, x="Año", y="Porcentaje", color="Nivel",
+        barmode="group",
+        color_discrete_map={
+            "Primaria":     WARM[0],
+            "Secundaria":   WARM[2],
+            "Preparatoria": WARM[1],
+        },
+        title="INEGI, ENOE 2018-2024",
+    )
+    return _layout(f)
+```
+
+<!-- ============================================================
+     NAVBAR SECUNDARIA · ODS (se mantiene del enfoque de capacidades)
+     ============================================================ -->
+
+## Row {height="52px" .nav-ods-row}
+
+### Column
+
+:::{.card .nav-ods-item}
+[ODS 4 · Educación de Calidad](ods4.html)
+:::
+
+### Column
+
+:::{.card .nav-ods-item .nav-ods-activo}
+ODS 8 · Trabajo Decente
+:::
+
+### Column
+
+:::{.card .nav-ods-item}
+[ODS 9 · Industria e Innovación](ods9.html)
+:::
+
+<!-- ============================================================
+     FILA 1 · Ingresos BCS + Informalidad
+     ============================================================ -->
+
+## Row {height="340px"}
+
+### Column {width="28%"}
+
+:::{.card .card-ingreso .card-ingreso-mejor}
+
+::: {.ingreso-titulo}
+El mejor ingreso medio por hora
+:::
+
+::: {.ingreso-lugar}
+1° Baja Calif. Sur
+:::
+
+:::: {.ingreso-valores-grid}
+
+::: {.valor-sub .valor-hombre}
+::: {.valor-cifra}
+$ 80.9
+:::
+::: {.valor-etiqueta}
+Hombre
+:::
+:::
+
+::: {.valor-sub .valor-mujer}
+::: {.valor-cifra}
+$ 72.9
+:::
+::: {.valor-etiqueta}
+Mujer
+:::
+:::
+
+::::
+
+:::
+
+### Column {width="28%"}
+
+:::{.card .card-ingreso .card-ingreso-peor}
+
+::: {.ingreso-titulo}
+El peor ingreso medio por hora
+:::
+
+::: {.ingreso-lugar}
+32° Baja Calif. Sur
+:::
+
+:::: {.ingreso-valores-grid}
+
+::: {.valor-sub .valor-hombre}
+::: {.valor-cifra}
+$ 33.9
+:::
+::: {.valor-etiqueta}
+Hombre
+:::
+:::
+
+::: {.valor-sub .valor-mujer}
+::: {.valor-cifra}
+$ 36.3
+:::
+::: {.valor-etiqueta}
+Mujer
+:::
+:::
+
+::::
+
+:::
+
+### Column {width="44%"}
+
+#### Row {height="55px"}
+
+:::{.card .titulo-informalidad}
+Informalidad: Trabajar sin Seguridad Social y otras garantías
+:::
+
+#### Row
+
+```{python}
+#| title: "% de Hombres y Mujeres en la informalidad"
+fig_informalidad()
+```
+
+<!-- ============================================================
+     FILA 2 · Banner pregunta (ancho completo)
+     ============================================================ -->
+
+## Row {height="60px"}
+
+:::{.card .banner-pregunta}
+Más allá de la informalidad: ¿por qué hay niños trabajando?
+:::
+
+<!-- ============================================================
+     FILA 3 · Gráfica · Texto · Gráfica
+     ============================================================ -->
+
+## Row {height="420px"}
+
+### Column {width="33%"}
+
+```{python}
+#| title: "% niños de 5 a 14 años trabajando"
+fig_ninos_trabajando()
+```
+
+### Column {width="30%"}
+
+:::{.card .texto-explicativo}
+El trabajo infantil suele implicar rezago escolar, y a su vez la falta de acceso a empleos formales.
+
+Históricamente, a mayor escolaridad, se reduce la probabilidad de quedar vulnerable por falta de oportunidades (estudios y empleo).
+:::
+
+### Column {width="37%"}
+
+```{python}
+#| title: "% nacional de jóvenes (15 a 24 años) que NO estudian, NI trabajan"
+fig_jovenes_ninis()
+```

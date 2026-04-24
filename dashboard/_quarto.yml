@@ -5,6 +5,7 @@ project:
     - index.qmd
     - notebooks/ods4.qmd
     - notebooks/enfoque_monetario.qmd
+    - notebooks/ods8.qmd
 
 format:
   dashboard:

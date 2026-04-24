@@ -1,0 +1,442 @@
+/*-- scss:defaults --*/
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+// ============================================================
+// Paleta chalkboard escolar — HEREDADA de ODS 4 (enfoque de capacidades)
+// ============================================================
+$chalk-dark:     #1e3a2b;   // pizarrón profundo
+$chalk-mid:      #2d5a3d;   // verde pizarra medio
+$chalk-light:    #3d7a52;   // verde tiza resaltado
+$chalk-accent:   #5ba672;   // verde brillante
+$chalk-soft:     #e8f3e8;   // crema verdoso
+$paper-bg:       #f5efe4;   // crema general del dashboard
+$chalk-text:     #f7f4e9;   // blanco tiza
+$chalk-muted:    #cfd9c8;   // blanco tiza apagado
+
+// ============================================================
+// Paleta específica de las tarjetas de BCS (especificada por el user)
+// ============================================================
+$ingreso-verde:        rgb(0, 104, 71);   // verde de "El mejor ingreso"
+$ingreso-verde-light:  lighten($ingreso-verde, 6%);
+$ingreso-verde-dark:   darken($ingreso-verde, 6%);
+
+$ingreso-rojo:         #d14e39;           // rojo de "El peor ingreso"
+$ingreso-rojo-light:   lighten($ingreso-rojo, 5%);
+$ingreso-rojo-dark:    darken($ingreso-rojo, 8%);
+
+// Sub-cajas Hombre / Mujer
+$sub-azul:          #2d6daa;   // azul para Hombre
+$sub-azul-border:   #0f3d5c;
+$sub-rosa:          #e03a96;   // rosa/magenta para Mujer
+$sub-rosa-border:   #9c1e62;
+
+// Texto neutro
+$text-box:       #2a2a2a;
+$border-box:     #2a2a2a;
+
+$font-sans:   "Montserrat", sans-serif;
+$font-serif:  "Playfair Display", serif;
+$font-chalk:  "Caveat", cursive;
+
+// --- Bootstrap overrides ---
+$navbar-bg:   $chalk-dark;
+$navbar-fg:   $chalk-text;
+$body-bg:     $paper-bg;
+$body-color:  #2a2a2a;
+
+$font-family-sans-serif: $font-sans;
+$font-family-base:       $font-sans;
+$headings-font-family:   $font-serif;
+
+
+/*-- scss:rules --*/
+
+// ============================================================
+// Base
+// ============================================================
+body {
+  background-color: $paper-bg !important;
+  font-family: $font-sans;
+  -webkit-font-smoothing: antialiased;
+}
+
+// ============================================================
+// Navbar — verde chalkboard (igual que ODS 4)
+// ============================================================
+.quarto-dashboard .navbar,
+.navbar {
+  background:
+    linear-gradient(90deg, $chalk-dark 0%, $chalk-mid 55%, $chalk-light 100%),
+    $chalk-dark !important;
+  background-color: $chalk-dark !important;
+  border-bottom: 3px solid $chalk-accent !important;
+  padding: 0.4rem 1.25rem !important;
+  min-height: 52px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+  .navbar-brand,
+  .navbar-title,
+  .title,
+  .quarto-dashboard-title {
+    color: $chalk-text !important;
+    font-family: $font-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+    font-size: clamp(1.1rem, 1.6vw, 1.4rem) !important;
+  }
+
+  .quarto-dashboard-author,
+  .navbar-author {
+    color: $chalk-muted !important;
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+}
+
+// Botón "Inicio"
+.quarto-dashboard .navbar .quarto-navbar-tools .btn,
+.quarto-dashboard .navbar .nav-btn,
+.navbar .nav-btn,
+.navbar .btn {
+  background: rgba(255, 255, 255, 0.10) !important;
+  color: $chalk-text !important;
+  border: 1px solid rgba(91, 166, 114, 0.55) !important;
+  border-radius: 999px !important;
+  padding: 0.3rem 0.9rem !important;
+  font-family: $font-sans !important;
+  font-weight: 600 !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.3px;
+  transition: all 0.2s ease;
+
+  &:hover,
+  &:focus {
+    background: $chalk-accent !important;
+    color: $chalk-dark !important;
+    border-color: $chalk-accent !important;
+    transform: translateY(-1px);
+  }
+}
+
+// ============================================================
+// Ajustes globales dashboard
+// ============================================================
+.quarto-dashboard main { padding: 0.7rem !important; }
+
+.quarto-dashboard .bslib-gap-spacing,
+.quarto-dashboard .dashboard-column,
+.quarto-dashboard .dashboard-row {
+  gap: 0.7rem !important;
+}
+
+// ============================================================
+// Cards base (gráficos con título del chunk)
+// ============================================================
+.card {
+  border: none !important;
+  border-radius: 10px !important;
+  background-color: #fbf8ef !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.card > .card-header {
+  background: linear-gradient(90deg, $chalk-dark 0%, $chalk-mid 100%) !important;
+  color: $chalk-text !important;
+  font-family: $font-sans !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.4px;
+  font-size: 0.9rem !important;
+  padding: 0.45rem 0.85rem !important;
+  border-bottom: none !important;
+  border-radius: 10px 10px 0 0 !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+  min-height: 0;
+}
+
+// Ocultar header vacío en cards personalizadas
+.card.card-ingreso > .card-header,
+.card.titulo-informalidad > .card-header,
+.card.banner-pregunta > .card-header,
+.card.texto-explicativo > .card-header {
+  display: none !important;
+}
+
+// ============================================================
+// NAVBAR SECUNDARIA (ODS 4 / 8 / 9) — igual que ODS 4
+// ============================================================
+.card.nav-ods-item {
+  background: $chalk-soft !important;
+  border: 2px solid $chalk-mid !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+
+  > .card-header { display: none !important; }
+
+  > .card-body {
+    padding: 0.4rem 0.8rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: $font-sans;
+    font-weight: 700;
+    font-size: clamp(0.8rem, 1vw, 0.95rem);
+    letter-spacing: 0.4px;
+    color: $chalk-dark;
+    text-align: center;
+    line-height: 1.1;
+  }
+
+  a {
+    color: $chalk-dark !important;
+    text-decoration: none !important;
+    display: block;
+    width: 100%;
+
+    &:hover { color: $chalk-accent !important; }
+  }
+
+  p { margin: 0 !important; }
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.card.nav-ods-item.nav-ods-activo {
+  background: linear-gradient(90deg, $chalk-dark 0%, $chalk-mid 100%) !important;
+  border-color: $chalk-accent !important;
+  cursor: default;
+
+  > .card-body { color: $chalk-text !important; }
+
+  &:hover { transform: none; }
+}
+
+// ============================================================
+// CARD INGRESO (mejor / peor) — tarjetas de BCS
+// ============================================================
+.card.card-ingreso {
+  border: none !important;
+  border-radius: 14px !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+
+  > .card-body {
+    padding: 0.7rem 0.75rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-evenly !important;
+    align-items: stretch !important;
+    gap: 0.45rem !important;
+    height: 100% !important;
+  }
+
+  p { margin: 0 !important; }
+}
+
+.card.card-ingreso-mejor {
+  background:
+    linear-gradient(160deg, $ingreso-verde-light 0%, $ingreso-verde 55%, $ingreso-verde-dark 100%) !important;
+  border: 3px solid $ingreso-verde-dark !important;
+}
+
+.card.card-ingreso-peor {
+  background:
+    linear-gradient(160deg, $ingreso-rojo-light 0%, $ingreso-rojo 55%, $ingreso-rojo-dark 100%) !important;
+  border: 3px solid $ingreso-rojo-dark !important;
+}
+
+// Título pequeño arriba ("El mejor ingreso medio por hora")
+.ingreso-titulo {
+  color: $chalk-text;
+  font-family: $font-sans;
+  font-weight: 600;
+  font-size: clamp(0.78rem, 0.95vw, 0.95rem);
+  text-align: center;
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+// Lugar grande ("1° Baja Calif. Sur")
+.ingreso-lugar {
+  color: $chalk-text;
+  font-family: $font-serif;
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  text-align: center;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+// Grid interno de las dos sub-cajas (Hombre / Mujer)
+.ingreso-valores-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 0.5rem !important;
+  padding: 0 0.15rem;
+}
+
+// Base de las sub-cajas
+.valor-sub {
+  border-radius: 8px;
+  padding: 0.45rem 0.4rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: $chalk-text;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  min-width: 0;
+  overflow: hidden;
+
+  p { margin: 0 !important; line-height: inherit; }
+}
+
+.valor-hombre {
+  background: $sub-azul;
+  border: 2px solid $sub-azul-border;
+}
+
+.valor-mujer {
+  background: $sub-rosa;
+  border: 2px solid $sub-rosa-border;
+}
+
+.valor-cifra {
+  font-family: $font-sans;
+  font-weight: 800;
+  font-size: clamp(0.95rem, 1.3vw, 1.25rem);
+  line-height: 1.1;
+  color: $chalk-text;
+  letter-spacing: 0.3px;
+}
+
+.valor-etiqueta {
+  font-family: $font-sans;
+  font-weight: 500;
+  font-size: clamp(0.7rem, 0.85vw, 0.85rem);
+  color: $chalk-text;
+  letter-spacing: 0.3px;
+  margin-top: 0.15rem !important;
+  opacity: 0.95;
+}
+
+// ============================================================
+// TITULO INFORMALIDAD — banner de encabezado sobre el gráfico
+// ============================================================
+.card.titulo-informalidad {
+  background: $chalk-soft !important;
+  border: 2px solid $chalk-mid !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+
+  > .card-body {
+    padding: 0.45rem 0.9rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: $font-sans;
+    font-weight: 600;
+    color: $chalk-dark;
+    text-align: center;
+    font-size: clamp(0.8rem, 1vw, 0.95rem);
+    line-height: 1.25;
+    letter-spacing: 0.3px;
+  }
+
+  p { margin: 0 !important; }
+}
+
+// ============================================================
+// BANNER PREGUNTA — fila completa ("Más allá de la informalidad...")
+// ============================================================
+.card.banner-pregunta {
+  background: #ffffff !important;
+  border: 2px solid $border-box !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+
+  > .card-body {
+    padding: 0.6rem 1.2rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: $font-serif;
+    font-weight: 600;
+    font-style: italic;
+    color: $chalk-dark;
+    text-align: center;
+    font-size: clamp(1rem, 1.3vw, 1.25rem);
+    line-height: 1.25;
+    letter-spacing: 0.2px;
+  }
+
+  p { margin: 0 !important; }
+}
+
+// ============================================================
+// TEXTO EXPLICATIVO — caja blanca entre las dos gráficas inferiores
+// ============================================================
+.card.texto-explicativo {
+  background: #ffffff !important;
+  border: 2px solid $border-box !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+
+  > .card-body {
+    padding: 1rem 1.1rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: stretch !important;
+    color: $text-box;
+    font-family: $font-sans;
+    font-size: clamp(0.85rem, 1vw, 1rem);
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: left;
+    gap: 0.75rem;
+  }
+
+  p {
+    margin: 0 !important;
+  }
+}
+
+// ============================================================
+// Plotly: contenedor transparente
+// ============================================================
+.js-plotly-plot .plotly .main-svg { background: transparent !important; }
+
+// ============================================================
+// Responsivo
+// ============================================================
+@media (max-width: 992px) {
+  .ingreso-lugar {
+    font-size: 1.2rem;
+  }
+  .valor-cifra {
+    font-size: 0.95rem;
+  }
+  .card.banner-pregunta > .card-body {
+    font-size: 0.95rem;
+    padding: 0.5rem 0.9rem !important;
+  }
+  .card.texto-explicativo > .card-body {
+    font-size: 0.85rem;
+    padding: 0.8rem 0.9rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .ingreso-valores-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
