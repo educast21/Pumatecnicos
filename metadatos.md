@@ -163,6 +163,187 @@ Variables:
 - Periodo: Entidad Federativa
 -  Porcentaje de población con inseguridad alimentaria moderada o severa, por desglose geográfico y grupo poblacional 2022: Porcentaje a nivel nacional 
 
+## 2.- 2n.1.1_sh_es.csv
+
+Consejo Nacional de Evaluación de la Política de Desarrollo Social.
+"Porcentaje de la población menor de 5 años que presenta algún tipo de desnutrición".
+
+Licencia: Licencia de Código Abierto.
+
+Variables:
+
+- Serie: nombre del indicador; en este archivo corresponde al porcentaje de población menor de 5 años que presenta algún tipo de desnutrición.
+- cvegeo: ID para cada entidad federativa; el valor 0 corresponde al total nacional.
+- Entidad_federativa: entidad federativa o total nacional.
+- Periodo: año de medición del indicador.
+- Menores_de_5_años-desnutrición|Nacional/Total: porcentaje total de menores de 5 años con algún tipo de desnutrición.
+- Menores_de_5_años-desnutrición|Urbana: porcentaje de menores de 5 años con algún tipo de desnutrición en localidades urbanas.
+- Menores_de_5_años-desnutrición|Rural: porcentaje de menores de 5 años con algún tipo de desnutrición en localidades rurales.
+- Menores_de_5_años-desnutrición|Hombres: porcentaje de niños menores de 5 años con algún tipo de desnutrición.
+- Menores_de_5_años-desnutrición|Mujeres: porcentaje de niñas menores de 5 años con algún tipo de desnutrición.
+
+Cobertura temporal: 2006, 2012, 2018, 2020, 2021, 2022, 2023 y 2024.
+
+Cobertura espacial: nacional y entidades federativas.
+
+Unidad de medida: Porcentaje.
+
+## 3.- 2.1.2.a_sh_es(2).csv
+
+CONEVAL - ENIGH.
+"Proporción de la población con inseguridad alimentaria moderada o severa, por desglose geográfico (Entidad federativa)".
+
+Licencia: Licencia de Código Abierto.
+
+Variables:
+
+- Periodo: año de medición del indicador.
+- cvegeo: ID para cada entidad federativa; el valor 0 corresponde al total nacional.
+- Desglose: entidad federativa o total nacional.
+- Proporción_de_la_población_con_inseguridad_alimentaria_moderada_o_severa,por_desglose_geográfico(Entidad_federativa): porcentaje de población con inseguridad alimentaria moderada o severa para cada entidad federativa.
+
+Cobertura temporal: 2016, 2018, 2020 y 2022.
+
+Cobertura espacial: nacional y entidades federativas.
+
+Unidad de medida: Porcentaje.
+
+## 4.- 2.1.2.b_sh_es.csv
+
+CONEVAL - ENIGH.
+"Proporción de la población con inseguridad alimentaria moderada o severa, por desglose geográfico (Municipio o demarcación territorial)".
+
+Licencia: Licencia de Código Abierto.
+
+Variables:
+
+- Periodo: año de medición del indicador.
+- cvegeo: ID geográfico para cada municipio o demarcación territorial; el valor 0 corresponde al total nacional.
+- Desglose: municipio, demarcación territorial, entidad federativa o total nacional.
+- Proporción_de_la_población_con_inseguridad_alimentaria_moderada_o_severa,por_desglose_geográfico(Municipio_o_demarcación_territorial): porcentaje de población con inseguridad alimentaria moderada o severa para cada municipio o demarcación territorial.
+
+Cobertura temporal: 2010, 2015 y 2020.
+
+Cobertura espacial: nacional, entidades federativas, municipios y demarcaciones territoriales.
+
+Unidad de medida: Porcentaje.
+
+## 5.- 2.2.1_sh_es.csv
+
+CONEVAL - ENIGH.
+"Prevalencia del retraso en el crecimiento entre la población menor de 5 años".
+
+Licencia: Licencia de Código Abierto.
+
+Variables:
+
+- Serie: nombre del indicador; en este archivo corresponde a la prevalencia del retraso en el crecimiento, medido como estatura para la edad con desviación típica menor a -2 respecto de la mediana de los patrones de crecimiento infantil de la Organización Mundial de la Salud.
+- cvegeo: ID para cada entidad federativa; el valor 0 corresponde al total nacional.
+- Entidad_federativa: entidad federativa o total nacional.
+- Periodo: año de medición del indicador.
+- tam_loc_sexo|Nacional: porcentaje total de población menor de 5 años con retraso en el crecimiento.
+- tam_loc_sexo|Urbana: porcentaje de población menor de 5 años con retraso en el crecimiento en localidades urbanas.
+- tam_loc_sexo|Rural: porcentaje de población menor de 5 años con retraso en el crecimiento en localidades rurales.
+- tam_loc_sexo|Hombres: porcentaje de niños menores de 5 años con retraso en el crecimiento.
+- tam_loc_sexo|Mujeres: porcentaje de niñas menores de 5 años con retraso en el crecimiento.
+
+Cobertura temporal: 2006, 2012, 2018, 2020, 2021, 2022, 2023 y 2024.
+
+Cobertura espacial: nacional y entidades federativas.
+
+Unidad de medida: Porcentaje.
+
+# 6.- 2.2.2(1)_sh_es.csv
+
+CONEVAL - ENIGH.
+"Prevalencia de emaciación entre la población menor de 5 años".
+
+Licencia: Licencia de Código Abierto.
+
+Variables:
+
+- Serie: nombre del indicador; en este archivo corresponde a la prevalencia de emaciación, medida como peso para la estatura con desviación típica menor a -2 respecto de la mediana de los patrones de crecimiento infantil de la OMS.
+- cvegeo: ID para cada entidad federativa; el valor 0 corresponde al total nacional.
+- Entidad_federativa: entidad federativa o total nacional.
+- Periodo: año de medición del indicador.
+- tam_loc_sexo|Nacional: porcentaje total de población menor de 5 años con emaciación.
+- tam_loc_sexo|Urbana: porcentaje de población menor de 5 años con emaciación en localidades urbanas.
+- tam_loc_sexo|Rural: porcentaje de población menor de 5 años con emaciación en localidades rurales.
+- tam_loc_sexo|Hombres: porcentaje de niños menores de 5 años con emaciación.
+- tam_loc_sexo|Mujeres: porcentaje de niñas menores de 5 años con emaciación.
+
+Cobertura temporal: 2006, 2012, 2018, 2020, 2021, 2022 y 2023.
+
+Cobertura espacial: nacional y entidades federativas.
+
+Unidad de medida: Porcentaje.
+
+## 7.- 2.2.2(2)_sh_es.csv
+
+CONEVAL - ENIGH.
+"Prevalencia de sobrepeso u obesidad entre la población menor de 5 años".
+
+Licencia: Licencia de Código Abierto.
+
+Variables:
+
+- Serie: nombre del indicador; en este archivo corresponde a la prevalencia de sobrepeso u obesidad, medida como peso para la estatura con desviación típica mayor a +2 respecto de los patrones de crecimiento infantil de la OMS.
+- cvegeo: ID para cada entidad federativa; el valor 0 corresponde al total nacional.
+- Entidad_federativa: entidad federativa o total nacional.
+- Periodo: año de medición del indicador.
+- tam_loc_sexo|Nacional: porcentaje total de población menor de 5 años con sobrepeso u obesidad.
+- tam_loc_sexo|Urbana: porcentaje de población menor de 5 años con sobrepeso u obesidad en localidades urbanas.
+- tam_loc_sexo|Rural: porcentaje de población menor de 5 años con sobrepeso u obesidad en localidades rurales.
+- tam_loc_sexo|Hombres: porcentaje de niños menores de 5 años con sobrepeso u obesidad.
+- tam_loc_sexo|Mujeres: porcentaje de niñas menores de 5 años con sobrepeso u obesidad.
+
+Cobertura temporal: 2006, 2012, 2018, 2020, 2021, 2022, 2023 y 2024.
+
+Cobertura espacial: nacional y entidades federativas.
+
+Unidad de medida: Porcentaje.
+
+## 8.- 2n.2.2_sh_es.csv
+
+CONEVAL - ENIGH.
+"Porcentaje de población con carencia por acceso a la alimentación nutritiva y de calidad".
+
+Licencia: Licencia de Código Abierto.
+
+Variables:
+
+- Serie: nombre del indicador; en este archivo corresponde al porcentaje de población con carencia por acceso a la alimentación nutritiva y de calidad.
+- Periodo: año de medición del indicador.
+- Grupos_de_Población|Nacional: porcentaje nacional de población con carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Hombres: porcentaje de hombres con carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Mujeres: porcentaje de mujeres con carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Población_analfabeta: porcentaje de población analfabeta con carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Población_indígena: porcentaje de población indígena con carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Hombres_indígenas: porcentaje de hombres indígenas con carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Mujeres_indígenas: porcentaje de mujeres indígenas con carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Personas_con_discapacidad: porcentaje de personas con discapacidad con carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Primera_infancia_(0_a_5_años): porcentaje de población de 0 a 5 años con carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Niños_y_niñas_(menores_de_18_años): porcentaje de niñas, niños y adolescentes menores de 18 años con carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Jóvenes_(los_de_12_a_29_años): porcentaje de jóvenes de 12 a 29 años con carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Adultos_mayores_(65_años_o_más): porcentaje de adultos mayores de 65 años o más con carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Hombres_adultos_mayores: porcentaje de hombres adultos mayores con carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Mujeres_adultos_mayores: porcentaje de mujeres adultas mayores con carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Hombres_(Menos_de_4_horas_a_cuidados)_<sup>1</sup>: porcentaje de hombres que dedican menos de 4 horas a cuidados y presentan carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Hombres_(4_horas_o_más_a_cuidados)_<sup>1</sup>: porcentaje de hombres que dedican 4 horas o más a cuidados y presentan carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Mujeres_(Menos_de_4_horas_a_cuidados)_<sup>1</sup>: porcentaje de mujeres que dedican menos de 4 horas a cuidados y presentan carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Mujeres_(4_horas_o_más_a_cuidados)_<sup>1</sup>: porcentaje de mujeres que dedican 4 horas o más a cuidados y presentan carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Hombres_(Menos_de_4_horas_a_hogar)_<sup>2</sup>: porcentaje de hombres que dedican menos de 4 horas a trabajo del hogar y presentan carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Hombres_(4_horas_o_más_a_hogar)_<sup>2</sup>: porcentaje de hombres que dedican 4 horas o más a trabajo del hogar y presentan carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Mujeres_(Menos_de_4_horas_a_hogar)_<sup>2</sup>: porcentaje de mujeres que dedican menos de 4 horas a trabajo del hogar y presentan carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Mujeres_(4_horas_o_más_a_hogar)_<sup>2</sup>: porcentaje de mujeres que dedican 4 horas o más a trabajo del hogar y presentan carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Ámbito_rural: porcentaje de población en ámbito rural con carencia por acceso a alimentación nutritiva y de calidad.
+- Grupos_de_Población|Ámbito_urbano: porcentaje de población en ámbito urbano con carencia por acceso a alimentación nutritiva y de calidad.
+
+Cobertura temporal: 2016, 2018, 2020 y 2022.
+
+Cobertura espacial: nacional.
+
+Unidad de medida: Porcentaje.
 
 # ODS 3
 
