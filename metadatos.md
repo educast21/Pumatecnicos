@@ -732,8 +732,17 @@ Cobertura Espacial: Nacional
 Periodicidad: Anual
 Unidad de Medida: Número
 
+## 10.- 9.5.2_sh_es.xls
+SECIHTI (2025)
+"9.5.2  Personas investigadoras por millón de habitantes".
+Recuperado el 24 de abril de 2026 de: [https://agenda2030.mx/ODSind.html?ind=ODS009000400020&cveind=228&cveCob=99&lang=es#/Indicator](https://agenda2030.mx/ODSind.html?ind=ODS009000400020&cveind=228&cveCob=99&lang=es#/Indicator)
 
+Licencia: Licencia de Código Abierto 
 
+Variables:
+
+- Entidad federativa
+- Personas investigadoras por millón de habitantes: por sexo (Hombres y Mujeres) a 2024
 
 
 
