@@ -4,6 +4,7 @@ project:
   render:
     - index.qmd
     - notebooks/ods4.qmd
+    - notebooks/enfoque_monetario.qmd
 
 format:
   dashboard:

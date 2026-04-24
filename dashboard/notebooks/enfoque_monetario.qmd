@@ -1,324 +1,116 @@
 ---
 title: "Enfoque Monetario"
+author: "Pumatecnicos"
 format:
   dashboard:
-    orientation: columns
+    theme: ../styles/enfoque_monetario.scss
+    scrolling: false
+    nav-buttons:
+      - icon: house-fill
+        text: Inicio
+        href: ../index.html
+        aria-label: Volver al inicio
 ---
 
 ```{python}
-#| label: setup
-#| include: false
-import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
-import requests
-
-path = "../../datos"
-
-# ── Umbrales Internacionales: $1.90 USD ────────────────────────────────────
-df_190 = pd.read_excel(f"{path}/1.1.1_sh_es.xls", sheet_name=0, header=None)
-df_190 = df_190.iloc[7:-6]
-df_190.columns = df_190.iloc[0]
-df_190 = df_190[1:]
-df_190.columns = ["Periodo", "Total", "Urbano", "Rural"]
-
-df2_190 = pd.read_excel(f"{path}/data_1775968412.xlsx", sheet_name=0)
-df2_190 = df2_190[['Años__ESTANDAR', 'value']]
-df2_190.columns = ['Periodo', 'LatinoAmerica']
-df_190 = df_190.merge(df2_190, how='right', on='Periodo')
-df_190 = df_190.apply(pd.to_numeric, errors='coerce').astype(float)
-
-# ── Umbrales Internacionales: $1.25 USD ────────────────────────────────────
-df_125 = pd.read_excel(f"{path}/1r.1.1_sh_es.xls", sheet_name=0, header=None)
-df_125 = df_125.iloc[7:-3]
-df_125.columns = df_125.iloc[0]
-df_125 = df_125[1:]
-df_125.columns = ["Periodo", "Total", "Urbano", "Rural"]
-
-df2_125 = pd.read_excel(f"{path}/data_1775968526.xlsx", sheet_name=0)
-df2_125 = df2_125[['Años__ESTANDAR', 'value']]
-df2_125.columns = ['Periodo', 'LatinoAmerica']
-df_125 = df_125.merge(df2_125, how='outer')
-df_125 = df_125.apply(pd.to_numeric, errors='coerce').astype(float)
-
-# ── Umbrales Nacionales: mapa por entidad ──────────────────────────────────
-df_nac = pd.read_excel(f"{path}/1.2.1.A_sh_es.xls", sheet_name=0, header=None)
-df_nac = df_nac.iloc[6:-10]
-df_nac.columns = df_nac.iloc[0]
-df_nac = df_nac[2:]
-df_nac.columns = ["ID", "Entidad", "2022", "2020", "2018", "2016"]
-
-df_pob_raw = pd.read_excel(f"{path}/1.2.1.A_dc_2195_es.xls", sheet_name=0, header=None)
-df_pob_raw = df_pob_raw.iloc[5:-10]
-df_pob_raw.columns = df_pob_raw.iloc[0]
-df_pob_raw = df_pob_raw[3:]
-df_pob_raw.columns = ["ID", "Entidad", "Pob2022", "Pob2020", "Pob2018", "Pob2016"]
-for col in ['Pob2016', 'Pob2018', 'Pob2020', 'Pob2022']:
-    df_pob_raw[col] = 1000 * df_pob_raw[col]
-df_nac = df_nac.merge(df_pob_raw, on=['ID', 'Entidad'], how='left')
-
-repo_url = 'https://raw.githubusercontent.com/angelnmara/geojson/master/mexicoHigh.json'
-mx_states_geojson = requests.get(repo_url).json()
-
-df_nac.iloc[4, 1]  = "Coahuila"
-df_nac.iloc[15, 1] = "Michoacán"
-df_nac.iloc[29, 1] = "Veracruz"
-
-df_long = df_nac.melt(
-    id_vars=['Entidad'],
-    value_vars=['2016', '2018', '2020', '2022'],
-    var_name='Año',
-    value_name='Porcentaje'
-)
-df_long['Categoría'] = pd.cut(
-    df_long['Porcentaje'],
-    bins=[0, 25, 50, 100],
-    labels=["[0,25]", "(25,50]", "(50,100]"],
-    include_lowest=True,
-    right=True
-)
-df_pob_long = df_nac.melt(
-    id_vars=['Entidad'],
-    value_vars=['Pob2016', 'Pob2018', 'Pob2020', 'Pob2022'],
-    var_name='Año_Pob',
-    value_name='Poblacion'
-)
-df_pob_long['Año'] = df_pob_long['Año_Pob'].str.extract(r'(\d+)').astype(str)
-df_long = pd.merge(df_long, df_pob_long[['Entidad', 'Año', 'Poblacion']], on=['Entidad', 'Año'])
-df_long['Categoría'] = df_long['Categoría'].astype(str).str.strip()
-df_long = df_long.sort_values('Año')
-df_long['Porcentaje'] = df_long['Porcentaje'].apply(lambda x: f"{round(x,2)}%")
-df_long['Poblacion']  = df_long['Poblacion'].apply(lambda x: f"{x:,.0f}")
-
-dummy = pd.DataFrame({
-    'Entidad': ['Dummy'], 'Año': ['2016'],
-    'Porcentaje': ['6%'], 'Categoría': ['[0,25]'], 'Poblacion': ['1']
-})
-df_long = pd.concat([dummy, df_long], ignore_index=True)
-```
-
-```{python}
-#| label: crear-graficas
+#| label: imports
 #| output: false
+import plotly.express as px
 
-colores_linea = {
-    "Total": "#e9e83f",
-    "Urbano": "#5767dc",
-    "Rural": "#e55353",
-    "LatinoAmerica": "#f59842"
-}
+df = px.data.gapminder()
+df_recent = df.query("year == 2007")
 
-# ── Figura 1.1.1: Umbral $1.90 USD ────────────────────────────────────────
-fig_190 = px.line(
-    df_190, x="Periodo", y=df_190.columns,
-    title='Proporción de la población que vive por debajo del umbral<br>'
-          'internacional de pobreza (1.90 USD/día), 1992–2020',
-    markers=True,
-    color_discrete_map=colores_linea
-)
-fig_190.update_xaxes(
-    type="date", dtick="M24", tickformat="%Y",
-    showgrid=True, gridcolor='LightGray', griddash='dot'
-)
-fig_190.update_yaxes(showgrid=True, gridcolor='LightGray', griddash='dot')
-fig_190.update_layout(
-    xaxis_title="Año", 
-    yaxis_title="Porcentaje",
-    plot_bgcolor='white',
-    margin=dict(t=60, b=80, l=60, r=40),
-    legend=dict(
-        title_text="",
-        orientation="h",
-        entrywidth=100,
-        yanchor="top",
-        y=-0.18,
-        xanchor="center",
-        x=0.5
-    ),
-)
-fig_190.update_traces(connectgaps=True)
+# Paleta consistente con el tema dorado/desértico
+PAPER_BG   = "rgba(0,0,0,0)"
+PLOT_BG    = "rgba(250,241,220,0.55)"
+TEXT_COLOR = "#3a2817"
+GOLDS      = ["#b8860b", "#d4a94a", "#8b6914", "#e8c468", "#6b4423"]
 
-# ── Figura 1r.1.1: Umbral $1.25 USD ───────────────────────────────────────
-fig_125 = px.line(
-    df_125, x="Periodo", y=df_125.columns,
-    title='Proporción de la población que vive por debajo del umbral<br>'
-          'de pobreza extrema (1.25 USD/día), 2002–2020',
-    markers=True,
-    color_discrete_map=colores_linea
-)
-fig_125.update_xaxes(
-    type="date", dtick="M24", tickformat="%Y",
-    showgrid=True, gridcolor='LightGray', griddash='dot'
-)
-fig_125.update_yaxes(showgrid=True, gridcolor='LightGray', griddash='dot')
-fig_125.update_layout(
-    xaxis_title="Año", 
-    yaxis_title="Porcentaje",
-    plot_bgcolor='white',
-    margin=dict(t=60, b=80, l=60, r=40),
-    legend=dict(
-        title_text="",
-        orientation="h",
-        entrywidth=100,
-        yanchor="top",
-        y=-0.18,
-        xanchor="center",
-        x=0.5
-    ),
-)
-fig_125.update_traces(connectgaps=True)
 
-# ── Figura mapa nacional ───────────────────────────────────────────────────
-colores_mapa = {
-    "[0,25]":    "#2dc937",
-    "(25,50]":   "#efd720",
-    "(50,100]":  "#d14e39"
-}
-fig_mapa = px.choropleth(
-    df_long,
-    geojson=mx_states_geojson,
-    locations='Entidad',
-    featureidkey='properties.name',
-    color='Categoría',
-    animation_frame='Año',
-    color_discrete_map=colores_mapa,
-    hover_name='Entidad',
-    hover_data={'Porcentaje': True, 'Entidad': False, 'Poblacion': True}
-)
-fig_mapa.update_geos(fitbounds="locations", visible=False)
-fig_mapa.update_layout(
-    title_text='Porcentaje de pobreza (Umbral Nacional) por Entidad Federativa<br>'
-               '<sup>Animación del 2016 al 2022</sup>',
-    margin={"r": 0, "t": 80, "l": 0, "b": 0},
-    legend=dict(
-        title_text="",
-        orientation="h",
-        entrywidth=100,
-        yanchor="top",
-        y=-0.3,
-        xanchor="center",
-        x=0.5
-    ),
-)
+def _layout(fig):
+    fig.update_layout(
+        paper_bgcolor=PAPER_BG,
+        plot_bgcolor=PLOT_BG,
+        font=dict(color=TEXT_COLOR, family="Montserrat"),
+        margin=dict(l=12, r=12, t=42, b=12),
+        legend=dict(
+            orientation="h",
+            y=-0.22, x=0.5, xanchor="center",
+            bgcolor="rgba(255,255,255,0.35)",
+            bordercolor="rgba(184,134,11,0.25)",
+            borderwidth=1,
+        ),
+        colorway=GOLDS,
+        title=dict(font=dict(size=13, color=TEXT_COLOR)),
+    )
+    fig.update_xaxes(gridcolor="rgba(139,105,20,0.12)", zerolinecolor="rgba(139,105,20,0.2)")
+    fig.update_yaxes(gridcolor="rgba(139,105,20,0.12)", zerolinecolor="rgba(139,105,20,0.2)")
+    return fig
+
+
+def fig_linea_tiempo(title):
+    """Placeholder: evolución temporal de la pobreza."""
+    sub = df.query("country in ['Mexico', 'Brazil', 'Argentina', 'Chile']")
+    f = px.line(
+        sub, x="year", y="lifeExp", color="country",
+        markers=True, title=title
+    )
+    return _layout(f)
+
+
+def fig_mapa_placeholder(title, variant=1):
+    """Placeholder para mapa coroplético (reemplazar con choropleth real)."""
+    f = px.scatter(
+        df_recent, x="gdpPercap", y="lifeExp",
+        size="pop", color="continent",
+        hover_name="country", log_x=True,
+        size_max=38 if variant == 1 else 30,
+        title=title,
+    )
+    return _layout(f)
 ```
 
-# Umbral Internacional $1.90
+<!-- ============================================================
+     ROW 1 · Gráfica histórica + Texto introductorio
+     ============================================================ -->
 
-## Column {width="30%"}
+## Row {height="45%"}
 
-::: {.card title="Indicador 1.1.1" height="25%" color="white"}
-
-**Descripción:** Proporción de la población que vive por debajo del umbral internacional de pobreza
-
-:::
-
-::: {.card color="white"}
-
-El Banco Mundial fijó en **$1.90 USD diarios** el umbral internacional de pobreza, equivalente a aproximadamente **$32.83 MXN** (abril 2026).
-
-El CONEVAL, a través de la ENIGH, calcula la proporción de personas que viven por debajo de este umbral, desglosando los datos por zona **urbana** y **rural**, y comparándolos con el promedio de **Latinoamérica**.
-
-La brecha entre las zonas rurales y urbanas es persistente a lo largo del tiempo, y México se ha mantenido históricamente por debajo del promedio latinoamericano en este indicador.
-
-:::
-
-## Column {width="70%"}
+### Column {width="52%"}
 
 ```{python}
-#| title: "Evolución temporal: umbral de $1.90 USD/día"
-#| height: 100%
-fig_190.show()
+#| title: "Evolución de la Pobreza y Pobreza Extrema (2002-2020)"
+fig_linea_tiempo("Comparativa entre México y Latinoamérica")
 ```
 
-# Umbral Internacional $1.25
+### Column {width="48%"}
 
-## Column {width="30%"}
-
-::: {.card title="Indicador 1r.1.1" height="25%" color="white"}
-
-**Descripción:** Proporción de la población que vive por debajo del umbral internacional de pobreza extrema
-
+:::{.card .texto-intro}
+La medición de la pobreza en nuestro país se ha desarrollado, en la mayoría de los casos, desde una perspectiva unidimensional que utiliza el ingreso como aproximación del bienestar de la población; sin embargo, este enfoque resulta limitado, pues deja de lado dimensiones fundamentales vinculadas con los derechos humanos, económicos, sociales y culturales.
 :::
 
-::: {.card color="white"}
+<!-- ============================================================
+     ROW 2 · Mapa · Texto aside · Mapa animado
+     ============================================================ -->
 
-El umbral de **pobreza extrema** se fijó en **$1.25 USD diarios**, equivalente a aproximadamente **$21.60 MXN** (abril 2026).
+## Row {height="55%"}
 
-Este indicador mide las condiciones más severas de privación económica. Al igual que con el umbral de $1.90, el CONEVAL desglosa los datos por zona **urbana** y **rural**, y los contrasta con **Latinoamérica**.
-
-La pobreza extrema rural ha sido significativamente mayor que la urbana en todos los periodos medidos, lo que refleja las desigualdades estructurales entre ambos contextos.
-
-:::
-
-## Column {width="70%"}
+### Column {width="38%"}
 
 ```{python}
-#| title: "Evolución temporal: umbral de pobreza extrema $1.25 USD/día"
-#| height: 100%
-fig_125.show()
+#| title: "Población que vive en pobreza (Umbral Nacional)"
+fig_mapa_placeholder("Animación del 2016 al 2022", variant=1)
 ```
 
-# Umbrales Nacionales
+### Column {width="24%"}
 
-## Column {width="30%"}
-
-::: {.card title="Indicador 1.2.1.A" height="25%" color="white"}
-
-**Descripción:** Porcentaje de la población en situación de pobreza según los umbrales nacionales del CONEVAL
-
+:::{.card .texto-aside}
+En este contexto, incluso la implementación de políticas públicas centradas exclusivamente en el ingreso, como la pensión universal para adultos mayores, no se ha logrado llegar a todos los rincones del país, especialmente al sur.
 :::
 
-::: {.card color="white"}
-
-El CONEVAL define sus propias **Líneas de Pobreza por Ingresos** (LPI y LPEI):
-
-$$\text{LPI} = \text{Canasta alimentaria} + \text{Canasta no alimentaria}$$
-
-$$\text{LPEI} = \text{Canasta alimentaria}$$
-
-Si el ingreso mensual de una persona es inferior a alguna de estas líneas, cae en su respectiva categoría.
-
-| Umbral | Urbana | Rural |
-|--------|--------|-------|
-| LPI    | $4,877.87 MXN | $3,494.95 MXN |
-| LPEI   | $2,516.91 MXN | $1,887.58 MXN |
-
----
-
-**Cómo leer el mapa:**
-
-- 🔴 **Rojo**: más de 1 de cada 2 personas es pobre (>50%)
-- 🟡 **Amarillo**: entre 1 de cada 4 y 1 de cada 2 (25–50%)
-- 🟢 **Verde**: menos de 1 de cada 4 personas es pobre (<25%)
-
-El objetivo final es que todo el mapa se pinte de verde.
-
-:::
-
-## Column {width="70%"}
+### Column {width="38%"}
 
 ```{python}
-#| title: "Pobreza por entidad federativa (2016–2022)"
-#| height: 100%
-fig_mapa.show()
+#| title: "Proporción de la población mayor de 65 años con pensión digna"
+fig_mapa_placeholder("Animación del 2016 al 2022", variant=2)
 ```
-
-# Síntesis
-
-## Column {width="100%"}
-
-::: {.card title="Enfoque Monetario — Conclusiones"}
-
-El **Enfoque Monetario** mide la pobreza a partir del ingreso, comparando los recursos de las personas con umbrales mínimos para adquirir bienes indispensables.
-
----
-
-Los tres indicadores analizados revelan patrones estructurales persistentes en México:
-
-- Bajo el **umbral internacional de $1.90 USD**, México ha mostrado mejoras graduales, pero la brecha rural-urbana se mantiene amplia a lo largo de todo el periodo analizado.
-- Bajo el **umbral de pobreza extrema de $1.25 USD**, la reducción ha sido más lenta en zonas rurales, que concentran las condiciones de mayor privación.
-- A nivel nacional, el **mapa por entidad federativa** muestra que los estados del sur del país —como Chiapas, Guerrero y Oaxaca— concentran los mayores porcentajes de pobreza, mientras que los estados del norte presentan mejores condiciones relativas.
-
-Si bien el ingreso es un indicador útil, su limitación radica en no capturar otras dimensiones del bienestar. Por ello, este enfoque debe complementarse con el análisis de carencias sociales y capacidades.
-
-:::

@@ -1,0 +1,265 @@
+/*-- scss:defaults --*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+// ============================================================
+// Paleta "moneda / desierto" (oros, bronces y arena cálida)
+// ============================================================
+$gold-deep:      #6b4423;   // bronce profundo (navbar, base)
+$gold-dark:      #8b6914;   // oro viejo
+$gold-primary:   #b8860b;   // oro antiguo (acento principal)
+$gold-bright:    #d4a94a;   // oro brillante
+$gold-light:     #e8c468;   // oro claro / highlight
+$sand-warm:      #e8d4a0;   // arena cálida
+$cream-warm:     #faf1dc;   // crema cálida (fondo tarjetas)
+$paper-bg:       #f5efe4;   // fondo del dashboard
+$text-dark:      #3a2817;   // marrón muy oscuro (cuerpo)
+$text-light:     #fdf6e3;   // blanco cálido
+$text-muted:     #c9b68a;   // dorado apagado (subtextos)
+
+$font-sans:  "Montserrat", sans-serif;
+$font-serif: "Playfair Display", serif;
+
+// Bootstrap overrides (ANTES de las reglas)
+$navbar-bg:   $gold-deep;
+$navbar-fg:   $text-light;
+$body-bg:     $paper-bg;
+$body-color:  $text-dark;
+
+$font-family-sans-serif: $font-sans;
+$font-family-base:       $font-sans;
+$headings-font-family:   $font-serif;
+
+
+/*-- scss:rules --*/
+
+// ============================================================
+// Base
+// ============================================================
+body {
+  background-color: $paper-bg !important;
+  font-family: $font-sans;
+  -webkit-font-smoothing: antialiased;
+}
+
+// ============================================================
+// NAVBAR · override a tonos dorados/bronce
+// ============================================================
+.quarto-dashboard .navbar,
+.navbar {
+  background:
+    linear-gradient(90deg, $gold-deep 0%, $gold-dark 50%, $gold-primary 100%),
+    $gold-deep !important;
+  background-color: $gold-deep !important;
+  border-bottom: 3px solid $gold-bright !important;
+  padding: 0.4rem 1.25rem !important;
+  min-height: 52px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+
+  .navbar-brand,
+  .navbar-title,
+  .title,
+  .quarto-dashboard-title {
+    color: $text-light !important;
+    font-family: $font-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+    font-size: clamp(1.1rem, 1.6vw, 1.4rem) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  }
+
+  .quarto-dashboard-author,
+  .navbar-author {
+    color: $text-muted !important;
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+}
+
+// Botón "Inicio" (nav-buttons) — pastilla dorada
+.quarto-dashboard .navbar .quarto-navbar-tools .btn,
+.quarto-dashboard .navbar .navbar-nav .nav-link,
+.quarto-dashboard .navbar .nav-btn,
+.quarto-dashboard .navbar .btn,
+.navbar .nav-btn,
+.navbar .btn {
+  background: rgba(255, 255, 255, 0.10) !important;
+  color: $text-light !important;
+  border: 1px solid rgba(232, 196, 104, 0.55) !important;
+  border-radius: 999px !important;
+  padding: 0.3rem 0.9rem !important;
+  font-family: $font-sans !important;
+  font-weight: 600 !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.3px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  &:hover,
+  &:focus {
+    background: $gold-bright !important;
+    color: $gold-deep !important;
+    border-color: $gold-light !important;
+    transform: translateY(-1px);
+  }
+
+  i, .bi {
+    color: inherit;
+  }
+}
+
+// ============================================================
+// Ajustes globales del dashboard
+// ============================================================
+.quarto-dashboard main {
+  padding: 0.7rem !important;
+}
+
+.quarto-dashboard .bslib-gap-spacing,
+.quarto-dashboard .dashboard-column,
+.quarto-dashboard .dashboard-row {
+  gap: 0.7rem !important;
+}
+
+// ============================================================
+// CARDS base (gráficos con título)
+// ============================================================
+.card {
+  border: none !important;
+  border-radius: 10px !important;
+  background-color: #fbf7ea !important;
+  box-shadow: 0 2px 6px rgba(107, 68, 35, 0.12);
+  overflow: hidden;
+}
+
+.card > .card-header {
+  background: linear-gradient(90deg, $gold-deep 0%, $gold-dark 55%, $gold-primary 100%) !important;
+  color: $text-light !important;
+  font-family: $font-sans !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.4px;
+  font-size: 0.9rem !important;
+  padding: 0.5rem 0.9rem !important;
+  border-bottom: 2px solid $gold-bright !important;
+  border-radius: 10px 10px 0 0 !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+  min-height: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+// Ocultar header vacío en las tarjetas de texto
+.card.texto-intro > .card-header,
+.card.texto-aside > .card-header {
+  display: none !important;
+}
+
+// ============================================================
+// TEXTO INTRO (derecha de la Row 1) · pergamino dorado
+// ============================================================
+.card.texto-intro {
+  background:
+    linear-gradient(135deg, $cream-warm 0%, lighten($sand-warm, 3%) 60%, $sand-warm 100%) !important;
+  border: 2px solid $gold-primary !important;
+  box-shadow:
+    0 3px 10px rgba(139, 105, 20, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+  position: relative;
+
+  // Esquina superior izquierda con brillo dorado
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 60px; height: 60px;
+    background: radial-gradient(circle at top left, rgba(232, 196, 104, 0.55) 0%, transparent 70%);
+    border-radius: 10px 0 0 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Esquina inferior derecha con brillo dorado
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 60px; height: 60px;
+    background: radial-gradient(circle at bottom right, rgba(232, 196, 104, 0.45) 0%, transparent 70%);
+    border-radius: 0 0 10px 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  > .card-body {
+    padding: 1.3rem 1.6rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: $text-dark;
+    font-family: $font-sans;
+    font-weight: 400;
+    font-size: clamp(0.9rem, 1.02vw, 1.08rem);
+    line-height: 1.6;
+    text-align: justify;
+    position: relative;
+    z-index: 1;
+  }
+
+  p { margin: 0 !important; }
+}
+
+// ============================================================
+// TEXTO ASIDE (centro de la Row 2) · más compacto
+// ============================================================
+.card.texto-aside {
+  background:
+    linear-gradient(160deg, $cream-warm 0%, $sand-warm 100%) !important;
+  border: 2px solid $gold-primary !important;
+  border-left: 6px solid $gold-bright !important;
+  box-shadow:
+    0 3px 10px rgba(139, 105, 20, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+
+  > .card-body {
+    padding: 1rem 1.2rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: $text-dark;
+    font-family: $font-sans;
+    font-weight: 400;
+    font-size: clamp(0.82rem, 0.93vw, 0.98rem);
+    line-height: 1.55;
+    text-align: left;
+  }
+
+  p { margin: 0 !important; }
+}
+
+// ============================================================
+// Plotly: contenedor transparente
+// ============================================================
+.js-plotly-plot .plotly .main-svg { background: transparent !important; }
+
+// ============================================================
+// Responsivo
+// ============================================================
+@media (max-width: 992px) {
+  .card.texto-intro > .card-body {
+    font-size: 0.9rem;
+    padding: 1rem 1.1rem !important;
+    text-align: left;
+  }
+  .card.texto-aside > .card-body {
+    font-size: 0.85rem;
+    padding: 0.8rem 0.9rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .card.texto-intro > .card-body,
+  .card.texto-aside > .card-body {
+    font-size: 0.85rem;
+  }
+}
