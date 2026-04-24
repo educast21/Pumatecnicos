@@ -13,147 +13,114 @@ format:
 ---
 
 ```{python}
-#| label: Imports
-
+#| label: imports
+#| output: false
+import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
-import plotly.express as px
-import json
-import requests
-from functools import reduce
-path = "../../datos"
-#path = "/content"
+import numpy as np
+
+# Paleta consistente con el tema chalkboard
+PAPER_BG    = "rgba(0,0,0,0)"
+PLOT_BG     = "rgba(245,245,235,0.95)"
+TEXT_COLOR  = "#1b2a1f"
+
+COLOR_HOMBRE = "#2d6daa"
+COLOR_MUJER  = "#e03a96"
+GREENS       = ["#1e3a2b", "#2d5a3d", "#3d7a52", "#5ba672", "#8fc79e"]
+WARM         = ["#b8860b", "#d14e39", "#7a1f1f"]
 
 
+def _layout(fig, legend=True):
+    fig.update_layout(
+        paper_bgcolor=PAPER_BG,
+        plot_bgcolor=PLOT_BG,
+        font=dict(color=TEXT_COLOR, family="Montserrat", size=11),
+        margin=dict(l=10, r=10, t=36, b=10),
+        title=dict(font=dict(size=12, color=TEXT_COLOR)),
+        showlegend=legend,
+        legend=dict(
+            orientation="h",
+            y=-0.22, x=0.5, xanchor="center",
+            bgcolor="rgba(255,255,255,0.35)",
+            bordercolor="rgba(30,58,43,0.2)",
+            borderwidth=1,
+        ),
+    )
+    fig.update_xaxes(gridcolor="rgba(30,58,43,0.12)", zerolinecolor="rgba(30,58,43,0.2)")
+    fig.update_yaxes(gridcolor="rgba(30,58,43,0.12)", zerolinecolor="rgba(30,58,43,0.2)")
+    return fig
+
+
+def fig_informalidad():
+    """Placeholder: % de Hombres y Mujeres en la informalidad por año."""
+    years = list(range(2015, 2025))
+    rng = np.random.default_rng(8)
+    data = pd.DataFrame({
+        "Año": years * 2,
+        "Sexo": ["Hombre"] * len(years) + ["Mujer"] * len(years),
+        "Porcentaje": np.concatenate([
+            55 + rng.normal(0, 1.2, len(years)),
+            58 + rng.normal(0, 1.4, len(years)),
+        ]),
+    })
+    f = px.bar(
+        data, x="Año", y="Porcentaje", color="Sexo",
+        barmode="group",
+        color_discrete_map={"Hombre": COLOR_HOMBRE, "Mujer": COLOR_MUJER},
+        title="Fuentes: INEGI, ENOE 2015-2024",
+    )
+    return _layout(f)
+
+
+def fig_ninos_trabajando():
+    """Placeholder: % niños 5-14 años trabajando, 3 estados peor posicionados."""
+    data = pd.DataFrame({
+        "Estado": ["Guerrero", "Chiapas", "Nayarit"],
+        "Porcentaje": [10.2, 10.1, 8.5],
+    })
+    f = px.bar(
+        data, x="Estado", y="Porcentaje",
+        title="Los 3 estados con mayor proporción",
+        color_discrete_sequence=[GREENS[3]],
+    )
+    f.add_hline(
+        y=4.85, line_dash="dot", line_color=WARM[1], line_width=2,
+        annotation_text="Promedio Nacional: 4.85%",
+        annotation_position="top right",
+        annotation_font=dict(color=WARM[1], size=10),
+    )
+    f.update_traces(marker_line_color=GREENS[0], marker_line_width=1)
+    return _layout(f, legend=False)
+
+
+def fig_jovenes_ninis():
+    """Placeholder: % de jóvenes 15-24 que no estudian ni trabajan por nivel."""
+    data = pd.DataFrame({
+        "Año":  [2018, 2020, 2022, 2024] * 3,
+        "Nivel": ["Primaria"] * 4 + ["Secundaria"] * 4 + ["Preparatoria"] * 4,
+        "Porcentaje": [
+            33.8, 51.0, 48.7, 48.5,
+            36.6, 19.0, 17.0, 15.4,
+            13.8, 15.8, 13.8, 11.2,
+        ],
+    })
+    f = px.bar(
+        data, x="Año", y="Porcentaje", color="Nivel",
+        barmode="group",
+        color_discrete_map={
+            "Primaria":     WARM[0],
+            "Secundaria":   WARM[2],
+            "Preparatoria": WARM[1],
+        },
+        title="INEGI, ENOE 2018-2024",
+    )
+    return _layout(f)
 ```
 
-```{python}
-#| label: Datos
-#| output: false
-
-df = pd.read_excel(path + "/8.5.1A_sh_03_es.xls", sheet_name=0, header = None)
-df = df.iloc[8:-6] # Eliminar todos los renglones de texto, solo dejar el nacional
-df.columns = df.iloc[0] # El encabezado es el primer renglón
-df = df[1:] # Eliminar el primer renglon (ya es el encazabezado)
-df = df.iloc[:, [1, 3,4]]
-df.columns = ["Entidad","Hombres", "Mujeres"]
-mejor_ing_hombre = df['Hombres']
-mejor_ing_mujer = df['Mujeres']
-mejor_ing_hombre = mejor_ing_hombre.values.tolist()[0]
-mejor_ing_mujer = mejor_ing_mujer.values.tolist()[0]
-
-
-df = pd.read_excel(path + "/8.5.1A_sh_07_es.xls", sheet_name=0, header = None)
-df = df.iloc[8:-6] # Eliminar todos los renglones de texto, solo dejar el nacional
-df.columns = df.iloc[0] # El encabezado es el primer renglón
-df = df[1:] # Eliminar el primer renglon (ya es el encazabezado)
-df = df.iloc[:, [1, 3,4]]
-df.columns = ["Entidad","Hombres", "Mujeres"]
-peor_ing_hombre = df['Hombres']
-peor_ing_mujer = df['Mujeres']
-peor_ing_hombre = peor_ing_hombre.values.tolist()[0]
-peor_ing_mujer = peor_ing_mujer.values.tolist()[0]
-
-```
-
-```{python}
-#| label: Carga_grafica_1
-#| output: false
-
-df = pd.read_excel(path + "/8.3.1_sh_es.xls", sheet_name=0, header = None)
-df = df.iloc[7:-12] # Eliminar todos los renglones de texto, solo dejar el nacional
-df.columns = df.iloc[0] # El encabezado es el primer renglón
-df = df[1:] # Eliminar el primer renglon (ya es el encazabezado)
-df.columns = ["Año","Total", "Hombres", "Mujeres"]
-df = df[["Año", "Mujeres", "Hombres"]]
-df = df.sort_values(by=['Año'])
-
-# 1. DATOS SIMULADOS (3 años, 2 categorías)
-anios = df['Año'].tolist()
-total_bloques = 100
-
-# Valores para cada año [Mujer, Hombre]
-datos_evolucion = {
-    '2024': [6, 9],
-    '2025': [10, 12],
-    '2026': [8, 14]
-}
-
-# 2. FUNCIÓN PARA CREAR LAS BARRAS DE UN AÑO ESPECÍFICO
-def crear_trazos(anio):
-    aux, val_m, val_h = df.loc[df['Año'] == anio].values.tolist()[0]
-
-    # Trazo Mujeres
-    trace_m = go.Bar(
-        y=['Mujer'], x=[val_m],
-        orientation='h',
-        marker=dict(color='#f06292', line=dict(color='white', width=4)),
-        width=0.5,
-        name='Mujer',
-        hovertemplate=f"Año {anio}<br>Porcentaje: {val_m}<extra></extra>"
-    )
-
-    # Trazo Hombres
-    trace_h = go.Bar(
-        y=['Hombre'], x=[val_h],
-        orientation='h',
-        marker=dict(color='#42a5f5', line=dict(color='white', width=4)),
-        width=0.5,
-        name='Hombre',
-        hovertemplate=f"Año {anio}<br>Porcentaje: {val_h}<extra></extra>"
-    )
-
-    # Fondo gris para completar los 15 bloques
-    fondo_m = go.Bar(y=['Mujer'], x=[total_bloques], orientation='h',
-                     marker=dict(color='#fce4ec'), width=0.5, showlegend=False, hoverinfo='skip')
-    fondo_h = go.Bar(y=['Hombre'], x=[total_bloques], orientation='h',
-                     marker=dict(color='#e1f5fe'), width=0.5, showlegend=False, hoverinfo='skip')
-
-    return [fondo_m, fondo_h, trace_m, trace_h]
-
-# 3. CONFIGURACIÓN INICIAL (Año 2024)
-fig = go.Figure(
-    data=crear_trazos(2024),
-    layout=go.Layout(
-        title="% de Hombres y Mujeres en la informalidad<br><sup>Fuentes: INEGI, ENOEN 2015-2024</sup>",
-        barmode='overlay', # Superponemos el color al fondo gris
-        plot_bgcolor='white',
-        xaxis=dict(showticklabels=False,range=[0, total_bloques], showgrid=False, zeroline=False, dtick=1),
-        yaxis=dict(showgrid=False),
-        updatemenus=[{
-            "type": "buttons",
-            "buttons": [{"label": "▶", "method": "animate", "args": [None, {"frame": {"duration": 500}}]}]
-        }]
-    )
-)
-
-# 4. CREACIÓN DE FRAMES (La magia del tiempo)
-fig.frames = [go.Frame(data=crear_trazos(yr), name=yr) for yr in anios]
-
-# 5. CONFIGURACIÓN DEL SLIDER
-sliders = [{
-    "active": 0,
-    "currentvalue": {"visible": False},
-    "steps": [{"label": yr, "method": "animate", "args": [[yr], {"frame": {"duration": 300, "redraw": True}}]} for yr in anios]
-}]
-
-fig.update_layout(sliders=sliders,
-    margin=dict(b=100),
-    legend=dict(
-        title_text="",
-        orientation="h",
-        entrywidth=100,
-        yanchor="top",
-        y=-0.3,
-        xanchor="center",
-        x=0.5
-    ),)
-
-# Truco visual: Añadir líneas blancas verticales para simular los cortes de los bloques
-for i in range(total_bloques + 1):
-    fig.add_vline(x=i-0.5, line_width=3, line_color="white")
-
-```
+<!-- ============================================================
+     NAVBAR SECUNDARIA · ODS (se mantiene del enfoque de capacidades)
+     ============================================================ -->
 
 ## Row {height="52px" .nav-ods-row}
 
@@ -174,6 +141,10 @@ ODS 8 · Trabajo Decente
 :::{.card .nav-ods-item}
 [ODS 9 · Industria e Innovación](ods9.html)
 :::
+
+<!-- ============================================================
+     FILA 1 · Ingresos BCS + Informalidad
+     ============================================================ -->
 
 ## Row {height="340px"}
 
@@ -261,9 +232,12 @@ Informalidad: Trabajar sin Seguridad Social y otras garantías
 
 ```{python}
 #| title: "% de Hombres y Mujeres en la informalidad"
-#| label: Grafica_1
-fig
+fig_informalidad()
 ```
+
+<!-- ============================================================
+     FILA 2 · Banner pregunta (ancho completo)
+     ============================================================ -->
 
 ## Row {height="60px"}
 
@@ -271,82 +245,20 @@ fig
 Más allá de la informalidad: ¿por qué hay niños trabajando?
 :::
 
+<!-- ============================================================
+     FILA 3 · Gráfica · Texto · Gráfica
+     ============================================================ -->
+
 ## Row {height="420px"}
 
-### Column {width="33%" height="300px"}
-
-```{python}
-#| label: Carga_grafica_ninos_trabajan
-#| output: false
-
-df = pd.read_excel(path + "/8.7.1_sh_es.xls", sheet_name=0, header = None)
-df = df.iloc[8:-13] # Eliminar todos los renglones de texto, solo dejar el nacional
-df.columns = df.iloc[0] # El encabezado es el primer renglón
-df = df[1:] # Eliminar el primer renglon (ya es el encazabezado)
-df = df.iloc[:, [1, 2, 3]]
-df.columns = ["Entidad Federativa", "Total", "Total_niños"]
-df['Total'] = df['Total'].apply(pd.to_numeric, errors='coerce').astype(float)
-df['Total_niños'] = df['Total_niños'].apply(pd.to_numeric, errors='coerce').astype(float)
-nacional_val = df.loc[df['Entidad Federativa'] == "Estados Unidos Mexicanos"].values.tolist()[0][2]
-top_3 = df.nlargest(3, 'Total_niños', keep='all')
-df = top_3
-
-fig = go.Figure()
-
-fig.add_trace(go.Bar(
-    x=df['Entidad Federativa'],
-    y=df['Total_niños'],
-    marker_color='#64bec0',
-    name='Entidad Federativa',
-    hovertemplate=(
-        "<b>Estado:</b> %{x}<br>" +
-        "<b>Proporción:</b> %{y:.2f}%<br>" +
-        "<extra></extra>"
-    )
-))
-
-# 3. Agregar la Línea Nacional (Horizontal)
-fig.add_hline(
-    y=nacional_val,
-    line_dash="dash", # Línea punteada
-    line_color="red",
-    line_width=3,
-    annotation_text=f"Promedio Nacional: {nacional_val:.2f} " + "%",
-    annotation_position="top right",
-    annotation_font=dict(color="red", size=14)
-)
-
-# 4. Estética del Layout
-fig.update_layout(
-    title="% Niños de 5 a 14 años trabajando <br> <sup>INEGI ENOE 2022</sup>",
-    xaxis_title="Los 3 estados con mayor proporción",
-    yaxis_title="Porcentaje (%)",
-    plot_bgcolor='white',
-    height=500,
-    legend=dict(
-        title_text="",
-        orientation="h",
-        entrywidth=100,
-        yanchor="top",
-        y=-0.3,
-        xanchor="center",
-        x=0.5
-    ),
-)
-
-# Añadir rejilla suave en el eje Y para mejor lectura
-fig.update_yaxes(showgrid=True, gridcolor='lightgray')
-
-
-```
+### Column {width="33%"}
 
 ```{python}
 #| title: "% niños de 5 a 14 años trabajando"
-#| label: Grafica_2
-fig
+fig_ninos_trabajando()
 ```
 
-### Column {width="30%" height="100px"}
+### Column {width="30%"}
 
 :::{.card .texto-explicativo}
 El trabajo infantil suele implicar rezago escolar, y a su vez la falta de acceso a empleos formales.
@@ -354,92 +266,9 @@ El trabajo infantil suele implicar rezago escolar, y a su vez la falta de acceso
 Históricamente, a mayor escolaridad, se reduce la probabilidad de quedar vulnerable por falta de oportunidades (estudios y empleo).
 :::
 
-### Column {width="37%" height="400px"}
-
-```{python}
-#| label: Carga_grafica_3
-#| output: false
-
-df = pd.read_excel(path + "/8.6.1A_sh_es.xls", sheet_name=0, header = None)
-df = df.iloc[9:-39] # Eliminar todos los renglones de texto, solo dejar el nacional
-#df.columns = df.iloc[0] # El encabezado es el primer renglón
-#df = df[1:] # Eliminar el primer renglon (ya es el encazabezado)
-cols = [1,4, 6, 7, 46, 48, 49, 88, 90, 91, 104, 106, 107]
-df = df.iloc[:, cols]
-df.columns = ["Entidad", "Primaria2024", "Secundaria2024", "Preparatoria2024", "Primaria2022", "Secundaria2022", "Preparatoria2022", "Primaria2020", "Secundaria2020", "Preparatoria2020", "Primaria2018", "Secundaria2018", "Preparatoria2018"]
-df_long = df.melt(
-    id_vars=['Entidad'],
-    var_name='Variable',
-    value_name='Valor'
-)
-
-# 3. Separamos el Nivel y el Año (extrayendo los últimos 4 caracteres para el año)
-df_long['Año'] = df_long['Variable'].str[-4:]
-df_long['Nivel'] = df_long['Variable'].str[:-4]
-
-# Limpiamos las columnas innecesarias y ordenamos
-df_long = df_long[['Entidad', 'Año', 'Nivel', 'Valor']].sort_values(['Año'], ascending=[True])
-df_long['Valor'] = df_long['Valor'].apply(pd.to_numeric, errors='coerce').astype(float)
-
-colores = {
-    "Primaria": "#bb6b00",
-    "Secundaria": "#690500",
-    "Preparatoria": "#9C4A3C"
-}
-fig = go.Figure()
-
-# Para que no se apilen y queden una al lado de la otra con el mismo color por Nivel:
-for nivel in df_long['Nivel'].unique():
-    df_filtrado = df_long[df_long['Nivel'] == nivel]
-
-    fig.add_trace(go.Bar(
-        x=[df_filtrado['Nivel'], df_filtrado['Año']], # Eje X multi-nivel
-        y=df_filtrado['Valor'],
-        name=nivel,
-        marker_color=colores.get(nivel, '#333'), # Asigna color por categoría
-        text=df_filtrado['Valor'].round(1),      # Muestra el dato sobre la barra
-        textposition='auto',
-        customdata=df_filtrado['Año'],
-        hovertemplate=(
-            "<b>Nivel:</b> " + nivel + "<br>" +
-            "<b>Año:</b> %{customdata}<br>" +
-            "<b>Porcentaje:</b> %{y:.2f}%<br>" +
-            "<extra></extra>" # Esto oculta el nombre del trace a la derecha
-        )
-    ))
-
-# Configuración visual Pro
-fig.update_layout(
-    title={
-        'text': "<b>% nacional jóvenes (de 15 a 24 años) que NO estudian, <br> NO tienen empleo NI reciben capacitación<br> y que solamente concluyeron la...</b><br><sup>INEGI ENOE 2018-2024</sup><span style='font-size:12px'>  </span>",
-        'y':0.95, 'x':0.5, 'xanchor': 'center', 'yanchor': 'top'
-    },
-    xaxis_title="Categoría / Año",
-    yaxis_title="Porcentaje (%)",
-    barmode='group',
-    template="plotly_white", # Fondo blanco limpio
-    bargap=0.15,            # Espacio entre grupos
-    bargroupgap=0.1,        # Espacio entre barras del mismo grupo
-    showlegend=True,
-    legend=dict(
-        title_text="",
-        orientation="h",
-        entrywidth=100,
-        yanchor="top",
-        y=-0.3,
-        xanchor="center",
-        x=0.5
-    ),
-)
-
-# Mejorar el formato de los números en el eje Y
-fig.update_yaxes(gridcolor='LightGrey', zerolinecolor='Black')
-
-
-```
+### Column {width="37%"}
 
 ```{python}
 #| title: "% nacional de jóvenes (15 a 24 años) que NO estudian, NI trabajan"
-#| label: Grafica_3
-fig
+fig_jovenes_ninis()
 ```

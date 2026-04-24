@@ -3,10 +3,13 @@ project:
   output-dir: "../docs"
   render:
     - index.qmd
-    - notebooks/ods4.qmd
     - notebooks/enfoque_monetario.qmd
+    - notebooks/ods2.qmd
+    - notebooks/ods3.qmd
+    - notebooks/ods6.qmd
     - notebooks/ods8.qmd
     - notebooks/ods9.qmd
+    - notebooks/ods4.qmd
 
 format:
   dashboard:

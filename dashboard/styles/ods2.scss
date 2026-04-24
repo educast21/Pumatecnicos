@@ -1,0 +1,440 @@
+/*-- scss:defaults --*/
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+// ============================================================
+// Paleta ODS 2 · Hambre Cero
+// Tonos de tierra, trigo y granate — espejo de la paleta ODS 6
+// ============================================================
+$wine-dark:       #3a1616;   // base profunda
+$wine-mid:        #5a2424;   // borgoña medio
+$wine-light:      #7d3838;   // ladrillo polvoso
+$wine-accent:     #a85c5c;   // rosa ladrillo (acentos)
+$wine-soft:       #f3e4e4;   // rosa muy pálido (navs secundarios)
+
+// Acento dorado-trigo (reemplaza al azul agua del ODS 6)
+$wheat-gold:      #b8860b;   // oro trigo (elemento diferenciador)
+$wheat-light:     #d9ae61;   // dorado claro
+$wheat-dark:      #7a5600;   // ámbar oscuro
+
+// Neutros compartidos con el proyecto
+$paper-bg:        #f5efe4;
+$text-light:      #fbf0f0;
+$text-muted:      #d8bdbd;
+$text-box:        #2a2a2a;
+$border-box:      #2a2a2a;
+
+$font-sans:   "Montserrat", sans-serif;
+$font-serif:  "Playfair Display", serif;
+$font-chalk:  "Caveat", cursive;
+
+// --- Bootstrap overrides ---
+$navbar-bg:   $wine-dark;
+$navbar-fg:   $text-light;
+$body-bg:     $paper-bg;
+$body-color:  $text-box;
+
+$font-family-sans-serif: $font-sans;
+$font-family-base:       $font-sans;
+$headings-font-family:   $font-serif;
+
+
+/*-- scss:rules --*/
+
+// ============================================================
+// Base
+// ============================================================
+body {
+  background-color: $paper-bg !important;
+  font-family: $font-sans;
+  -webkit-font-smoothing: antialiased;
+}
+
+// ============================================================
+// NAVBAR principal — vino apagado (igual que ODS 6)
+// ============================================================
+.quarto-dashboard .navbar,
+.navbar {
+  background:
+    linear-gradient(90deg, $wine-dark 0%, $wine-mid 55%, $wine-light 100%),
+    $wine-dark !important;
+  background-color: $wine-dark !important;
+  border-bottom: 3px solid $wine-accent !important;
+  padding: 0.4rem 1.25rem !important;
+  min-height: 52px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+
+  .navbar-brand,
+  .navbar-title,
+  .title,
+  .quarto-dashboard-title {
+    color: $text-light !important;
+    font-family: $font-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+    font-size: clamp(1.1rem, 1.6vw, 1.4rem) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  .quarto-dashboard-author,
+  .navbar-author {
+    color: $text-muted !important;
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+}
+
+// Botón "Inicio"
+.quarto-dashboard .navbar .quarto-navbar-tools .btn,
+.quarto-dashboard .navbar .nav-btn,
+.navbar .nav-btn,
+.navbar .btn {
+  background: rgba(255, 255, 255, 0.10) !important;
+  color: $text-light !important;
+  border: 1px solid rgba(168, 92, 92, 0.55) !important;
+  border-radius: 999px !important;
+  padding: 0.3rem 0.9rem !important;
+  font-family: $font-sans !important;
+  font-weight: 600 !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.3px;
+  transition: all 0.2s ease;
+
+  &:hover,
+  &:focus {
+    background: $wine-accent !important;
+    color: $text-light !important;
+    border-color: $wine-accent !important;
+    transform: translateY(-1px);
+  }
+}
+
+// ============================================================
+// Ajustes globales dashboard
+// ============================================================
+.quarto-dashboard main { padding: 0.6rem !important; }
+
+.quarto-dashboard .bslib-gap-spacing,
+.quarto-dashboard .dashboard-column,
+.quarto-dashboard .dashboard-row {
+  gap: 0.5rem !important;
+}
+
+// ============================================================
+// Cards base
+// ============================================================
+.card {
+  border: none !important;
+  border-radius: 10px !important;
+  background-color: #fbf6f3 !important;
+  box-shadow: 0 2px 6px rgba(90, 36, 36, 0.10);
+  overflow: hidden;
+}
+
+.card > .card-header {
+  background: linear-gradient(90deg, $wine-dark 0%, $wine-mid 100%) !important;
+  color: $text-light !important;
+  font-family: $font-sans !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.4px;
+  font-size: 0.9rem !important;
+  padding: 0.45rem 0.85rem !important;
+  border-bottom: none !important;
+  border-radius: 10px 10px 0 0 !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+  min-height: 0;
+}
+
+// Ocultar header vacío en cards personalizadas
+.card.nav-ods-item > .card-header,
+.card.banner-inseguridad > .card-header,
+.card.texto-lateral > .card-header,
+.card:has(> .hunger-sticker) > .card-header {
+  display: none !important;
+}
+
+// Neutralizar el card wrapper del sticker
+.card:has(> .hunger-sticker) {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 12px !important;
+  overflow: visible !important;
+}
+
+.card:has(> .hunger-sticker) > .card-body {
+  padding: 0 !important;
+  background: transparent !important;
+  height: 100%;
+}
+
+// ============================================================
+// NAVBAR SECUNDARIA (ODS 2 / 3 / 6) — espejo exacto de ODS 6
+// ============================================================
+.card.nav-ods-item {
+  background: $wine-soft !important;
+  border: 2px solid $wine-mid !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 4px rgba(90, 36, 36, 0.10);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+
+  > .card-header { display: none !important; }
+
+  > .card-body {
+    padding: 0.4rem 0.8rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: $font-sans;
+    font-weight: 700;
+    font-size: clamp(0.8rem, 1vw, 0.95rem);
+    letter-spacing: 0.4px;
+    color: $wine-dark;
+    text-align: center;
+    line-height: 1.1;
+  }
+
+  a {
+    color: $wine-dark !important;
+    text-decoration: none !important;
+    display: block;
+    width: 100%;
+
+    &:hover { color: $wine-accent !important; }
+  }
+
+  p { margin: 0 !important; }
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(90, 36, 36, 0.15);
+  }
+}
+
+// Pestaña activa (ODS 2)
+.card.nav-ods-item.nav-ods-activo {
+  background: linear-gradient(90deg, $wine-dark 0%, $wine-mid 100%) !important;
+  border-color: $wine-accent !important;
+  cursor: default;
+
+  > .card-body { color: $text-light !important; }
+
+  &:hover { transform: none; }
+}
+
+// ============================================================
+// BANNER INSEGURIDAD — fila de encabezado con 3 info-cards
+// ============================================================
+.card.banner-inseguridad {
+  background:
+    linear-gradient(160deg, $wine-mid 0%, $wine-dark 60%, #2a0f0f 100%) !important;
+  border: 2px solid $wine-accent !important;
+  border-radius: 10px !important;
+  box-shadow: 0 3px 10px rgba(58, 22, 22, 0.25);
+
+  > .card-body {
+    padding: 0.6rem 0.9rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.4rem !important;
+    height: 100%;
+  }
+
+  p { margin: 0 !important; }
+}
+
+.banner-titulo {
+  color: $text-light;
+  font-family: $font-serif;
+  font-weight: 700;
+  font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+  text-align: center;
+  letter-spacing: 0.4px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+}
+
+// Grid interno de las 3 info-cards
+.banner-cards-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 0.55rem !important;
+  flex: 1 1 auto;
+  min-height: 0;
+  align-items: stretch;
+}
+
+.info-card {
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(168, 92, 92, 0.4);
+  border-radius: 7px;
+  padding: 0.45rem 0.6rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.2rem;
+
+  p { margin: 0 !important; line-height: inherit; }
+}
+
+.info-card-titulo {
+  color: $wheat-light;
+  font-family: $font-sans;
+  font-weight: 700;
+  font-size: clamp(0.7rem, 0.85vw, 0.85rem);
+  letter-spacing: 0.3px;
+}
+
+.info-card-texto {
+  color: $text-muted;
+  font-family: $font-sans;
+  font-weight: 400;
+  font-size: clamp(0.65rem, 0.78vw, 0.78rem);
+  line-height: 1.35;
+}
+
+// ============================================================
+// HUNGER STICKER — equivalente al water-sticker del ODS 6
+// ============================================================
+.hunger-sticker {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(185, 134, 11, 0.22) 0%, transparent 55%),
+    linear-gradient(160deg, $wine-light 0%, $wine-mid 55%, $wine-dark 100%) !important;
+  border-radius: 12px;
+  padding: 0.9rem 0.7rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+  color: $text-light;
+  box-shadow: 0 3px 12px rgba(58, 22, 22, 0.3);
+  position: relative;
+  overflow: hidden;
+  border: 2px solid $wine-accent;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 85%, rgba(217, 174, 97, 0.12) 0%, transparent 35%),
+      radial-gradient(circle at 85% 15%, rgba(251, 240, 240, 0.08) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  > * { position: relative; z-index: 1; }
+  p { margin: 0 !important; }
+}
+
+.hunger-number {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 900;
+  font-family: $font-sans;
+  line-height: 1;
+  color: $text-light;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.35);
+  letter-spacing: -1px;
+}
+
+.hunger-label {
+  font-size: clamp(0.62rem, 0.78vw, 0.78rem);
+  font-family: $font-sans;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: $text-light;
+  padding: 0 0.2rem;
+}
+
+.hunger-icon {
+  font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+  line-height: 1;
+  margin: 0.1rem 0;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
+}
+
+.hunger-tagline {
+  font-size: clamp(0.6rem, 0.75vw, 0.72rem);
+  font-style: italic;
+  font-family: $font-serif;
+  line-height: 1.35;
+  color: $text-muted;
+  padding: 0 0.15rem;
+}
+
+.hunger-divider {
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, $wheat-light 50%, transparent 100%);
+  border-radius: 2px;
+  margin: 0.1rem 0;
+}
+
+// ============================================================
+// TEXTO LATERAL — caja blanca entre gráficos
+// ============================================================
+.card.texto-lateral {
+  background: #ffffff !important;
+  border: 2px solid $border-box !important;
+  border-left: 5px solid $wine-accent !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+
+  > .card-body {
+    padding: 1.1rem 1.2rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: stretch !important;
+    color: $text-box;
+    font-family: $font-sans;
+    font-size: clamp(0.88rem, 1vw, 1rem);
+    font-weight: 400;
+    line-height: 1.55;
+    text-align: left;
+    gap: 0.8rem;
+  }
+
+  p { margin: 0 !important; }
+
+  strong {
+    color: $wine-dark;
+    font-weight: 700;
+  }
+}
+
+// ============================================================
+// Plotly — fondo transparente
+// ============================================================
+.js-plotly-plot .plotly .main-svg { background: transparent !important; }
+
+// ============================================================
+// Responsivo
+// ============================================================
+@media (max-width: 992px) {
+  .hunger-number  { font-size: 1.8rem; }
+  .hunger-label   { font-size: 0.6rem; }
+  .hunger-icon    { font-size: 1.6rem; }
+  .hunger-tagline { display: none; }
+
+  .banner-cards-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .banner-titulo {
+    font-size: 1rem;
+  }
+  .card.texto-lateral > .card-body {
+    font-size: 0.85rem;
+    padding: 0.8rem 0.9rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .hunger-tagline { display: none; }
+  .hunger-divider { display: none; }
+  .banner-cards-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
